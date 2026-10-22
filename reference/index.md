@@ -77,6 +77,15 @@
   [`nhl_draft_picks()`](https://ethanrawson.github.io/bluelineR/reference/nhl_draft_rankings.md)
   : The draft
 
+## International
+
+- [`nhl_international()`](https://ethanrawson.github.io/bluelineR/reference/nhl_international.md)
+  [`nhl_international_careers()`](https://ethanrawson.github.io/bluelineR/reference/nhl_international.md)
+  [`nhl_international_games()`](https://ethanrawson.github.io/bluelineR/reference/nhl_international.md)
+  [`nhl_international_winners()`](https://ethanrawson.github.io/bluelineR/reference/nhl_international.md)
+  [`nhl_olympic_podiums()`](https://ethanrawson.github.io/bluelineR/reference/nhl_international.md)
+  : Best-on-best international hockey
+
 ## Stats and records APIs
 
 - [`nhl_stats()`](https://ethanrawson.github.io/bluelineR/reference/nhl_stats.md)

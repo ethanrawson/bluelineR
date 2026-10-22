@@ -181,9 +181,59 @@
 <span><span class="co">#&gt; #   ³​top_shot_speed_imperial, ⁴​total_distance_skated_imperial</span></span></code></pre></div>
 </div>
 <div class="section level2">
+<h2 id="best-on-best-tournaments">Best-on-best tournaments<a class="anchor" aria-label="anchor" href="#best-on-best-tournaments"></a>
+</h2>
+<p>Every tournament NHL players have played in: the Canada Cup, the World Cup of Hockey, the Olympics and the 4 Nations Face-Off, from 1976 to 2026. Each player’s and club’s numbers at each one, careers with Olympic medals, every game and every final. The game ids open the NHL’s play-by-play, in full for the 4 Nations and the 2016 World Cup and goals and penalties for the Olympics.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">oly</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/nhl_international.html">nhl_international</a></span><span class="op">(</span><span class="st">"skater"</span>, <span class="st">"olympics"</span>, <span class="fl">2026</span><span class="op">)</span></span>
+<span><span class="va">oly</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"first_name"</span>, <span class="st">"last_name"</span>, <span class="st">"tri_code"</span>, <span class="st">"games_played"</span>, <span class="st">"goals"</span>, <span class="st">"assists"</span>, <span class="st">"points"</span>, <span class="st">"toi_seconds"</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="co">#&gt; # A tibble: 264 × 8</span></span>
+<span><span class="co">#&gt;   first_name last_name  tri_code games_played goals assists points toi_seconds</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;           &lt;int&gt; &lt;int&gt;   &lt;int&gt;  &lt;int&gt;       &lt;int&gt;</span></span>
+<span><span class="co">#&gt; 1 Connor     McDavid    CAN                 6     2      11     13        7285</span></span>
+<span><span class="co">#&gt; 2 Macklin    Celebrini  CAN                 6     5       5     10        7119</span></span>
+<span><span class="co">#&gt; 3 Lucas      Raymond    SWE                 5     1       8      9        5560</span></span>
+<span><span class="co">#&gt; 4 Joel       Armia      FIN                 6     3       5      8        4639</span></span>
+<span><span class="co">#&gt; 5 Juraj      Slafkovský SVK                 6     4       4      8        7145</span></span>
+<span><span class="co">#&gt; # ℹ 259 more rows</span></span>
+<span></span>
+<span><span class="va">winners</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/nhl_international.html">nhl_international_winners</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">winners</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"tournament"</span>, <span class="st">"year"</span>, <span class="st">"winning_tricode"</span>, <span class="st">"winning_score"</span>, <span class="st">"losing_tricode"</span>, <span class="st">"losing_score"</span>, <span class="st">"overtime"</span><span class="op">)</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">15</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 15 × 7</span></span>
+<span><span class="co">#&gt;    tournament           year winning_tricode winning_score losing_tricode losing_score overtime</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt;                   &lt;int&gt; &lt;chr&gt;                 &lt;int&gt; &lt;chr&gt;   </span></span>
+<span><span class="co">#&gt;  1 Canada Cup           1976 CAN                         5 TCH                       4 OT      </span></span>
+<span><span class="co">#&gt;  2 Canada Cup           1981 URS                         8 CAN                       1 &lt;NA&gt;    </span></span>
+<span><span class="co">#&gt;  3 Canada Cup           1984 CAN                         6 SWE                       5 &lt;NA&gt;    </span></span>
+<span><span class="co">#&gt;  4 Canada Cup           1987 CAN                         6 URS                       5 &lt;NA&gt;    </span></span>
+<span><span class="co">#&gt;  5 Canada Cup           1991 CAN                         4 USA                       2 &lt;NA&gt;    </span></span>
+<span><span class="co">#&gt;  6 World Cup of Hockey  1996 USA                         5 CAN                       2 &lt;NA&gt;    </span></span>
+<span><span class="co">#&gt;  7 Olympics             1998 CZE                         1 RUS                       0 &lt;NA&gt;    </span></span>
+<span><span class="co">#&gt;  8 Olympics             2002 CAN                         5 USA                       2 &lt;NA&gt;    </span></span>
+<span><span class="co">#&gt;  9 World Cup of Hockey  2004 CAN                         3 FIN                       2 &lt;NA&gt;    </span></span>
+<span><span class="co">#&gt; 10 Olympics             2006 SWE                         3 FIN                       2 &lt;NA&gt;    </span></span>
+<span><span class="co">#&gt; 11 Olympics             2010 CAN                         3 USA                       2 OT      </span></span>
+<span><span class="co">#&gt; 12 Olympics             2014 CAN                         3 SWE                       0 &lt;NA&gt;    </span></span>
+<span><span class="co">#&gt; 13 World Cup of Hockey  2016 CAN                         2 EUR                       1 &lt;NA&gt;    </span></span>
+<span><span class="co">#&gt; 14 4 Nations Face-Off   2025 CAN                         3 USA                       2 OT      </span></span>
+<span><span class="co">#&gt; 15 Olympics             2026 USA                         2 CAN                       1 OT</span></span>
+<span></span>
+<span><span class="va">games</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/nhl_international.html">nhl_international_games</a></span><span class="op">(</span><span class="st">"4 nations"</span><span class="op">)</span></span>
+<span><span class="va">final</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/nhl_pbp.html">nhl_pbp</a></span><span class="op">(</span><span class="va">games</span><span class="op">$</span><span class="va">game_id</span><span class="op">[</span><span class="va">games</span><span class="op">$</span><span class="va">series_title</span> <span class="op">==</span> <span class="st">"Final"</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">final</span><span class="op">[</span><span class="va">final</span><span class="op">$</span><span class="va">type</span> <span class="op">==</span> <span class="st">"goal"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"period"</span>, <span class="st">"time_in_period"</span>, <span class="st">"event_team"</span>, <span class="st">"player_1_name"</span>, <span class="st">"x_fixed"</span>, <span class="st">"y_fixed"</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="co">#&gt; # A tibble: 5 × 6</span></span>
+<span><span class="co">#&gt;   period time_in_period event_team player_1_name    x_fixed y_fixed</span></span>
+<span><span class="co">#&gt;    &lt;int&gt; &lt;chr&gt;          &lt;chr&gt;      &lt;chr&gt;              &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1      1 04:48          CAN        Nathan MacKinnon      41       7</span></span>
+<span><span class="co">#&gt; 2      1 16:52          USA        Brady Tkachuk         80      -1</span></span>
+<span><span class="co">#&gt; 3      2 07:32          USA        Jake Sanderson        73       7</span></span>
+<span><span class="co">#&gt; 4      2 14:00          CAN        Sam Bennett           81      10</span></span>
+<span><span class="co">#&gt; 5      4 08:18          CAN        Connor McDavid        68       6</span></span></code></pre></div>
+</div>
+<div class="section level2">
 <h2 id="the-stats-api">The stats API<a class="anchor" aria-label="anchor" href="#the-stats-api"></a>
 </h2>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/nhl_stats.html">nhl_stats</a></span><span class="op">(</span><span class="st">"skater/summary"</span>, <span class="st">"2025-26"</span>, sort <span class="op">=</span> <span class="st">"points"</span>, limit <span class="op">=</span> <span class="fl">5</span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"skater_full_name"</span>, <span class="st">"team_abbrevs"</span>, <span class="st">"goals"</span>, <span class="st">"assists"</span>, <span class="st">"points"</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">#&gt; # A tibble: 5 × 5</span></span>
 <span><span class="co">#&gt;   skater_full_name  team_abbrevs goals assists points</span></span>
@@ -271,6 +321,15 @@
 </td>
 </tr>
 <tr>
+<td>International</td>
+<td>
+<code><a href="reference/nhl_international.html">nhl_international()</a></code>, <code><a href="reference/nhl_international.html">nhl_international_careers()</a></code>, <code><a href="reference/nhl_international.html">nhl_international_games()</a></code>, <code><a href="reference/nhl_international.html">nhl_international_winners()</a></code>, <code><a href="reference/nhl_international.html">nhl_olympic_podiums()</a></code>
+</td>
+<td>
+<code>records.nhl.com/site/api/international-*</code>, <code>/olympic-*</code>
+</td>
+</tr>
+<tr>
 <td>Stats and records APIs</td>
 <td>
 <code><a href="reference/nhl_stats.html">nhl_stats()</a></code>, <code><a href="reference/nhl_stats.html">nhl_stats_reports()</a></code>, <code><a href="reference/nhl_teams.html">nhl_teams()</a></code>, <code><a href="reference/nhl_teams.html">nhl_seasons()</a></code>, <code><a href="reference/nhl_teams.html">nhl_franchises()</a></code>, <code><a href="reference/nhl_records.html">nhl_records()</a></code>
@@ -301,6 +360,8 @@
 <strong>Reading a goal from its tracking</strong> (<code><a href="reference/classify_goal.html">classify_goal()</a></code>): rush, breakaway, odd-man rush, one-timer, cross-slot pass, traffic, behind the net and the forecheck, with who carried it in and who made the pass, and the frame the puck went in (<code><a href="reference/goal_frame.html">goal_frame()</a></code>).</li>
 <li>
 <strong>Goal replays as video</strong> (<code><a href="reference/animate_goal.html">animate_goal()</a></code>): the tracking played back on a rink as an MP4, with the scorer and his assists named, his skating speed and the finish again in slow motion.</li>
+<li>
+<strong>Best-on-best tournaments</strong> (<code><a href="reference/nhl_international.html">nhl_international()</a></code> and the rest): every Canada Cup, World Cup, Olympics and 4 Nations from records.nhl.com, with careers, Olympic medals, every game and every final.</li>
 <li>
 <strong>NHL EDGE</strong> leaderboards, comparison reports and last night’s standouts, the goal replay summary (<code><a href="reference/nhl_goal_tracking.html">nhl_goal_replay()</a></code>) and player search.</li>
 </ul>
