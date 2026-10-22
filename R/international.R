@@ -13,6 +13,8 @@
 #'   goalies, coaches, three stars and the winning goal. The game ids work
 #'   with [nhl_pbp()] and [nhl_boxscore()]: full play-by-play for the 4
 #'   Nations and the 2016 World Cup, goals and penalties for the Olympics.
+#'   Goals at the 4 Nations have puck and player tracking as well, for
+#'   [nhl_goal_tracking()] and [animate_goal()].
 #' * `nhl_international_winners()`: the game that decided each tournament,
 #'   with the captains, the winning goalie and who scored the winner.
 #' * `nhl_olympic_podiums()`: gold, silver and bronze at each Olympics, with
@@ -36,6 +38,10 @@
 #' # Every 4 Nations game, then the final's play-by-play:
 #' games <- nhl_international_games("4 nations")
 #' nhl_pbp(games$game_id[games$series_title == "Final"])
+#'
+#' # McDavid's overtime winner in the final, from the tracking:
+#' animate_goal(nhl_goal_tracking(2024200007, 1443), "mcdavid-4-nations.mp4",
+#'              goal = nhl_goal_replay(2024200007, 1443))
 #'
 #' nhl_international_careers("skater")
 #' nhl_international_careers("goalie", olympics = TRUE)

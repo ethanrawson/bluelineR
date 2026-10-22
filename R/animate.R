@@ -50,10 +50,13 @@ animate_goal <- function(frames, file = "goal.mp4", goal = NULL, team = NULL, fp
       names[as.character(assists)] <- a$last_name %||% rep("", nrow(a))
     }
     team <- team %||% goal$team_abbrev[[1]]
-    title <- title %||% sprintf("%s %s  |  %s %s-%s %s  |  P%s %s",
+    per <- goal$period[[1]]
+    per <- switch(goal$period_type[[1]] %||% "REG", OT = if (per > 4) paste0(per - 3, "OT") else "OT", SO = "SO",
+                  paste0("P", per))
+    title <- title %||% sprintf("%s %s  |  %s %s-%s %s  |  %s %s",
                                 goal$first_name[[1]] %||% "", goal$last_name[[1]] %||% "", goal$away_team[[1]],
                                 goal$away_score[[1]], goal$home_score[[1]], goal$home_team[[1]],
-                                goal$period[[1]], sub("^0", "", goal$time_in_period[[1]] %||% ""))
+                                per, sub("^0", "", goal$time_in_period[[1]] %||% ""))
   } else {
     cl <- classify_goal(frames, team = team)
     if (!is.null(cl)) { scorer <- cl$shooter; team <- team %||% cl$team }

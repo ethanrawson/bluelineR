@@ -1,5 +1,8 @@
 
-<img src="man/figures/logo.png" alt="bluelineR" width="100%" />
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="man/figures/logo-dark.png">
+  <img src="man/figures/logo.png" alt="bluelineR" width="100%" />
+</picture>
 
 <!-- badges: start -->
 
@@ -182,7 +185,9 @@ mcdavid$info[, c("skating_speed_speed_max_imperial", "skating_speed_speed_max_pe
 Every tournament NHL players have played in: the Canada Cup, the World Cup of Hockey, the Olympics and
 the 4 Nations Face-Off, from 1976 to 2026. Each player's and club's numbers at each one, careers with
 Olympic medals, every game and every final. The game ids open the NHL's play-by-play, in full for the 4
-Nations and the 2016 World Cup and goals and penalties for the Olympics.
+Nations and the 2016 World Cup and goals and penalties for the Olympics, and the 4 Nations goals have
+player tracking: `animate_goal(nhl_goal_tracking(2024200007, 1443), goal = nhl_goal_replay(2024200007, 1443))`
+is McDavid's overtime winner in the final.
 
 ``` r
 oly <- nhl_international("skater", "olympics", 2026)

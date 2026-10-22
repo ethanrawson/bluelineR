@@ -55,6 +55,9 @@ nhl_rink <- function(ice = "#f7f9fc") {
 team_palette <- function(teams) {
   info <- nhl_team_info()
   fill <- info$primary_color[match(teams, info$abbrev)]
+  # The 4 Nations Face-Off, whose goals are tracked too.
+  nations <- c(CAN = "#D80621", USA = "#041E42", SWE = "#005293", FIN = "#002F6C")
+  fill[is.na(fill)] <- unname(nations[teams[is.na(fill)]])
   fill[is.na(fill)] <- c("#1f6feb", "#64748b")[seq_len(sum(is.na(fill)))]
   # Two clubs in alike colors: the second goes white with its color outlined.
   rgb <- grDevices::col2rgb(fill)
