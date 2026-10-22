@@ -1,0 +1,4 @@
+/* The logo is a wide wordmark: give it room beside page titles. */
+img.logo {
+  width: 180px;
+}

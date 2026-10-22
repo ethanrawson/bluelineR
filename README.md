@@ -1,5 +1,5 @@
 
-# bluelineR <img src="man/figures/logo.png" align="right" height="120" alt="" />
+<img src="man/figures/logo.png" alt="bluelineR" width="100%" />
 
 <!-- badges: start -->
 
