@@ -277,6 +277,67 @@
 <span><span class="va">props</span><span class="op">[</span><span class="va">props</span><span class="op">$</span><span class="va">stat</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="st">"shots"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"team"</span>, <span class="st">"player_name"</span>, <span class="st">"player_id"</span>, <span class="st">"line"</span>, <span class="st">"over"</span>, <span class="st">"under"</span>, <span class="st">"over_prob"</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
 </div>
 <div class="section level2">
+<h2 id="how-far-back-it-goes">How far back it goes<a class="anchor" aria-label="anchor" href="#how-far-back-it-goes"></a>
+</h2>
+<p>Every season since 1917-18 is in the NHL’s data, but each kind of number starts in its own year, and a column the league did not keep comes back missing (or zero) before then. <code><a href="reference/nhl_stat_eras.html">nhl_stat_eras()</a></code> has the eras and, with <code>by = "stat"</code>, the first season of each stats column, measured against the live API; <code><a href="reference/nhl_stats.html">nhl_stats()</a></code>, <code><a href="reference/nhl_pbp.html">nhl_pbp()</a></code> and <code><a href="reference/nhl_shifts.html">nhl_shifts()</a></code> say so when you ask for something older than the data.</p>
+<table class="table">
+<colgroup>
+<col width="50%">
+<col width="50%">
+</colgroup>
+<thead><tr>
+<th>From</th>
+<th>What starts</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>1917-18</td>
+<td>Goals, assists, points, penalty minutes; goalie wins, goals against and shutouts; every game’s boxscore, player game logs, and play-by-play of goals and penalties</td>
+</tr>
+<tr>
+<td>1933-34</td>
+<td>Even-strength, power-play and short-handed goals and points</td>
+</tr>
+<tr>
+<td>1955-56</td>
+<td>Goalies’ shots against, saves and save percentage</td>
+</tr>
+<tr>
+<td>1959-60</td>
+<td>Shots and plus/minus</td>
+</tr>
+<tr>
+<td>1977-78</td>
+<td>Team power-play and penalty-kill percentages</td>
+</tr>
+<tr>
+<td>1997-98</td>
+<td>Ice time, shifts and faceoffs; shots on goal in the play-by-play</td>
+</tr>
+<tr>
+<td>2005-06</td>
+<td>Hits, blocked shots, giveaways, takeaways and missed shots</td>
+</tr>
+<tr>
+<td>2009-10</td>
+<td>Every event in the play-by-play, with its location (shot maps)</td>
+</tr>
+<tr>
+<td>2010-11</td>
+<td>Shift charts</td>
+</tr>
+<tr>
+<td>2021-22</td>
+<td>NHL EDGE tracking</td>
+</tr>
+<tr>
+<td>2023-24</td>
+<td>Goal tracking</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level2">
 <h2 id="the-stats-api">The stats API<a class="anchor" aria-label="anchor" href="#the-stats-api"></a>
 </h2>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">

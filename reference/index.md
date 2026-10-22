@@ -132,6 +132,8 @@
 - [`nhl_stats()`](https://ethanrawson.github.io/bluelineR/reference/nhl_stats.md)
   [`nhl_stats_reports()`](https://ethanrawson.github.io/bluelineR/reference/nhl_stats.md)
   : The NHL stats API
+- [`nhl_stat_eras()`](https://ethanrawson.github.io/bluelineR/reference/nhl_stat_eras.md)
+  : What the NHL kept, and since when
 - [`nhl_teams()`](https://ethanrawson.github.io/bluelineR/reference/nhl_teams.md)
   [`nhl_seasons()`](https://ethanrawson.github.io/bluelineR/reference/nhl_teams.md)
   [`nhl_franchises()`](https://ethanrawson.github.io/bluelineR/reference/nhl_teams.md)

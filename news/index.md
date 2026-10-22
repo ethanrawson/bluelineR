@@ -76,9 +76,27 @@
   (club jersey textures), and broadcaster logos in
   [`nhl_broadcasts()`](https://ethanrawson.github.io/bluelineR/reference/nhl_broadcasts.md).
 
+- [`nhl_stat_eras()`](https://ethanrawson.github.io/bluelineR/reference/nhl_stat_eras.md):
+  what the NHL kept and since when, as eras (goals and assists from
+  1917-18, shots and plus/minus from 1959-60, ice time from 1997-98,
+  hits from 2005-06, located play-by-play from 2009-10, shift charts
+  from 2010-11, tracking from 2021-22) and as each stats column’s first
+  season, measured against the live API.
+  [`nhl_stats()`](https://ethanrawson.github.io/bluelineR/reference/nhl_stats.md)
+  says when it is sorting by a column the NHL did not keep for the
+  seasons asked for, and
+  [`nhl_pbp()`](https://ethanrawson.github.io/bluelineR/reference/nhl_pbp.md)
+  and
+  [`nhl_shifts()`](https://ethanrawson.github.io/bluelineR/reference/nhl_shifts.md)
+  say what an old game has.
+
 - [`nhl_player_game_log()`](https://ethanrawson.github.io/bluelineR/reference/nhl_player.md)
-  reads seasons before 1997-98, which have no ice time (it used to fail
-  on them).
+  and
+  [`nhl_boxscore()`](https://ethanrawson.github.io/bluelineR/reference/nhl_boxscore.md)
+  read seasons before 1997-98, which have no ice time (they used to fail
+  on them), and
+  [`plot_shots()`](https://ethanrawson.github.io/bluelineR/reference/plot_shots.md)
+  says why when a game has no shot locations.
 
 - [`plot_shots()`](https://ethanrawson.github.io/bluelineR/reference/plot_shots.md)
   draws each club at its own end, the away club at the left net and the

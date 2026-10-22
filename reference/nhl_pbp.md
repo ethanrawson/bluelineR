@@ -23,6 +23,13 @@ nhl_pbp(game_id)
 
 A tibble, one row per event.
 
+## Details
+
+Every game since 1917-18 has a play-by-play, but the early ones are
+short: goals and penalties only until 1997-98, shots on goal added from
+then, and every event with its location from 2009-10 (see
+[`nhl_stat_eras()`](https://ethanrawson.github.io/bluelineR/reference/nhl_stat_eras.md)).
+
 ## Examples
 
 ``` r
