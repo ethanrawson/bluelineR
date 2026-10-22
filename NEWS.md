@@ -1,5 +1,9 @@
 # bluelineR (development version)
 
+* `nhl_international()`, `nhl_international_careers()`, `nhl_international_games()`,
+  `nhl_international_winners()` and `nhl_olympic_podiums()`: every Canada Cup, World Cup of Hockey,
+  Olympics and 4 Nations Face-Off with NHL players, from records.nhl.com.
+* `animate_goal()` puts GOAL in the middle of the rink.
 * `animate_goal()` writes a goal's tracking replay as an MP4: every player and the puck on the rink,
   sweater numbers in club colors, the puck's trail, the scorer and his assists named, his skating speed,
   and the last three seconds again at half speed.

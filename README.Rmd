@@ -112,6 +112,25 @@ mcdavid <- nhl_edge_skater(8478402, "2025-26")
 mcdavid$info[, c("skating_speed_speed_max_imperial", "skating_speed_speed_max_percentile", "top_shot_speed_imperial", "total_distance_skated_imperial")]
 ```
 
+## Best-on-best tournaments
+
+Every tournament NHL players have played in: the Canada Cup, the World Cup of Hockey, the Olympics and
+the 4 Nations Face-Off, from 1976 to 2026. Each player's and club's numbers at each one, careers with
+Olympic medals, every game and every final. The game ids open the NHL's play-by-play, in full for the 4
+Nations and the 2016 World Cup and goals and penalties for the Olympics.
+
+```{r international}
+oly <- nhl_international("skater", "olympics", 2026)
+oly[, c("first_name", "last_name", "tri_code", "games_played", "goals", "assists", "points", "toi_seconds")]
+
+winners <- nhl_international_winners()
+print(winners[, c("tournament", "year", "winning_tricode", "winning_score", "losing_tricode", "losing_score", "overtime")], n = 15)
+
+games <- nhl_international_games("4 nations")
+final <- nhl_pbp(games$game_id[games$series_title == "Final"])
+final[final$type == "goal", c("period", "time_in_period", "event_team", "player_1_name", "x_fixed", "y_fixed")]
+```
+
 ## The stats API
 
 ```{r stats}
@@ -129,6 +148,7 @@ nhl_stats("skater/summary", "2025-26", sort = "points", limit = 5)[, c("skater_f
 | NHL EDGE | `nhl_edge_skater()`, `nhl_edge_goalie()`, `nhl_edge_team()`, `nhl_edge_leaders()`, `nhl_edge_landing()`, `nhl_edge_by_the_numbers()` | `/edge/...` (20 reports) |
 | Players and clubs | `nhl_player()`, `nhl_player_game_log()`, `nhl_player_search()`, `nhl_roster()`, `nhl_prospects()`, `nhl_team_stats()`, `nhl_stat_leaders()` | `/player`, `/roster`, `/prospects`, `/club-stats`, `/skater-stats-leaders`; `search.d3.nhle.com` |
 | Draft | `nhl_draft_rankings()`, `nhl_draft_picks()` | `/draft/rankings`, `/draft/picks` |
+| International | `nhl_international()`, `nhl_international_careers()`, `nhl_international_games()`, `nhl_international_winners()`, `nhl_olympic_podiums()` | `records.nhl.com/site/api/international-*`, `/olympic-*` |
 | Stats and records APIs | `nhl_stats()`, `nhl_stats_reports()`, `nhl_teams()`, `nhl_seasons()`, `nhl_franchises()`, `nhl_records()` | `api.nhle.com/stats/rest/en`, `records.nhl.com/site/api` |
 | Anything else | `nhl_api()`, `tidy_json()` | any of the above |
 
@@ -153,5 +173,7 @@ season of them at once. What bluelineR adds:
   pass, and the frame the puck went in (`goal_frame()`).
 * **Goal replays as video** (`animate_goal()`): the tracking played back on a rink as an MP4, with
   the scorer and his assists named, his skating speed and the finish again in slow motion.
+* **Best-on-best tournaments** (`nhl_international()` and the rest): every Canada Cup, World Cup,
+  Olympics and 4 Nations from records.nhl.com, with careers, Olympic medals, every game and every final.
 * **NHL EDGE** leaderboards, comparison reports and last night's standouts, the goal replay summary
   (`nhl_goal_replay()`) and player search.

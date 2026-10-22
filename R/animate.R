@@ -94,7 +94,6 @@ animate_goal <- function(frames, file = "goal.mp4", goal = NULL, team = NULL, fp
   pal <- team_palette(sort(unique(stats::na.omit(ents$team))))
   k <- match(ents$team, pal$team)
   ents$fill <- pal$fill[k]; ents$stroke <- pal$stroke[k]; ents$text <- pal$text[k]
-  goal_side <- if (!is.na(g)) sign(frames$x[frames$frame == g & frames$is_puck][1] %||% 1) else 1
 
   draw <- function(i) {
     t <- vt[[i]]
@@ -130,7 +129,7 @@ animate_goal <- function(frames, file = "goal.mp4", goal = NULL, team = NULL, fp
       graphics::points(X[i, puck], Y[i, puck], pch = 21, cex = 1.7, bg = "#0b1220", col = "white", lwd = 1.2)
     }
     if (!is.na(t_goal) && t >= t_goal && t < t_goal + 1.8) {
-      halo_text(-goal_side * 30, 26, "GOAL", cex = 5.5, col = "#ffd60a", halo = "#0b1220", r = 0.9)
+      halo_text(0, 0, "GOAL", cex = 5.5, col = "#ffd60a", halo = "#0b1220", r = 0.9)
     }
     graphics::text(-99, 50.5, title, adj = c(0, 0.5), col = "white", font = 2, cex = 1.25)
     graphics::text(99, 50.5, sprintf("%.1f s", t), adj = c(1, 0.5), col = "white", font = 2, cex = 1.1)

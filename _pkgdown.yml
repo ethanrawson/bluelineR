@@ -22,6 +22,8 @@ reference:
   contents: [nhl_player, nhl_roster, nhl_team_stats, nhl_stat_leaders, nhl_headshot_url, nhl_team_info]
 - title: Draft
   contents: [nhl_draft_rankings]
+- title: International
+  contents: [nhl_international]
 - title: Stats and records APIs
   contents: [nhl_stats, nhl_teams, nhl_records]
 - title: Plots

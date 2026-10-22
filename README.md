@@ -177,6 +177,60 @@ mcdavid$info[, c("skating_speed_speed_max_imperial", "skating_speed_speed_max_pe
 #> #   ³​top_shot_speed_imperial, ⁴​total_distance_skated_imperial
 ```
 
+## Best-on-best tournaments
+
+Every tournament NHL players have played in: the Canada Cup, the World Cup of Hockey, the Olympics and
+the 4 Nations Face-Off, from 1976 to 2026. Each player's and club's numbers at each one, careers with
+Olympic medals, every game and every final. The game ids open the NHL's play-by-play, in full for the 4
+Nations and the 2016 World Cup and goals and penalties for the Olympics.
+
+``` r
+oly <- nhl_international("skater", "olympics", 2026)
+oly[, c("first_name", "last_name", "tri_code", "games_played", "goals", "assists", "points", "toi_seconds")]
+#> # A tibble: 264 × 8
+#>   first_name last_name  tri_code games_played goals assists points toi_seconds
+#>   <chr>      <chr>      <chr>           <int> <int>   <int>  <int>       <int>
+#> 1 Connor     McDavid    CAN                 6     2      11     13        7285
+#> 2 Macklin    Celebrini  CAN                 6     5       5     10        7119
+#> 3 Lucas      Raymond    SWE                 5     1       8      9        5560
+#> 4 Joel       Armia      FIN                 6     3       5      8        4639
+#> 5 Juraj      Slafkovský SVK                 6     4       4      8        7145
+#> # ℹ 259 more rows
+
+winners <- nhl_international_winners()
+print(winners[, c("tournament", "year", "winning_tricode", "winning_score", "losing_tricode", "losing_score", "overtime")], n = 15)
+#> # A tibble: 15 × 7
+#>    tournament           year winning_tricode winning_score losing_tricode losing_score overtime
+#>    <chr>               <dbl> <chr>                   <int> <chr>                 <int> <chr>   
+#>  1 Canada Cup           1976 CAN                         5 TCH                       4 OT      
+#>  2 Canada Cup           1981 URS                         8 CAN                       1 <NA>    
+#>  3 Canada Cup           1984 CAN                         6 SWE                       5 <NA>    
+#>  4 Canada Cup           1987 CAN                         6 URS                       5 <NA>    
+#>  5 Canada Cup           1991 CAN                         4 USA                       2 <NA>    
+#>  6 World Cup of Hockey  1996 USA                         5 CAN                       2 <NA>    
+#>  7 Olympics             1998 CZE                         1 RUS                       0 <NA>    
+#>  8 Olympics             2002 CAN                         5 USA                       2 <NA>    
+#>  9 World Cup of Hockey  2004 CAN                         3 FIN                       2 <NA>    
+#> 10 Olympics             2006 SWE                         3 FIN                       2 <NA>    
+#> 11 Olympics             2010 CAN                         3 USA                       2 OT      
+#> 12 Olympics             2014 CAN                         3 SWE                       0 <NA>    
+#> 13 World Cup of Hockey  2016 CAN                         2 EUR                       1 <NA>    
+#> 14 4 Nations Face-Off   2025 CAN                         3 USA                       2 OT      
+#> 15 Olympics             2026 USA                         2 CAN                       1 OT
+
+games <- nhl_international_games("4 nations")
+final <- nhl_pbp(games$game_id[games$series_title == "Final"])
+final[final$type == "goal", c("period", "time_in_period", "event_team", "player_1_name", "x_fixed", "y_fixed")]
+#> # A tibble: 5 × 6
+#>   period time_in_period event_team player_1_name    x_fixed y_fixed
+#>    <int> <chr>          <chr>      <chr>              <dbl>   <dbl>
+#> 1      1 04:48          CAN        Nathan MacKinnon      41       7
+#> 2      1 16:52          USA        Brady Tkachuk         80      -1
+#> 3      2 07:32          USA        Jake Sanderson        73       7
+#> 4      2 14:00          CAN        Sam Bennett           81      10
+#> 5      4 08:18          CAN        Connor McDavid        68       6
+```
+
 ## The stats API
 
 ``` r
@@ -202,6 +256,7 @@ nhl_stats("skater/summary", "2025-26", sort = "points", limit = 5)[, c("skater_f
 | NHL EDGE                    | `nhl_edge_skater()`, `nhl_edge_goalie()`, `nhl_edge_team()`, `nhl_edge_leaders()`, `nhl_edge_landing()`, `nhl_edge_by_the_numbers()`        | `/edge/...` (20 reports)                                                                           |
 | Players and clubs           | `nhl_player()`, `nhl_player_game_log()`, `nhl_player_search()`, `nhl_roster()`, `nhl_prospects()`, `nhl_team_stats()`, `nhl_stat_leaders()` | `/player`, `/roster`, `/prospects`, `/club-stats`, `/skater-stats-leaders`; `search.d3.nhle.com`   |
 | Draft                       | `nhl_draft_rankings()`, `nhl_draft_picks()`                                                                                                 | `/draft/rankings`, `/draft/picks`                                                                  |
+| International | `nhl_international()`, `nhl_international_careers()`, `nhl_international_games()`, `nhl_international_winners()`, `nhl_olympic_podiums()` | `records.nhl.com/site/api/international-*`, `/olympic-*` |
 | Stats and records APIs      | `nhl_stats()`, `nhl_stats_reports()`, `nhl_teams()`, `nhl_seasons()`, `nhl_franchises()`, `nhl_records()`                                   | `api.nhle.com/stats/rest/en`, `records.nhl.com/site/api`                                           |
 | Anything else               | `nhl_api()`, `tidy_json()`                                                                                                                  | any of the above                                                                                   |
 
@@ -228,5 +283,7 @@ season of them at once. What bluelineR adds:
   pass, and the frame the puck went in (`goal_frame()`).
 * **Goal replays as video** (`animate_goal()`): the tracking played back on a rink as an MP4, with
   the scorer and his assists named, his skating speed and the finish again in slow motion.
+* **Best-on-best tournaments** (`nhl_international()` and the rest): every Canada Cup, World Cup,
+  Olympics and 4 Nations from records.nhl.com, with careers, Olympic medals, every game and every final.
 * **NHL EDGE** leaderboards, comparison reports and last night's standouts, the goal replay summary
   (`nhl_goal_replay()`) and player search.
