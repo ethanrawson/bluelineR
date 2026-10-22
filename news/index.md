@@ -76,6 +76,10 @@
   (club jersey textures), and broadcaster logos in
   [`nhl_broadcasts()`](https://ethanrawson.github.io/bluelineR/reference/nhl_broadcasts.md).
 
+- [`nhl_player_game_log()`](https://ethanrawson.github.io/bluelineR/reference/nhl_player.md)
+  reads seasons before 1997-98, which have no ice time (it used to fail
+  on them).
+
 - [`plot_shots()`](https://ethanrawson.github.io/bluelineR/reference/plot_shots.md)
   draws each club at its own end, the away club at the left net and the
   home club at the right; `sides = "right"` keeps the old view with
