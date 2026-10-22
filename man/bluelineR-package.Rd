@@ -16,6 +16,9 @@ with snake_case names:
 \item \strong{Goal tracking}: \code{\link[=nhl_goal_tracking]{nhl_goal_tracking()}} returns the puck and player
 positions behind every goal since 2023-24, ten frames a second;
 \code{\link[=classify_goal]{classify_goal()}} reads how it was scored and \code{\link[=plot_goal]{plot_goal()}} draws it.
+\item \strong{Game tracking summaries} (2021-22 to 2023-24 and some of 2020-21 and
+2024-25): \code{\link[=nhl_tracking_summary]{nhl_tracking_summary()}} has each player's speed, distance,
+zone time and puck possession time, and each club's possession share.
 \item \strong{NHL EDGE}: \code{\link[=nhl_edge_skater]{nhl_edge_skater()}}, \code{\link[=nhl_edge_goalie]{nhl_edge_goalie()}},
 \code{\link[=nhl_edge_team]{nhl_edge_team()}}, \code{\link[=nhl_edge_leaders]{nhl_edge_leaders()}}, \code{\link[=nhl_edge_by_the_numbers]{nhl_edge_by_the_numbers()}}.
 \item \strong{Players, teams, drafts}: \code{\link[=nhl_player]{nhl_player()}}, \code{\link[=nhl_player_game_log]{nhl_player_game_log()}},

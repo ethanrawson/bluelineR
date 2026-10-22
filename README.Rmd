@@ -79,6 +79,20 @@ plot_goal(frames, title = "Connor McDavid, shorthanded breakaway at Boston, 18 D
 plot_goal_sequence(frames, n = 6, seconds = 5)
 ```
 
+## Game tracking summaries
+
+For 2021-22 to 2023-24 (and some of 2020-21 and 2024-25) the NHL's tracking vendor left a summary of
+every game: each player's skating speed, distance, zone time and zone starts, and **his puck possession
+time**, in all, by zone and by strength, with each club's possession share. Individual possession is not
+in NHL EDGE.
+
+```{r possession}
+tr <- nhl_tracking_summary(2023020500)
+tr$teams[, c("team", "possession_pct", "possession_pct_o_zone", "possession_pct_d_zone")]
+top <- tr$players[order(-tr$players$possession_time), ]
+top[, c("name", "team", "time_on_total", "possession_time", "possession_time_o_zone", "speed_max_mph", "distance_miles")]
+```
+
 ## NHL EDGE
 
 ```{r edge}
@@ -101,6 +115,7 @@ nhl_stats("skater/summary", "2025-26", sort = "points", limit = 5)[, c("skater_f
 | Scores, schedule, standings | `nhl_scores()`, `nhl_schedule()`, `nhl_team_schedule()`, `nhl_standings()` | `api-web.nhle.com/v1/score`, `/schedule`, `/club-schedule-season`, `/standings` |
 | Games | `nhl_pbp()`, `nhl_boxscore()`, `nhl_game()`, `nhl_shifts()` | `/gamecenter/{id}/play-by-play`, `/boxscore`, `/landing`; `api.nhle.com/stats/rest/en/shiftcharts` |
 | Goal tracking | `nhl_goal_tracking()`, `nhl_goal_replay()`, `goal_frame()`, `classify_goal()`, `goal_context()`, `skater_speed()`, `plot_goal()` | `wsr.nhle.com/sprites/{season}/{game}/ev{event}.json`, `/ppt-replay/goal` |
+| Game tracking summaries | `nhl_tracking_summary()`, `nhl_tracking_player_stats()`, `nhl_tracking_entities()` | `live.nhle.com/ppt/{season}/{game}/` (2021-22 to 2023-24, some of 2020-21 and 2024-25) |
 | NHL EDGE | `nhl_edge_skater()`, `nhl_edge_goalie()`, `nhl_edge_team()`, `nhl_edge_leaders()`, `nhl_edge_landing()`, `nhl_edge_by_the_numbers()` | `/edge/...` (20 reports) |
 | Players and clubs | `nhl_player()`, `nhl_player_game_log()`, `nhl_player_search()`, `nhl_roster()`, `nhl_prospects()`, `nhl_team_stats()`, `nhl_stat_leaders()` | `/player`, `/roster`, `/prospects`, `/club-stats`, `/skater-stats-leaders`; `search.d3.nhle.com` |
 | Draft | `nhl_draft_rankings()`, `nhl_draft_picks()` | `/draft/rankings`, `/draft/picks` |

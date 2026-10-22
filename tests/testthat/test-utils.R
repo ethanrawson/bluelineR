@@ -25,8 +25,8 @@ test_that("teams resolve by abbreviation or id", {
 })
 
 test_that("names become snake_case", {
-  expect_equal(bluelineR:::to_snake(c("xCoord", "awaySOG", "savePctg5v5Details", "periodDescriptor.number")),
-               c("x_coord", "away_sog", "save_pctg5v5_details", "period_descriptor_number"))
+  expect_equal(bluelineR:::to_snake(c("xCoord", "awaySOG", "savePctg5v5Details", "periodDescriptor.number", "TOI5V5", "Faceoffs5V4Won")),
+               c("x_coord", "away_sog", "save_pctg_5v5_details", "period_descriptor_number", "toi_5v5", "faceoffs_5v4_won"))
 })
 
 test_that("clocks become seconds", {

@@ -8,6 +8,7 @@ api_base <- function(api) {
     records = "https://records.nhl.com/site/api",
     search = "https://search.d3.nhle.com/api/v1",
     tracking = "https://wsr.nhle.com/sprites",
+    ppt = "https://live.nhle.com/ppt",
     cli::cli_abort("Unknown API {.val {api}}.")
   )
 }

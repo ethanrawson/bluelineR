@@ -17,6 +17,9 @@ is_record_list <- function(x) is.list(x) && length(x) > 0 && is.null(names(x)) &
 #' @keywords internal
 #' @noRd
 to_snake <- function(x) {
+  # Strengths read as one token: TOI5V5 -> toi_5v5, savePctg5v5 -> save_pctg_5v5.
+  x <- gsub("([0-9])V([0-9])", "\\1v\\2", x)
+  x <- gsub("([A-Za-z])([0-9]+v[0-9]+)", "\\1_\\2", x)
   x <- gsub("([a-z0-9])([A-Z])", "\\1_\\2", x)
   x <- gsub("([A-Z]+)([A-Z][a-z])", "\\1_\\2", x)
   x <- gsub("[^A-Za-z0-9]+", "_", x)

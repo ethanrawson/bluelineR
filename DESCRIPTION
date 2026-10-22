@@ -1,6 +1,6 @@
 Package: bluelineR
 Title: Tidy Access to the NHL's Web, Stats, EDGE and Goal-Tracking APIs
-Version: 0.1.0
+Version: 0.1.0.9000
 Authors@R: 
     person("Ethan", "Rawson", , "ethanb.rawson@icloud.com", role = c("aut", "cre", "cph"))
 Description: Wraps the public endpoints behind NHL.com: schedules, scores,
