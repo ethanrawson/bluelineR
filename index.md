@@ -337,6 +337,32 @@ say so when you ask for something older than the data.
 | 2021-22 | NHL EDGE tracking |
 | 2023-24 | Goal tracking |
 
+Gretzky’s 1981-82, from the league’s numbers and his game log: 92 goals,
+and the fiftieth in his thirty-ninth game.
+
+``` r
+
+nhl_stats("skater/summary", "1981-82", sort = "points", limit = 5)[, c("skater_full_name", "team_abbrevs", "goals", "assists", "points")]
+#> # A tibble: 5 × 5
+#>   skater_full_name team_abbrevs goals assists points
+#>   <chr>            <chr>        <int>   <int>  <int>
+#> 1 Wayne Gretzky    EDM             92     120    212
+#> 2 Mike Bossy       NYI             64      83    147
+#> 3 Peter Stastny    QUE             46      93    139
+#> 4 Dennis Maruk     WSH             60      76    136
+#> 5 Bryan Trottier   NYI             50      79    129
+log <- nhl_player_game_log(8447400, "1981-82")
+log <- log[order(log$game_date), ]
+fifty <- which(cumsum(log$goals) >= 50)[1]
+fifty
+#> [1] 39
+log[fifty, c("game_date", "opponent_abbrev", "goals", "assists")]
+#> # A tibble: 1 × 4
+#>   game_date  opponent_abbrev goals assists
+#>   <date>     <chr>           <int>   <int>
+#> 1 1981-12-30 PHI                 5       1
+```
+
 ## The stats API
 
 ``` r

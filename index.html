@@ -336,11 +336,32 @@
 </tr>
 </tbody>
 </table>
+<p>Gretzky’s 1981-82, from the league’s numbers and his game log: 92 goals, and the fiftieth in his thirty-ninth game.</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/nhl_stats.html">nhl_stats</a></span><span class="op">(</span><span class="st">"skater/summary"</span>, <span class="st">"1981-82"</span>, sort <span class="op">=</span> <span class="st">"points"</span>, limit <span class="op">=</span> <span class="fl">5</span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"skater_full_name"</span>, <span class="st">"team_abbrevs"</span>, <span class="st">"goals"</span>, <span class="st">"assists"</span>, <span class="st">"points"</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="co">#&gt; # A tibble: 5 × 5</span></span>
+<span><span class="co">#&gt;   skater_full_name team_abbrevs goals assists points</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;            &lt;chr&gt;        &lt;int&gt;   &lt;int&gt;  &lt;int&gt;</span></span>
+<span><span class="co">#&gt; 1 Wayne Gretzky    EDM             92     120    212</span></span>
+<span><span class="co">#&gt; 2 Mike Bossy       NYI             64      83    147</span></span>
+<span><span class="co">#&gt; 3 Peter Stastny    QUE             46      93    139</span></span>
+<span><span class="co">#&gt; 4 Dennis Maruk     WSH             60      76    136</span></span>
+<span><span class="co">#&gt; 5 Bryan Trottier   NYI             50      79    129</span></span>
+<span><span class="va">log</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/nhl_player.html">nhl_player_game_log</a></span><span class="op">(</span><span class="fl">8447400</span>, <span class="st">"1981-82"</span><span class="op">)</span></span>
+<span><span class="va">log</span> <span class="op">&lt;-</span> <span class="va">log</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">log</span><span class="op">$</span><span class="va">game_date</span><span class="op">)</span>, <span class="op">]</span></span>
+<span><span class="va">fifty</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cumsum.html" class="external-link">cumsum</a></span><span class="op">(</span><span class="va">log</span><span class="op">$</span><span class="va">goals</span><span class="op">)</span> <span class="op">&gt;=</span> <span class="fl">50</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
+<span><span class="va">fifty</span></span>
+<span><span class="co">#&gt; [1] 39</span></span>
+<span><span class="va">log</span><span class="op">[</span><span class="va">fifty</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"game_date"</span>, <span class="st">"opponent_abbrev"</span>, <span class="st">"goals"</span>, <span class="st">"assists"</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="co">#&gt; # A tibble: 1 × 4</span></span>
+<span><span class="co">#&gt;   game_date  opponent_abbrev goals assists</span></span>
+<span><span class="co">#&gt;   &lt;date&gt;     &lt;chr&gt;           &lt;int&gt;   &lt;int&gt;</span></span>
+<span><span class="co">#&gt; 1 1981-12-30 PHI                 5       1</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="the-stats-api">The stats API<a class="anchor" aria-label="anchor" href="#the-stats-api"></a>
 </h2>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/nhl_stats.html">nhl_stats</a></span><span class="op">(</span><span class="st">"skater/summary"</span>, <span class="st">"2025-26"</span>, sort <span class="op">=</span> <span class="st">"points"</span>, limit <span class="op">=</span> <span class="fl">5</span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"skater_full_name"</span>, <span class="st">"team_abbrevs"</span>, <span class="st">"goals"</span>, <span class="st">"assists"</span>, <span class="st">"points"</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">#&gt; # A tibble: 5 × 5</span></span>
 <span><span class="co">#&gt;   skater_full_name  team_abbrevs goals assists points</span></span>
@@ -355,7 +376,7 @@
 <h2 id="the-records-site">The records site<a class="anchor" aria-label="anchor" href="#the-records-site"></a>
 </h2>
 <p>records.nhl.com keeps a century of tables. <code><a href="reference/nhl_records_catalog.html">nhl_records_catalog()</a></code> lists the 78 that answer, each with a line on what it holds, and helpers cover the ones people ask for: Game 7, overtime, season-opener, outdoor and overseas records, the draft lottery and its odds, and the milestones in sight.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/nhl_franchise_records.html">nhl_franchise_records</a></span><span class="op">(</span><span class="st">"game7"</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"franchise_name"</span>, <span class="st">"games_played"</span>, <span class="st">"wins"</span>, <span class="st">"losses"</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">#&gt; # A tibble: 5 × 4</span></span>
 <span><span class="co">#&gt;   franchise_name      games_played  wins losses</span></span>
