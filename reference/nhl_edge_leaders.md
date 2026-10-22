@@ -1,19 +1,24 @@
 # NHL EDGE leaderboards
 
-The NHL's EDGE top 10s: fastest skaters, most distance skated, hardest
-shots, most offensive-zone time, and the clubs' skating speed. `landing`
-gives the leaders the EDGE home pages show for skaters, goalies or
-teams.
+The NHL's EDGE top 10s, all thirteen of them: fastest skaters, most
+distance skated, hardest shots, most offensive-zone time and shots by
+area for skaters; skating speed, shot speed, distance, zone time and
+shots by area for clubs; and 5-on-5 save percentage, save percentage by
+area and games above .900 for goalies. `landing` gives the leaders the
+EDGE home pages show for skaters, goalies or teams.
 
 ## Usage
 
 ``` r
 nhl_edge_leaders(
   metric = c("skater_speed", "skater_distance", "skater_shot_speed", "skater_zone_time",
-    "team_skating_speed"),
+    "skater_shot_location", "team_skating_speed", "team_shot_speed",
+    "team_skating_distance", "team_zone_time", "team_shot_location", "goalie_5v5",
+    "goalie_shot_location", "goalie_save_pct"),
   position = c("all", "F", "D"),
   strength = c("all", "es", "pp", "pk"),
   sort_by = NULL,
+  area = c("all", "high", "mid", "long"),
   season = NULL,
   game_type = "regular"
 )
@@ -29,7 +34,11 @@ nhl_edge_landing(
 
 - metric:
 
-  Which leaderboard.
+  Which leaderboard: `"skater_speed"`, `"skater_distance"`,
+  `"skater_shot_speed"`, `"skater_zone_time"`, `"skater_shot_location"`,
+  `"team_skating_speed"`, `"team_shot_speed"`,
+  `"team_skating_distance"`, `"team_zone_time"`, `"team_shot_location"`,
+  `"goalie_5v5"`, `"goalie_shot_location"` or `"goalie_save_pct"`.
 
 - position:
 
@@ -42,11 +51,19 @@ nhl_edge_landing(
 
 - sort_by:
 
-  The ranking: for speed and shot speed `"max"` (top speed) or a burst
-  band (`"over22"`, `"20-22"`, `"18-20"` for skating speed; `"over100"`,
-  `"90-100"`, `"80-90"`, `"70-80"` for shot speed); for distance
-  `"total"` or `"max-game"`; for zone time `"offensive"`, `"neutral"` or
-  `"defensive"`. `NULL` picks the first.
+  The ranking (`NULL` picks the first): for skating speed `"max"`,
+  `"over-22"`, `"20-22"`, `"18-20"` (bursts in mph); for shot speed
+  `"max"`, `"over-100"`, `"90-99"`, `"80-89"`, `"70-79"`; for distance
+  `"total"`, `"per-60"`, `"max-game"`, `"max-period"`; for zone time
+  `"offensive"`, `"neutral"`, `"defensive"`; for shot location `"sog"`,
+  `"goals"`, `"shooting-pctg"`; for goalies' 5 on 5 `"save-pctg"`,
+  `"save-pctg-close"`, `"shots"`, `"shots-per-60"`; for goalies by area
+  `"save-pctg"`; for games above .900 `"pctg"` or `"games"`.
+
+- area:
+
+  For shot location: `"all"`, `"high"` (high danger), `"mid"` or
+  `"long"`.
 
 - season:
 
@@ -72,6 +89,9 @@ A tibble, one row per player or club.
 if (FALSE) { # interactive()
 nhl_edge_leaders("skater_speed")
 nhl_edge_leaders("skater_shot_speed", position = "D")
+nhl_edge_leaders("skater_shot_location", sort_by = "goals", area = "high")
+nhl_edge_leaders("team_zone_time", strength = "pp")
+nhl_edge_leaders("goalie_5v5", sort_by = "save-pctg-close")
 nhl_edge_landing("goalie")
 }
 ```

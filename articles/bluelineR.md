@@ -56,7 +56,7 @@ right (`x_fixed`, `y_fixed`).
 plot_shots(pbp)
 ```
 
-![Shot map, both clubs attacking
+![Shot map, the away club at the left net and the home club at the
 right.](bluelineR_files/figure-html/unnamed-chunk-5-1.png)
 
 ``` r

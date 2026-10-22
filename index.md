@@ -55,13 +55,16 @@ pbp[pbp$type == "goal", c("period", "time_in_period", "event_team", "strength_st
 #> 4      3 01:41          EDM        4v5            Connor McDavid           87      -3
 ```
 
+[`plot_shots()`](https://ethanrawson.github.io/bluelineR/reference/plot_shots.md)
+puts each club at its own end, the away club at the left net:
+
 ``` r
 
 plot_shots(pbp)
 ```
 
-![Shot map of Edmonton at Boston, both clubs attacking
-right.](reference/figures/README-shots-1.png)
+![Shot map of Edmonton at Boston: Edmonton at the left net, Boston at
+the right.](reference/figures/README-shots-1.png)
 
 ## A goal, from the tracking
 
@@ -246,6 +249,66 @@ final[final$type == "goal", c("period", "time_in_period", "event_team", "player_
 #> 5      4 08:18          CAN        Connor McDavid        68       6
 ```
 
+## IIHF tournaments: every shot, located
+
+The IIHF’s live-data feed has every game of its championships (the World
+Championship, the World Juniors, the women’s and under-18 Worlds and the
+divisions) and the 2026 Olympics, with every shot placed on the ice from
+the 2019 tournaments on, goals and penalties, and each period’s team
+stats. The 2026 Olympic final, Jack Hughes in overtime:
+
+``` r
+
+shots <- iihf_shots(1010000058)
+shots[shots$result == "goal", c("period", "time", "team", "player_name", "x", "y", "distance")]
+table(shots$team, shots$result)
+
+wm <- iihf_schedule(2026, "wm")
+wm[wm$phase %in% c("Semifinals", "BronzeMedalGame", "GoldMedalGame"), c("game_id", "date", "phase", "home_team", "away_team", "home_score", "away_score")]
+#> # A tibble: 3 x 7
+#>   period time  team  player_name     x     y distance
+#>   <chr>  <chr> <chr> <chr>       <dbl> <dbl>    <dbl>
+#> 1 1      06:00 USA   Matt Boldy   80.8 -2.38     8.54
+#> 2 2      38:16 CAN   Cale Makar   65.8 19.8     30.5 
+#> 3 OT     61:41 USA   Jack Hughes  78   -3.57    11.6 
+#>      
+#>       blocked goal missed saved
+#>   CAN      24    1     12    41
+#>   USA      17    2     12    26
+#> # A tibble: 4 x 7
+#>   game_id date       phase           home_team away_team home_score away_score
+#>   <chr>   <date>     <chr>           <chr>     <chr>          <int>      <int>
+#> 1 12917   2026-05-30 Semifinals      SUI       NOR                6          0
+#> 2 12918   2026-05-30 Semifinals      CAN       FIN                2          4
+#> 3 12919   2026-05-31 BronzeMedalGame CAN       NOR                2          3
+#> 4 12920   2026-05-31 GoldMedalGame   SUI       FIN                0          1
+```
+
+``` r
+
+plot_shots(shots)
+```
+
+![Every shot of the 2026 Olympic final: USA at the left net, Canada at
+the right; Hughes's overtime winner from the
+slot.](reference/figures/README-iihf-1.png)
+
+## DraftKings odds and player props
+
+ESPN’s NHL odds come from DraftKings: every game’s moneyline, puck line
+and total, opening and current, and DraftKings’ player props (shots,
+points, assists, saves, goalscorer, milestones, club totals), each
+over/under as one row with the no-vig chance and the player’s NHL id.
+
+``` r
+
+odds <- espn_odds()
+odds[, c("home_team", "away_team", "home_ml", "away_ml", "home_win_prob", "total_line", "over_price", "under_price")]
+
+props <- espn_props()
+props[props$stat %in% "shots", c("team", "player_name", "player_id", "line", "over", "under", "over_prob")]
+```
+
 ## The stats API
 
 ``` r
@@ -274,6 +337,10 @@ nhl_stats("skater/summary", "2025-26", sort = "points", limit = 5)[, c("skater_f
 | Draft | [`nhl_draft_rankings()`](https://ethanrawson.github.io/bluelineR/reference/nhl_draft_rankings.md), [`nhl_draft_picks()`](https://ethanrawson.github.io/bluelineR/reference/nhl_draft_rankings.md) | `/draft/rankings`, `/draft/picks` |
 | International | [`nhl_international()`](https://ethanrawson.github.io/bluelineR/reference/nhl_international.md), [`nhl_international_careers()`](https://ethanrawson.github.io/bluelineR/reference/nhl_international.md), [`nhl_international_games()`](https://ethanrawson.github.io/bluelineR/reference/nhl_international.md), [`nhl_international_winners()`](https://ethanrawson.github.io/bluelineR/reference/nhl_international.md), [`nhl_olympic_podiums()`](https://ethanrawson.github.io/bluelineR/reference/nhl_international.md) | `records.nhl.com/site/api/international-*`, `/olympic-*` |
 | Stats and records APIs | [`nhl_stats()`](https://ethanrawson.github.io/bluelineR/reference/nhl_stats.md), [`nhl_stats_reports()`](https://ethanrawson.github.io/bluelineR/reference/nhl_stats.md), [`nhl_teams()`](https://ethanrawson.github.io/bluelineR/reference/nhl_teams.md), [`nhl_seasons()`](https://ethanrawson.github.io/bluelineR/reference/nhl_teams.md), [`nhl_franchises()`](https://ethanrawson.github.io/bluelineR/reference/nhl_teams.md), [`nhl_records()`](https://ethanrawson.github.io/bluelineR/reference/nhl_records.md) | `api.nhle.com/stats/rest/en`, `records.nhl.com/site/api` |
+| IIHF tournaments | [`iihf_schedule()`](https://ethanrawson.github.io/bluelineR/reference/iihf.md), [`iihf_olympic_games()`](https://ethanrawson.github.io/bluelineR/reference/iihf.md), [`iihf_game()`](https://ethanrawson.github.io/bluelineR/reference/iihf.md), [`iihf_shots()`](https://ethanrawson.github.io/bluelineR/reference/iihf.md), [`iihf_events()`](https://ethanrawson.github.io/bluelineR/reference/iihf.md), [`iihf_period_stats()`](https://ethanrawson.github.io/bluelineR/reference/iihf.md) | `realtime.iihf.com/gamestate/GetLatestState/{game}`; schedules from `canada-central.iihf.com` |
+| DraftKings odds and props | [`espn_odds()`](https://ethanrawson.github.io/bluelineR/reference/espn_odds.md), [`espn_props()`](https://ethanrawson.github.io/bluelineR/reference/espn_odds.md), [`devig()`](https://ethanrawson.github.io/bluelineR/reference/devig.md) | `site.api.espn.com/.../scoreboard`; `sports.core.api.espn.com/.../odds/100/propBets` |
+| Players, clubs and games, more | [`nhl_player_bio()`](https://ethanrawson.github.io/bluelineR/reference/nhl_player_bio.md), [`nhl_team_comparison()`](https://ethanrawson.github.io/bluelineR/reference/nhl_team_comparison.md), [`nhl_broadcasts()`](https://ethanrawson.github.io/bluelineR/reference/nhl_broadcasts.md), [`nhl_quick_stats()`](https://ethanrawson.github.io/bluelineR/reference/nhl_quick_stats.md), [`nhl_news()`](https://ethanrawson.github.io/bluelineR/reference/nhl_news.md), [`nhl_videos()`](https://ethanrawson.github.io/bluelineR/reference/nhl_news.md), [`espn_player_splits()`](https://ethanrawson.github.io/bluelineR/reference/espn_player_splits.md) | `api-web.nhle.com/v2/player/{id}/bio`, `/v1/team-stats-comparison`, `/v1/how-to-watch`; `live.nhle.com/psr`; `forge-dapi.d3.nhle.com/v2/content`; ESPN athlete splits |
+| Playoff history | [`nhl_playoff_series()`](https://ethanrawson.github.io/bluelineR/reference/nhl_playoff_series.md), [`nhl_playoff_games()`](https://ethanrawson.github.io/bluelineR/reference/nhl_playoff_series.md) | `records.nhl.com/site/api/playoff-franchise-vs-team`, `/yearly-playoff-series-details` |
 | Anything else | [`nhl_api()`](https://ethanrawson.github.io/bluelineR/reference/nhl_api.md), [`tidy_json()`](https://ethanrawson.github.io/bluelineR/reference/tidy_json.md) | any of the above |
 
 ## Being a good guest
@@ -312,6 +379,24 @@ serves a season of them at once. What bluelineR adds:
   and the rest): every Canada Cup, World Cup, Olympics and 4 Nations
   from records.nhl.com, with careers, Olympic medals, every game and
   every final.
+- **IIHF tournaments with every shot located**
+  ([`iihf_shots()`](https://ethanrawson.github.io/bluelineR/reference/iihf.md)
+  and the rest): the World Championship, World Juniors, women’s and
+  under-18 Worlds, the divisions and the 2026 Olympics, from the IIHF’s
+  live-data feed, which no other package reads.
+- **DraftKings player props**
+  ([`espn_props()`](https://ethanrawson.github.io/bluelineR/reference/espn_odds.md)):
+  ESPN’s prop list for every game, over and under paired and each player
+  matched to his NHL id, with game lines
+  ([`espn_odds()`](https://ethanrawson.github.io/bluelineR/reference/espn_odds.md))
+  and
+  [`devig()`](https://ethanrawson.github.io/bluelineR/reference/devig.md).
+- **The newer NHL endpoints**: the v2 player bio with every award and
+  its season
+  ([`nhl_player_bio()`](https://ethanrawson.github.io/bluelineR/reference/nhl_player_bio.md)),
+  the team comparison, the viewing guide, the quick standings and leader
+  files, NHL.com news and videos, playoff series records and every
+  playoff game, and all thirteen EDGE top-10 boards.
 - **NHL EDGE** leaderboards, comparison reports and last night’s
   standouts, the goal replay summary
   ([`nhl_goal_replay()`](https://ethanrawson.github.io/bluelineR/reference/nhl_goal_tracking.md))

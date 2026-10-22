@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Tidy Access to the NHL's Web, Stats, EDGE and Goal-Tracking APIs • bluelineR</title>
+<title>Tidy Access to the NHL's Web, Stats, EDGE and Goal-Tracking APIs, IIHF Data and NHL Odds • bluelineR</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
 <link rel="icon" type="”image/svg+xml”" href="favicon.svg">
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
@@ -17,9 +17,9 @@
 <link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
-<script src="extra.js"></script><meta property="og:title" content="Tidy Access to the NHL's Web, Stats, EDGE and Goal-Tracking APIs">
-<meta name="description" content="Wraps the public endpoints behind NHL.com: schedules, scores, standings, play-by-play, box scores and shift charts; players, rosters, stat leaders and the draft; the stats and records APIs; NHL EDGE skating, shot and zone-time tracking; and the puck and player tracking frames behind every goal since 2023-24. Results come back as tibbles with snake_case names and rink coordinates in feet, with helpers that read how a goal was scored from its tracking and draw it on a rink.">
-<meta property="og:description" content="Wraps the public endpoints behind NHL.com: schedules, scores, standings, play-by-play, box scores and shift charts; players, rosters, stat leaders and the draft; the stats and records APIs; NHL EDGE skating, shot and zone-time tracking; and the puck and player tracking frames behind every goal since 2023-24. Results come back as tibbles with snake_case names and rink coordinates in feet, with helpers that read how a goal was scored from its tracking and draw it on a rink.">
+<script src="extra.js"></script><meta property="og:title" content="Tidy Access to the NHL's Web, Stats, EDGE and Goal-Tracking APIs, IIHF Data and NHL Odds">
+<meta name="description" content="Wraps the public endpoints behind NHL.com: schedules, scores, standings, play-by-play, box scores and shift charts; players, rosters, stat leaders and the draft; the stats and records APIs; NHL EDGE skating, shot and zone-time tracking; and the puck and player tracking frames behind every goal since 2023-24. Also the IIHFs live data (every shot of its tournaments placed on the ice) and DraftKings NHL odds and player props as ESPN publishes them. Results come back as tibbles with snake_case names and rink coordinates in feet, with helpers that read how a goal was scored from its tracking and draw it on a rink.">
+<meta property="og:description" content="Wraps the public endpoints behind NHL.com: schedules, scores, standings, play-by-play, box scores and shift charts; players, rosters, stat leaders and the draft; the stats and records APIs; NHL EDGE skating, shot and zone-time tracking; and the puck and player tracking frames behind every goal since 2023-24. Also the IIHFs live data (every shot of its tournaments placed on the ice) and DraftKings NHL odds and player props as ESPN publishes them. Results come back as tibbles with snake_case names and rink coordinates in feet, with helpers that read how a goal was scored from its tracking and draw it on a rink.">
 <meta property="og:image" content="https://ethanrawson.github.io/bluelineR/logo.png">
 </head>
 <body>
@@ -95,9 +95,10 @@
 <span><span class="co">#&gt; 2      1 16:27          BOS        5v4            Pavel Zacha              82      -3</span></span>
 <span><span class="co">#&gt; 3      2 14:38          EDM        5v5            Quinn Hutson             83       6</span></span>
 <span><span class="co">#&gt; 4      3 01:41          EDM        4v5            Connor McDavid           87      -3</span></span></code></pre></div>
+<p><code><a href="reference/plot_shots.html">plot_shots()</a></code> puts each club at its own end, the away club at the left net:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/plot_shots.html">plot_shots</a></span><span class="op">(</span><span class="va">pbp</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-shots-1.png" alt="Shot map of Edmonton at Boston, both clubs attacking right." width="100%"></p>
+<p><img src="reference/figures/README-shots-1.png" alt="Shot map of Edmonton at Boston: Edmonton at the left net, Boston at the right." width="100%"></p>
 </div>
 <div class="section level2">
 <h2 id="a-goal-from-the-tracking">A goal, from the tracking<a class="anchor" aria-label="anchor" href="#a-goal-from-the-tracking"></a>
@@ -233,9 +234,52 @@
 <span><span class="co">#&gt; 5      4 08:18          CAN        Connor McDavid        68       6</span></span></code></pre></div>
 </div>
 <div class="section level2">
+<h2 id="iihf-tournaments-every-shot-located">IIHF tournaments: every shot, located<a class="anchor" aria-label="anchor" href="#iihf-tournaments-every-shot-located"></a>
+</h2>
+<p>The IIHF’s live-data feed has every game of its championships (the World Championship, the World Juniors, the women’s and under-18 Worlds and the divisions) and the 2026 Olympics, with every shot placed on the ice from the 2019 tournaments on, goals and penalties, and each period’s team stats. The 2026 Olympic final, Jack Hughes in overtime:</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">shots</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/iihf.html">iihf_shots</a></span><span class="op">(</span><span class="fl">1010000058</span><span class="op">)</span></span>
+<span><span class="va">shots</span><span class="op">[</span><span class="va">shots</span><span class="op">$</span><span class="va">result</span> <span class="op">==</span> <span class="st">"goal"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"period"</span>, <span class="st">"time"</span>, <span class="st">"team"</span>, <span class="st">"player_name"</span>, <span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"distance"</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">shots</span><span class="op">$</span><span class="va">team</span>, <span class="va">shots</span><span class="op">$</span><span class="va">result</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">wm</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/iihf.html">iihf_schedule</a></span><span class="op">(</span><span class="fl">2026</span>, <span class="st">"wm"</span><span class="op">)</span></span>
+<span><span class="va">wm</span><span class="op">[</span><span class="va">wm</span><span class="op">$</span><span class="va">phase</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Semifinals"</span>, <span class="st">"BronzeMedalGame"</span>, <span class="st">"GoldMedalGame"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"game_id"</span>, <span class="st">"date"</span>, <span class="st">"phase"</span>, <span class="st">"home_team"</span>, <span class="st">"away_team"</span>, <span class="st">"home_score"</span>, <span class="st">"away_score"</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="co">#&gt; # A tibble: 3 x 7</span></span>
+<span><span class="co">#&gt;   period time  team  player_name     x     y distance</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 1      06:00 USA   Matt Boldy   80.8 -2.38     8.54</span></span>
+<span><span class="co">#&gt; 2 2      38:16 CAN   Cale Makar   65.8 19.8     30.5 </span></span>
+<span><span class="co">#&gt; 3 OT     61:41 USA   Jack Hughes  78   -3.57    11.6 </span></span>
+<span><span class="co">#&gt;      </span></span>
+<span><span class="co">#&gt;       blocked goal missed saved</span></span>
+<span><span class="co">#&gt;   CAN      24    1     12    41</span></span>
+<span><span class="co">#&gt;   USA      17    2     12    26</span></span>
+<span><span class="co">#&gt; # A tibble: 4 x 7</span></span>
+<span><span class="co">#&gt;   game_id date       phase           home_team away_team home_score away_score</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;   &lt;date&gt;     &lt;chr&gt;           &lt;chr&gt;     &lt;chr&gt;          &lt;int&gt;      &lt;int&gt;</span></span>
+<span><span class="co">#&gt; 1 12917   2026-05-30 Semifinals      SUI       NOR                6          0</span></span>
+<span><span class="co">#&gt; 2 12918   2026-05-30 Semifinals      CAN       FIN                2          4</span></span>
+<span><span class="co">#&gt; 3 12919   2026-05-31 BronzeMedalGame CAN       NOR                2          3</span></span>
+<span><span class="co">#&gt; 4 12920   2026-05-31 GoldMedalGame   SUI       FIN                0          1</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/plot_shots.html">plot_shots</a></span><span class="op">(</span><span class="va">shots</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-iihf-1.png" alt="Every shot of the 2026 Olympic final: USA at the left net, Canada at the right; Hughes's overtime winner from the slot." width="100%"></p>
+</div>
+<div class="section level2">
+<h2 id="draftkings-odds-and-player-props">DraftKings odds and player props<a class="anchor" aria-label="anchor" href="#draftkings-odds-and-player-props"></a>
+</h2>
+<p>ESPN’s NHL odds come from DraftKings: every game’s moneyline, puck line and total, opening and current, and DraftKings’ player props (shots, points, assists, saves, goalscorer, milestones, club totals), each over/under as one row with the no-vig chance and the player’s NHL id.</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">odds</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/espn_odds.html">espn_odds</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">odds</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"home_team"</span>, <span class="st">"away_team"</span>, <span class="st">"home_ml"</span>, <span class="st">"away_ml"</span>, <span class="st">"home_win_prob"</span>, <span class="st">"total_line"</span>, <span class="st">"over_price"</span>, <span class="st">"under_price"</span><span class="op">)</span><span class="op">]</span></span>
+<span></span>
+<span><span class="va">props</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/espn_odds.html">espn_props</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">props</span><span class="op">[</span><span class="va">props</span><span class="op">$</span><span class="va">stat</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="st">"shots"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"team"</span>, <span class="st">"player_name"</span>, <span class="st">"player_id"</span>, <span class="st">"line"</span>, <span class="st">"over"</span>, <span class="st">"under"</span>, <span class="st">"over_prob"</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
+</div>
+<div class="section level2">
 <h2 id="the-stats-api">The stats API<a class="anchor" aria-label="anchor" href="#the-stats-api"></a>
 </h2>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/nhl_stats.html">nhl_stats</a></span><span class="op">(</span><span class="st">"skater/summary"</span>, <span class="st">"2025-26"</span>, sort <span class="op">=</span> <span class="st">"points"</span>, limit <span class="op">=</span> <span class="fl">5</span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"skater_full_name"</span>, <span class="st">"team_abbrevs"</span>, <span class="st">"goals"</span>, <span class="st">"assists"</span>, <span class="st">"points"</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">#&gt; # A tibble: 5 × 5</span></span>
 <span><span class="co">#&gt;   skater_full_name  team_abbrevs goals assists points</span></span>
@@ -341,6 +385,41 @@
 </td>
 </tr>
 <tr>
+<td>IIHF tournaments</td>
+<td>
+<code><a href="reference/iihf.html">iihf_schedule()</a></code>, <code><a href="reference/iihf.html">iihf_olympic_games()</a></code>, <code><a href="reference/iihf.html">iihf_game()</a></code>, <code><a href="reference/iihf.html">iihf_shots()</a></code>, <code><a href="reference/iihf.html">iihf_events()</a></code>, <code><a href="reference/iihf.html">iihf_period_stats()</a></code>
+</td>
+<td>
+<code>realtime.iihf.com/gamestate/GetLatestState/{game}</code>; schedules from <code>canada-central.iihf.com</code>
+</td>
+</tr>
+<tr>
+<td>DraftKings odds and props</td>
+<td>
+<code><a href="reference/espn_odds.html">espn_odds()</a></code>, <code><a href="reference/espn_odds.html">espn_props()</a></code>, <code><a href="reference/devig.html">devig()</a></code>
+</td>
+<td>
+<code>site.api.espn.com/.../scoreboard</code>; <code>sports.core.api.espn.com/.../odds/100/propBets</code>
+</td>
+</tr>
+<tr>
+<td>Players, clubs and games, more</td>
+<td>
+<code><a href="reference/nhl_player_bio.html">nhl_player_bio()</a></code>, <code><a href="reference/nhl_team_comparison.html">nhl_team_comparison()</a></code>, <code><a href="reference/nhl_broadcasts.html">nhl_broadcasts()</a></code>, <code><a href="reference/nhl_quick_stats.html">nhl_quick_stats()</a></code>, <code><a href="reference/nhl_news.html">nhl_news()</a></code>, <code><a href="reference/nhl_news.html">nhl_videos()</a></code>, <code><a href="reference/espn_player_splits.html">espn_player_splits()</a></code>
+</td>
+<td>
+<code>api-web.nhle.com/v2/player/{id}/bio</code>, <code>/v1/team-stats-comparison</code>, <code>/v1/how-to-watch</code>; <code>live.nhle.com/psr</code>; <code>forge-dapi.d3.nhle.com/v2/content</code>; ESPN athlete splits</td>
+</tr>
+<tr>
+<td>Playoff history</td>
+<td>
+<code><a href="reference/nhl_playoff_series.html">nhl_playoff_series()</a></code>, <code><a href="reference/nhl_playoff_series.html">nhl_playoff_games()</a></code>
+</td>
+<td>
+<code>records.nhl.com/site/api/playoff-franchise-vs-team</code>, <code>/yearly-playoff-series-details</code>
+</td>
+</tr>
+<tr>
 <td>Anything else</td>
 <td>
 <code><a href="reference/nhl_api.html">nhl_api()</a></code>, <code><a href="reference/tidy_json.html">tidy_json()</a></code>
@@ -364,6 +443,12 @@
 <strong>Goal replays as video</strong> (<code><a href="reference/animate_goal.html">animate_goal()</a></code>): the tracking played back on a rink as an MP4, with the scorer and his assists named, his skating speed and the finish again in slow motion.</li>
 <li>
 <strong>Best-on-best tournaments</strong> (<code><a href="reference/nhl_international.html">nhl_international()</a></code> and the rest): every Canada Cup, World Cup, Olympics and 4 Nations from records.nhl.com, with careers, Olympic medals, every game and every final.</li>
+<li>
+<strong>IIHF tournaments with every shot located</strong> (<code><a href="reference/iihf.html">iihf_shots()</a></code> and the rest): the World Championship, World Juniors, women’s and under-18 Worlds, the divisions and the 2026 Olympics, from the IIHF’s live-data feed, which no other package reads.</li>
+<li>
+<strong>DraftKings player props</strong> (<code><a href="reference/espn_odds.html">espn_props()</a></code>): ESPN’s prop list for every game, over and under paired and each player matched to his NHL id, with game lines (<code><a href="reference/espn_odds.html">espn_odds()</a></code>) and <code><a href="reference/devig.html">devig()</a></code>.</li>
+<li>
+<strong>The newer NHL endpoints</strong>: the v2 player bio with every award and its season (<code><a href="reference/nhl_player_bio.html">nhl_player_bio()</a></code>), the team comparison, the viewing guide, the quick standings and leader files, NHL.com news and videos, playoff series records and every playoff game, and all thirteen EDGE top-10 boards.</li>
 <li>
 <strong>NHL EDGE</strong> leaderboards, comparison reports and last night’s standouts, the goal replay summary (<code><a href="reference/nhl_goal_tracking.html">nhl_goal_replay()</a></code>) and player search.</li>
 </ul>

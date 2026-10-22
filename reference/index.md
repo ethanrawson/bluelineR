@@ -86,6 +86,43 @@
   [`nhl_olympic_podiums()`](https://ethanrawson.github.io/bluelineR/reference/nhl_international.md)
   : Best-on-best international hockey
 
+## IIHF tournaments
+
+- [`iihf_schedule()`](https://ethanrawson.github.io/bluelineR/reference/iihf.md)
+  [`iihf_olympic_games()`](https://ethanrawson.github.io/bluelineR/reference/iihf.md)
+  [`iihf_game()`](https://ethanrawson.github.io/bluelineR/reference/iihf.md)
+  [`iihf_period_stats()`](https://ethanrawson.github.io/bluelineR/reference/iihf.md)
+  [`iihf_shots()`](https://ethanrawson.github.io/bluelineR/reference/iihf.md)
+  [`iihf_events()`](https://ethanrawson.github.io/bluelineR/reference/iihf.md)
+  : IIHF games: schedules, shot locations, goals and penalties
+
+## Odds and props
+
+- [`espn_odds()`](https://ethanrawson.github.io/bluelineR/reference/espn_odds.md)
+  [`espn_props()`](https://ethanrawson.github.io/bluelineR/reference/espn_odds.md)
+  : DraftKings odds and player props, from ESPN
+- [`devig()`](https://ethanrawson.github.io/bluelineR/reference/devig.md)
+  : The no-vig chance of a pair of prices
+- [`espn_player_splits()`](https://ethanrawson.github.io/bluelineR/reference/espn_player_splits.md)
+  : A player's splits, from ESPN
+
+## More from the NHL
+
+- [`nhl_player_bio()`](https://ethanrawson.github.io/bluelineR/reference/nhl_player_bio.md)
+  : A player's bio, draft and awards
+- [`nhl_team_comparison()`](https://ethanrawson.github.io/bluelineR/reference/nhl_team_comparison.md)
+  : Two clubs side by side
+- [`nhl_broadcasts()`](https://ethanrawson.github.io/bluelineR/reference/nhl_broadcasts.md)
+  : Where to watch a game
+- [`nhl_quick_stats()`](https://ethanrawson.github.io/bluelineR/reference/nhl_quick_stats.md)
+  : The NHL's quick standings and leaders
+- [`nhl_news()`](https://ethanrawson.github.io/bluelineR/reference/nhl_news.md)
+  [`nhl_videos()`](https://ethanrawson.github.io/bluelineR/reference/nhl_news.md)
+  : NHL.com news and videos
+- [`nhl_playoff_series()`](https://ethanrawson.github.io/bluelineR/reference/nhl_playoff_series.md)
+  [`nhl_playoff_games()`](https://ethanrawson.github.io/bluelineR/reference/nhl_playoff_series.md)
+  : Playoff history: series records and every playoff game
+
 ## Stats and records APIs
 
 - [`nhl_stats()`](https://ethanrawson.github.io/bluelineR/reference/nhl_stats.md)

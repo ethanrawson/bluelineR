@@ -2,6 +2,66 @@
 
 ## bluelineR (development version)
 
+- IIHF tournaments, from the IIHF’s live-data feed
+  (`realtime.iihf.com`):
+  [`iihf_schedule()`](https://ethanrawson.github.io/bluelineR/reference/iihf.md)
+  lists a tournament’s games (the World Championship, World Juniors,
+  women’s and under-18 Worlds and the divisions),
+  [`iihf_olympic_games()`](https://ethanrawson.github.io/bluelineR/reference/iihf.md)
+  every game of the 2026 Olympics,
+  [`iihf_game()`](https://ethanrawson.github.io/bluelineR/reference/iihf.md)
+  one game,
+  [`iihf_period_stats()`](https://ethanrawson.github.io/bluelineR/reference/iihf.md)
+  each team’s shots, saves, penalty minutes, power play and faceoffs by
+  period,
+  [`iihf_events()`](https://ethanrawson.github.io/bluelineR/reference/iihf.md)
+  goals with assists and strength, penalties and goalie changes, and
+  [`iihf_shots()`](https://ethanrawson.github.io/bluelineR/reference/iihf.md)
+  every shot with its result (goal, saved, blocked, missed) and place on
+  the ice, from the 2019 tournaments on.
+  [`plot_shots()`](https://ethanrawson.github.io/bluelineR/reference/plot_shots.md)
+  draws them, and knows the IIHF nations’ colors.
+
+- DraftKings odds and props from ESPN:
+  [`espn_odds()`](https://ethanrawson.github.io/bluelineR/reference/espn_odds.md)
+  (moneyline, puck line and total, opening and current, with no-vig
+  chances),
+  [`espn_props()`](https://ethanrawson.github.io/bluelineR/reference/espn_odds.md)
+  (every player prop, over and under paired, with each player’s NHL id),
+  [`espn_player_splits()`](https://ethanrawson.github.io/bluelineR/reference/espn_player_splits.md)
+  and
+  [`devig()`](https://ethanrawson.github.io/bluelineR/reference/devig.md).
+
+- [`nhl_player_bio()`](https://ethanrawson.github.io/bluelineR/reference/nhl_player_bio.md):
+  the v2 player bio, with the draft and every NHL award and its season.
+
+- [`nhl_team_comparison()`](https://ethanrawson.github.io/bluelineR/reference/nhl_team_comparison.md),
+  [`nhl_broadcasts()`](https://ethanrawson.github.io/bluelineR/reference/nhl_broadcasts.md)
+  (the viewing guide),
+  [`nhl_quick_stats()`](https://ethanrawson.github.io/bluelineR/reference/nhl_quick_stats.md)
+  (the static standings, power-play and leader files at
+  `live.nhle.com/psr`),
+  [`nhl_news()`](https://ethanrawson.github.io/bluelineR/reference/nhl_news.md)
+  and
+  [`nhl_videos()`](https://ethanrawson.github.io/bluelineR/reference/nhl_news.md)
+  (NHL.com’s content API).
+
+- [`nhl_playoff_series()`](https://ethanrawson.github.io/bluelineR/reference/nhl_playoff_series.md)
+  and
+  [`nhl_playoff_games()`](https://ethanrawson.github.io/bluelineR/reference/nhl_playoff_series.md):
+  a franchise’s playoff record against each opponent, and every playoff
+  game of any season, from records.nhl.com.
+
+- [`nhl_edge_leaders()`](https://ethanrawson.github.io/bluelineR/reference/nhl_edge_leaders.md)
+  has all thirteen EDGE top-10 boards: skater shot location, team shot
+  speed, distance, zone time and shot location, and the goalie boards (5
+  on 5, by area, games above .900).
+
+- [`plot_shots()`](https://ethanrawson.github.io/bluelineR/reference/plot_shots.md)
+  draws each club at its own end, the away club at the left net and the
+  home club at the right; `sides = "right"` keeps the old view with
+  every shot at one net.
+
 - [`nhl_international()`](https://ethanrawson.github.io/bluelineR/reference/nhl_international.md),
   [`nhl_international_careers()`](https://ethanrawson.github.io/bluelineR/reference/nhl_international.md),
   [`nhl_international_games()`](https://ethanrawson.github.io/bluelineR/reference/nhl_international.md),
@@ -10,19 +70,24 @@
   [`nhl_olympic_podiums()`](https://ethanrawson.github.io/bluelineR/reference/nhl_international.md):
   every Canada Cup, World Cup of Hockey, Olympics and 4 Nations Face-Off
   with NHL players, from records.nhl.com.
+
 - [`animate_goal()`](https://ethanrawson.github.io/bluelineR/reference/animate_goal.md)
   puts GOAL in the middle of the rink and labels overtime goals OT.
+
 - Goal plots and videos use national colors for the 4 Nations Face-Off,
   whose goals are tracked.
+
 - `animate_goal(logos = TRUE)` puts the clubs’ logos in the title and
   the home club’s at centre ice, or any SVG or PNG with `centre_logo`;
   [`nhl_goal_replay()`](https://ethanrawson.github.io/bluelineR/reference/nhl_goal_tracking.md)
   has the logos’ addresses. “GOAL” now flashes on a scoreboard panel.
+
 - [`animate_goal()`](https://ethanrawson.github.io/bluelineR/reference/animate_goal.md)
   writes a goal’s tracking replay as an MP4: every player and the puck
   on the rink, sweater numbers in club colors, the puck’s trail, the
   scorer and his assists named, his skating speed, and the last three
   seconds again at half speed.
+
 - [`nhl_tracking_summary()`](https://ethanrawson.github.io/bluelineR/reference/nhl_tracking_summary.md),
   [`nhl_tracking_player_stats()`](https://ethanrawson.github.io/bluelineR/reference/nhl_tracking_summary.md)
   and
