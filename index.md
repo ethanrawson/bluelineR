@@ -1,4 +1,4 @@
-# bluelineR
+![bluelineR](reference/figures/logo.png)
 
 bluelineR wraps the public APIs behind NHL.com and returns tidy tibbles:
 scores, schedules, standings, play-by-play, box scores and shift charts;
