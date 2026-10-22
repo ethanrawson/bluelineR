@@ -1,0 +1,152 @@
+{
+ "seasonId": 19811982,
+ "gameTypeId": 2,
+ "playerStatsSeasons": [
+  {
+   "season": 19981999,
+   "gameTypes": [
+    2
+   ]
+  },
+  {
+   "season": 19971998,
+   "gameTypes": [
+    2
+   ]
+  },
+  {
+   "season": 19961997,
+   "gameTypes": [
+    2,
+    3
+   ]
+  }
+ ],
+ "gameLog": [
+  {
+   "gameId": 1981020839,
+   "teamAbbrev": "EDM",
+   "homeRoadFlag": "H",
+   "gameDate": "1982-04-04",
+   "goals": 0,
+   "assists": 1,
+   "commonName": {
+    "default": "Oilers"
+   },
+   "opponentCommonName": {
+    "default": "Jets"
+   },
+   "points": 1,
+   "plusMinus": 0,
+   "powerPlayGoals": 0,
+   "powerPlayPoints": 1,
+   "gameWinningGoals": 0,
+   "otGoals": 0,
+   "shots": 2,
+   "shorthandedGoals": 0,
+   "shorthandedPoints": 0,
+   "pim": 0,
+   "opponentAbbrev": "WIN"
+  },
+  {
+   "gameId": 1981020817,
+   "teamAbbrev": "EDM",
+   "homeRoadFlag": "H",
+   "gameDate": "1982-03-31",
+   "goals": 0,
+   "assists": 3,
+   "commonName": {
+    "default": "Oilers"
+   },
+   "opponentCommonName": {
+    "default": "Kings"
+   },
+   "points": 3,
+   "plusMinus": 1,
+   "powerPlayGoals": 0,
+   "powerPlayPoints": 1,
+   "gameWinningGoals": 0,
+   "otGoals": 0,
+   "shots": 4,
+   "shorthandedGoals": 0,
+   "shorthandedPoints": 0,
+   "pim": 0,
+   "opponentAbbrev": "LAK"
+  },
+  {
+   "gameId": 1981020806,
+   "teamAbbrev": "EDM",
+   "homeRoadFlag": "R",
+   "gameDate": "1982-03-28",
+   "goals": 1,
+   "assists": 1,
+   "commonName": {
+    "default": "Oilers"
+   },
+   "opponentCommonName": {
+    "default": "Kings"
+   },
+   "points": 2,
+   "plusMinus": 1,
+   "powerPlayGoals": 0,
+   "powerPlayPoints": 1,
+   "gameWinningGoals": 0,
+   "otGoals": 0,
+   "shots": 5,
+   "shorthandedGoals": 0,
+   "shorthandedPoints": 0,
+   "pim": 0,
+   "opponentAbbrev": "LAK"
+  },
+  {
+   "gameId": 1981020790,
+   "teamAbbrev": "EDM",
+   "homeRoadFlag": "R",
+   "gameDate": "1982-03-26",
+   "goals": 1,
+   "assists": 2,
+   "commonName": {
+    "default": "Oilers"
+   },
+   "opponentCommonName": {
+    "default": "Rockies"
+   },
+   "points": 3,
+   "plusMinus": 2,
+   "powerPlayGoals": 0,
+   "powerPlayPoints": 1,
+   "gameWinningGoals": 0,
+   "otGoals": 0,
+   "shots": 4,
+   "shorthandedGoals": 0,
+   "shorthandedPoints": 0,
+   "pim": 0,
+   "opponentAbbrev": "CLR"
+  },
+  {
+   "gameId": 1981020787,
+   "teamAbbrev": "EDM",
+   "homeRoadFlag": "R",
+   "gameDate": "1982-03-25",
+   "goals": 2,
+   "assists": 2,
+   "commonName": {
+    "default": "Oilers"
+   },
+   "opponentCommonName": {
+    "default": "Flames"
+   },
+   "points": 4,
+   "plusMinus": 2,
+   "powerPlayGoals": 0,
+   "powerPlayPoints": 1,
+   "gameWinningGoals": 1,
+   "otGoals": 0,
+   "shots": 11,
+   "shorthandedGoals": 2,
+   "shorthandedPoints": 2,
+   "pim": 2,
+   "opponentAbbrev": "CGY"
+  }
+ ]
+}

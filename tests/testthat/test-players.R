@@ -7,6 +7,14 @@ test_that("nhl_player splits the page into tables", {
   expect_gt(nrow(p$season_totals), 5)
 })
 
+test_that("game logs from before ice time was recorded still read", {
+  local_nhl(c("game-log" = "game-log-8447400-19811982-2"))
+  log <- nhl_player_game_log(8447400, "1981-82")
+  expect_equal(nrow(log), 5)
+  expect_true(all(is.na(log$toi_seconds)))
+  expect_true(all(c("goals", "assists", "shots", "plus_minus") %in% names(log)))
+})
+
 test_that("game logs, search, rosters and club stats", {
   local_nhl(c("game-log" = "game-log-8478402-20252026-2", "search/player" = "search-mcdavid",
               "roster/EDM" = "roster-EDM-20252026", "club-stats/EDM" = "club-stats-EDM-20252026-2"))

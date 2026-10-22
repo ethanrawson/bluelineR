@@ -25,6 +25,7 @@
   `nhl_records_catalog()`, a guide to the 78 records tables with the helper for each. `nhl_records()` takes
   `include` to join related fields such as names and team codes.
 * `nhl_jersey_url()` (club jersey textures), and broadcaster logos in `nhl_broadcasts()`.
+* `nhl_player_game_log()` reads seasons before 1997-98, which have no ice time (it used to fail on them).
 * `plot_shots()` draws each club at its own end, the away club at the left net and the home club at
   the right; `sides = "right"` keeps the old view with every shot at one net.
 
