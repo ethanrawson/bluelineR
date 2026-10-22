@@ -67,7 +67,8 @@
   : Stat leaders
 - [`nhl_headshot_url()`](https://ethanrawson.github.io/bluelineR/reference/nhl_headshot_url.md)
   [`nhl_logo_url()`](https://ethanrawson.github.io/bluelineR/reference/nhl_headshot_url.md)
-  : Headshot and logo URLs
+  [`nhl_jersey_url()`](https://ethanrawson.github.io/bluelineR/reference/nhl_headshot_url.md)
+  : Headshot, logo and jersey URLs
 - [`nhl_team_info()`](https://ethanrawson.github.io/bluelineR/reference/nhl_team_info.md)
   : NHL clubs
 
@@ -76,6 +77,9 @@
 - [`nhl_draft_rankings()`](https://ethanrawson.github.io/bluelineR/reference/nhl_draft_rankings.md)
   [`nhl_draft_picks()`](https://ethanrawson.github.io/bluelineR/reference/nhl_draft_rankings.md)
   : The draft
+- [`nhl_draft_lottery()`](https://ethanrawson.github.io/bluelineR/reference/nhl_draft_lottery.md)
+  [`nhl_draft_lottery_odds()`](https://ethanrawson.github.io/bluelineR/reference/nhl_draft_lottery.md)
+  : Draft lottery winners and odds
 
 ## International
 
@@ -134,6 +138,12 @@
   : Teams, seasons and franchises
 - [`nhl_records()`](https://ethanrawson.github.io/bluelineR/reference/nhl_records.md)
   : The NHL records API
+- [`nhl_records_catalog()`](https://ethanrawson.github.io/bluelineR/reference/nhl_records_catalog.md)
+  : What is in the records API
+- [`nhl_franchise_records()`](https://ethanrawson.github.io/bluelineR/reference/nhl_franchise_records.md)
+  : Franchise records in particular games
+- [`nhl_milestones()`](https://ethanrawson.github.io/bluelineR/reference/nhl_milestones.md)
+  : Milestones in sight
 
 ## Plots
 

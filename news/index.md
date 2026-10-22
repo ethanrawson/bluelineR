@@ -57,6 +57,25 @@
   speed, distance, zone time and shot location, and the goalie boards (5
   on 5, by area, games above .900).
 
+- Records helpers:
+  [`nhl_franchise_records()`](https://ethanrawson.github.io/bluelineR/reference/nhl_franchise_records.md)
+  (each franchise’s record in Game 7s, overtime, season openers, outdoor
+  games, games outside North America and at other neutral sites),
+  [`nhl_draft_lottery()`](https://ethanrawson.github.io/bluelineR/reference/nhl_draft_lottery.md)
+  (every draw since 1995: the pick, the clubs, the player) and
+  [`nhl_draft_lottery_odds()`](https://ethanrawson.github.io/bluelineR/reference/nhl_draft_lottery.md)
+  (each club’s chance, 1995 to 2021),
+  [`nhl_milestones()`](https://ethanrawson.github.io/bluelineR/reference/nhl_milestones.md)
+  (players closing in on a milestone, and how far they have to go), and
+  [`nhl_records_catalog()`](https://ethanrawson.github.io/bluelineR/reference/nhl_records_catalog.md),
+  a guide to the 78 records tables with the helper for each.
+  [`nhl_records()`](https://ethanrawson.github.io/bluelineR/reference/nhl_records.md)
+  takes `include` to join related fields such as names and team codes.
+
+- [`nhl_jersey_url()`](https://ethanrawson.github.io/bluelineR/reference/nhl_headshot_url.md)
+  (club jersey textures), and broadcaster logos in
+  [`nhl_broadcasts()`](https://ethanrawson.github.io/bluelineR/reference/nhl_broadcasts.md).
+
 - [`plot_shots()`](https://ethanrawson.github.io/bluelineR/reference/plot_shots.md)
   draws each club at its own end, the away club at the left net and the
   home club at the right; `sides = "right"` keeps the old view with

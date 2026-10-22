@@ -291,6 +291,27 @@
 <span><span class="co">#&gt; 5 Mark Scheifele    WPG             36      67    103</span></span></code></pre></div>
 </div>
 <div class="section level2">
+<h2 id="the-records-site">The records site<a class="anchor" aria-label="anchor" href="#the-records-site"></a>
+</h2>
+<p>records.nhl.com keeps a century of tables. <code><a href="reference/nhl_records_catalog.html">nhl_records_catalog()</a></code> lists the 78 that answer, each with a line on what it holds, and helpers cover the ones people ask for: Game 7, overtime, season-opener, outdoor and overseas records, the draft lottery and its odds, and the milestones in sight.</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/nhl_franchise_records.html">nhl_franchise_records</a></span><span class="op">(</span><span class="st">"game7"</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"franchise_name"</span>, <span class="st">"games_played"</span>, <span class="st">"wins"</span>, <span class="st">"losses"</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="co">#&gt; # A tibble: 5 × 4</span></span>
+<span><span class="co">#&gt;   franchise_name      games_played  wins losses</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;                      &lt;int&gt; &lt;int&gt;  &lt;int&gt;</span></span>
+<span><span class="co">#&gt; 1 Boston Bruins                 31    16     15</span></span>
+<span><span class="co">#&gt; 2 Toronto Maple Leafs           28    12     16</span></span>
+<span><span class="co">#&gt; 3 Montréal Canadiens            26    17      9</span></span>
+<span><span class="co">#&gt; 4 Detroit Red Wings             25    14     11</span></span>
+<span><span class="co">#&gt; 5 St. Louis Blues               19    10      9</span></span>
+<span><span class="fu"><a href="reference/nhl_draft_lottery.html">nhl_draft_lottery</a></span><span class="op">(</span><span class="fl">2026</span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"draft_year"</span>, <span class="st">"pick"</span>, <span class="st">"lottery_team"</span>, <span class="st">"player_name"</span>, <span class="st">"effect"</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="co">#&gt; # A tibble: 2 × 5</span></span>
+<span><span class="co">#&gt;   draft_year  pick lottery_team player_name   effect               </span></span>
+<span><span class="co">#&gt;        &lt;int&gt; &lt;int&gt; &lt;chr&gt;        &lt;chr&gt;         &lt;chr&gt;                </span></span>
+<span><span class="co">#&gt; 1       2026     1 TOR          Gavin McKenna Moved from 5th to 1st</span></span>
+<span><span class="co">#&gt; 2       2026     2 SJS          Ivar Stenberg Moved from 9th to 2nd</span></span></code></pre></div>
+</div>
+<div class="section level2">
 <h2 id="what-it-covers">What it covers<a class="anchor" aria-label="anchor" href="#what-it-covers"></a>
 </h2>
 <table class="table">
@@ -417,6 +438,24 @@
 </td>
 <td>
 <code>records.nhl.com/site/api/playoff-franchise-vs-team</code>, <code>/yearly-playoff-series-details</code>
+</td>
+</tr>
+<tr>
+<td>Records</td>
+<td>
+<code><a href="reference/nhl_franchise_records.html">nhl_franchise_records()</a></code>, <code><a href="reference/nhl_draft_lottery.html">nhl_draft_lottery()</a></code>, <code><a href="reference/nhl_draft_lottery.html">nhl_draft_lottery_odds()</a></code>, <code><a href="reference/nhl_milestones.html">nhl_milestones()</a></code>, <code><a href="reference/nhl_records_catalog.html">nhl_records_catalog()</a></code>
+</td>
+<td>
+<code>records.nhl.com/site/api/franchise-all-time-*</code>, <code>/neutral-site-standings</code>, <code>/draft-lottery-*</code>; <code>api.nhle.com/stats/rest/en/milestones</code>
+</td>
+</tr>
+<tr>
+<td>Images</td>
+<td>
+<code><a href="reference/nhl_headshot_url.html">nhl_headshot_url()</a></code>, <code><a href="reference/nhl_headshot_url.html">nhl_logo_url()</a></code>, <code><a href="reference/nhl_headshot_url.html">nhl_jersey_url()</a></code>; broadcaster logos in <code><a href="reference/nhl_broadcasts.html">nhl_broadcasts()</a></code>
+</td>
+<td>
+<code>assets.nhle.com/mugs</code>, <code>/logos/nhl</code>, <code>/textures/nhl/jersey</code>, <code>/logos/broadcast</code>
 </td>
 </tr>
 <tr>
