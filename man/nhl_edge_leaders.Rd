@@ -7,10 +7,13 @@
 \usage{
 nhl_edge_leaders(
   metric = c("skater_speed", "skater_distance", "skater_shot_speed", "skater_zone_time",
-    "team_skating_speed"),
+    "skater_shot_location", "team_skating_speed", "team_shot_speed",
+    "team_skating_distance", "team_zone_time", "team_shot_location", "goalie_5v5",
+    "goalie_shot_location", "goalie_save_pct"),
   position = c("all", "F", "D"),
   strength = c("all", "es", "pp", "pk"),
   sort_by = NULL,
+  area = c("all", "high", "mid", "long"),
   season = NULL,
   game_type = "regular"
 )
@@ -22,18 +25,29 @@ nhl_edge_landing(
 )
 }
 \arguments{
-\item{metric}{Which leaderboard.}
+\item{metric}{Which leaderboard: \code{"skater_speed"}, \code{"skater_distance"},
+\code{"skater_shot_speed"}, \code{"skater_zone_time"}, \code{"skater_shot_location"},
+\code{"team_skating_speed"}, \code{"team_shot_speed"}, \code{"team_skating_distance"},
+\code{"team_zone_time"}, \code{"team_shot_location"}, \code{"goalie_5v5"},
+\code{"goalie_shot_location"} or \code{"goalie_save_pct"}.}
 
 \item{position}{\code{"all"}, \code{"F"} (forwards) or \code{"D"} (defence).}
 
 \item{strength}{For distance and zone time: \code{"all"}, \code{"es"} (even
 strength), \code{"pp"} or \code{"pk"}.}
 
-\item{sort_by}{The ranking: for speed and shot speed \code{"max"} (top speed)
-or a burst band (\code{"over22"}, \code{"20-22"}, \code{"18-20"} for skating speed;
-\code{"over100"}, \code{"90-100"}, \code{"80-90"}, \code{"70-80"} for shot speed); for
-distance \code{"total"} or \code{"max-game"}; for zone time \code{"offensive"},
-\code{"neutral"} or \code{"defensive"}. \code{NULL} picks the first.}
+\item{sort_by}{The ranking (\code{NULL} picks the first): for skating speed
+\code{"max"}, \code{"over-22"}, \code{"20-22"}, \code{"18-20"} (bursts in mph); for shot
+speed \code{"max"}, \code{"over-100"}, \code{"90-99"}, \code{"80-89"}, \code{"70-79"}; for
+distance \code{"total"}, \code{"per-60"}, \code{"max-game"}, \code{"max-period"}; for zone
+time \code{"offensive"}, \code{"neutral"}, \code{"defensive"}; for shot location
+\code{"sog"}, \code{"goals"}, \code{"shooting-pctg"}; for goalies' 5 on 5
+\code{"save-pctg"}, \code{"save-pctg-close"}, \code{"shots"}, \code{"shots-per-60"}; for
+goalies by area \code{"save-pctg"}; for games above .900 \code{"pctg"} or
+\code{"games"}.}
+
+\item{area}{For shot location: \code{"all"}, \code{"high"} (high danger), \code{"mid"}
+or \code{"long"}.}
 
 \item{season}{Season (see \code{\link[=nhl_season]{nhl_season()}}); \code{NULL} for the current one.}
 
@@ -45,14 +59,20 @@ distance \code{"total"} or \code{"max-game"}; for zone time \code{"offensive"},
 A tibble, one row per player or club.
 }
 \description{
-The NHL's EDGE top 10s: fastest skaters, most distance skated, hardest
-shots, most offensive-zone time, and the clubs' skating speed. \code{landing}
-gives the leaders the EDGE home pages show for skaters, goalies or teams.
+The NHL's EDGE top 10s, all thirteen of them: fastest skaters, most
+distance skated, hardest shots, most offensive-zone time and shots by area
+for skaters; skating speed, shot speed, distance, zone time and shots by
+area for clubs; and 5-on-5 save percentage, save percentage by area and
+games above .900 for goalies. \code{landing} gives the leaders the EDGE home
+pages show for skaters, goalies or teams.
 }
 \examples{
 \dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 nhl_edge_leaders("skater_speed")
 nhl_edge_leaders("skater_shot_speed", position = "D")
+nhl_edge_leaders("skater_shot_location", sort_by = "goals", area = "high")
+nhl_edge_leaders("team_zone_time", strength = "pp")
+nhl_edge_leaders("goalie_5v5", sort_by = "save-pctg-close")
 nhl_edge_landing("goalie")
 \dontshow{\}) # examplesIf}
 }

@@ -22,3 +22,16 @@ local_nhl <- function(routes, env = parent.frame()) {
 mcdavid_goal <- function() {
   read_goal_tracking(system.file("extdata", "goal-2025020534-777.json.gz", package = "bluelineR"), 2025020534, 777)
 }
+
+# Serve fetch_text() (HTML pages: the IIHF's schedules) from fixture files.
+local_pages <- function(routes, env = parent.frame()) {
+  testthat::local_mocked_bindings(
+    fetch_text = function(url, query = list(), headers = list()) {
+      for (pat in names(routes)) if (grepl(pat, url, fixed = TRUE)) {
+        return(paste(readLines(test_path("fixtures", routes[[pat]]), warn = FALSE), collapse = "\n"))
+      }
+      stop("No fixture for ", url)
+    },
+    .env = env
+  )
+}

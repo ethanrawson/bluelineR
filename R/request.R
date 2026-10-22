@@ -9,6 +9,14 @@ api_base <- function(api) {
     search = "https://search.d3.nhle.com/api/v1",
     tracking = "https://wsr.nhle.com/sprites",
     ppt = "https://live.nhle.com/ppt",
+    iihf = "https://realtime.iihf.com/gamestate",
+    # iihf.com refuses scripted requests; this mirror of it does not.
+    iihf_site = "https://canada-central.iihf.com",
+    espn_site = "https://site.api.espn.com/apis/site/v2/sports/hockey/nhl",
+    espn_web = "https://site.web.api.espn.com/apis",
+    espn_core = "https://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl",
+    psr = "https://live.nhle.com/psr",
+    content = "https://forge-dapi.d3.nhle.com/v2/content",
     cli::cli_abort("Unknown API {.val {api}}.")
   )
 }
@@ -76,6 +84,26 @@ fetch_json <- function(url, query = list(), headers = list()) {
                    class = "bluelineR_http_error")
   }
   body <- jsonlite::fromJSON(httr2::resp_body_string(resp), simplifyVector = FALSE)
+  if (isTRUE(getOption("bluelineR.cache", FALSE))) assign(key, body, envir = .cache)
+  body
+}
+
+# GET a page as text (the IIHF's schedules are HTML), through the same
+# throttle, retries and cache. Tests replace this one too.
+fetch_text <- function(url, query = list(), headers = list()) {
+  key <- paste("text", url, paste(names(query), unlist(query), sep = "=", collapse = "&"))
+  if (isTRUE(getOption("bluelineR.cache", FALSE)) && exists(key, envir = .cache, inherits = FALSE)) {
+    return(get(key, envir = .cache, inherits = FALSE))
+  }
+  resp <- httr2::req_perform(build_request(url, query, headers))
+  status <- httr2::resp_status(resp)
+  if (status == 404) {
+    cli::cli_abort(c("Nothing at this address (HTTP 404).", i = "{.url {httr2::resp_url(resp)}}"), class = "bluelineR_not_found")
+  }
+  if (status >= 400) {
+    cli::cli_abort(c("The server returned HTTP {status}.", i = "{.url {httr2::resp_url(resp)}}"), class = "bluelineR_http_error")
+  }
+  body <- httr2::resp_body_string(resp)
   if (isTRUE(getOption("bluelineR.cache", FALSE))) assign(key, body, envir = .cache)
   body
 }

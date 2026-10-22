@@ -24,6 +24,12 @@ reference:
   contents: [nhl_draft_rankings]
 - title: International
   contents: [nhl_international]
+- title: IIHF tournaments
+  contents: [iihf]
+- title: Odds and props
+  contents: [espn_odds, devig, espn_player_splits]
+- title: More from the NHL
+  contents: [nhl_player_bio, nhl_team_comparison, nhl_broadcasts, nhl_quick_stats, nhl_news, nhl_playoff_series]
 - title: Stats and records APIs
   contents: [nhl_stats, nhl_teams, nhl_records]
 - title: Plots

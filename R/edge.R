@@ -69,41 +69,72 @@ nhl_edge_team <- function(team, season = NULL, game_type = "regular",
 
 #' NHL EDGE leaderboards
 #'
-#' The NHL's EDGE top 10s: fastest skaters, most distance skated, hardest
-#' shots, most offensive-zone time, and the clubs' skating speed. `landing`
-#' gives the leaders the EDGE home pages show for skaters, goalies or teams.
+#' The NHL's EDGE top 10s, all thirteen of them: fastest skaters, most
+#' distance skated, hardest shots, most offensive-zone time and shots by area
+#' for skaters; skating speed, shot speed, distance, zone time and shots by
+#' area for clubs; and 5-on-5 save percentage, save percentage by area and
+#' games above .900 for goalies. `landing` gives the leaders the EDGE home
+#' pages show for skaters, goalies or teams.
 #'
-#' @param metric Which leaderboard.
+#' @param metric Which leaderboard: `"skater_speed"`, `"skater_distance"`,
+#'   `"skater_shot_speed"`, `"skater_zone_time"`, `"skater_shot_location"`,
+#'   `"team_skating_speed"`, `"team_shot_speed"`, `"team_skating_distance"`,
+#'   `"team_zone_time"`, `"team_shot_location"`, `"goalie_5v5"`,
+#'   `"goalie_shot_location"` or `"goalie_save_pct"`.
 #' @param position `"all"`, `"F"` (forwards) or `"D"` (defence).
 #' @param strength For distance and zone time: `"all"`, `"es"` (even
 #'   strength), `"pp"` or `"pk"`.
-#' @param sort_by The ranking: for speed and shot speed `"max"` (top speed)
-#'   or a burst band (`"over22"`, `"20-22"`, `"18-20"` for skating speed;
-#'   `"over100"`, `"90-100"`, `"80-90"`, `"70-80"` for shot speed); for
-#'   distance `"total"` or `"max-game"`; for zone time `"offensive"`,
-#'   `"neutral"` or `"defensive"`. `NULL` picks the first.
+#' @param sort_by The ranking (`NULL` picks the first): for skating speed
+#'   `"max"`, `"over-22"`, `"20-22"`, `"18-20"` (bursts in mph); for shot
+#'   speed `"max"`, `"over-100"`, `"90-99"`, `"80-89"`, `"70-79"`; for
+#'   distance `"total"`, `"per-60"`, `"max-game"`, `"max-period"`; for zone
+#'   time `"offensive"`, `"neutral"`, `"defensive"`; for shot location
+#'   `"sog"`, `"goals"`, `"shooting-pctg"`; for goalies' 5 on 5
+#'   `"save-pctg"`, `"save-pctg-close"`, `"shots"`, `"shots-per-60"`; for
+#'   goalies by area `"save-pctg"`; for games above .900 `"pctg"` or
+#'   `"games"`.
+#' @param area For shot location: `"all"`, `"high"` (high danger), `"mid"`
+#'   or `"long"`.
 #' @inheritParams nhl_edge
 #' @return A tibble, one row per player or club.
 #' @export
 #' @examplesIf interactive()
 #' nhl_edge_leaders("skater_speed")
 #' nhl_edge_leaders("skater_shot_speed", position = "D")
+#' nhl_edge_leaders("skater_shot_location", sort_by = "goals", area = "high")
+#' nhl_edge_leaders("team_zone_time", strength = "pp")
+#' nhl_edge_leaders("goalie_5v5", sort_by = "save-pctg-close")
 #' nhl_edge_landing("goalie")
-nhl_edge_leaders <- function(metric = c("skater_speed", "skater_distance", "skater_shot_speed", "skater_zone_time", "team_skating_speed"),
+nhl_edge_leaders <- function(metric = c("skater_speed", "skater_distance", "skater_shot_speed", "skater_zone_time",
+                                        "skater_shot_location", "team_skating_speed", "team_shot_speed",
+                                        "team_skating_distance", "team_zone_time", "team_shot_location",
+                                        "goalie_5v5", "goalie_shot_location", "goalie_save_pct"),
                              position = c("all", "F", "D"), strength = c("all", "es", "pp", "pk"),
-                             sort_by = NULL, season = NULL, game_type = "regular") {
+                             sort_by = NULL, area = c("all", "high", "mid", "long"), season = NULL, game_type = "regular") {
   metric <- match.arg(metric)
   position <- match.arg(position)
   strength <- match.arg(strength)
+  area <- match.arg(area)
   default_sort <- c(skater_speed = "max", skater_distance = "total", skater_shot_speed = "max",
-                    skater_zone_time = "offensive", team_skating_speed = "max")
+                    skater_zone_time = "offensive", skater_shot_location = "sog", team_skating_speed = "max",
+                    team_shot_speed = "max", team_skating_distance = "total", team_zone_time = "offensive",
+                    team_shot_location = "sog", goalie_5v5 = "save-pctg", goalie_shot_location = "save-pctg",
+                    goalie_save_pct = "pctg")
   sort_by <- sort_by %||% default_sort[[metric]]
   path <- switch(metric,
     skater_speed = c("skater-speed-top-10", position, sort_by),
     skater_distance = c("skater-distance-top-10", position, strength, sort_by),
     skater_shot_speed = c("skater-shot-speed-top-10", position, sort_by),
     skater_zone_time = c("skater-zone-time-top-10", position, strength, sort_by),
-    team_skating_speed = c("team-skating-speed-top-10", position, sort_by)
+    skater_shot_location = c("skater-shot-location-top-10", position, sort_by, area),
+    team_skating_speed = c("team-skating-speed-top-10", position, sort_by),
+    team_shot_speed = c("team-shot-speed-top-10", position, sort_by),
+    team_skating_distance = c("team-skating-distance-top-10", position, strength, sort_by),
+    team_zone_time = c("team-zone-time-top-10", strength, sort_by),
+    team_shot_location = c("team-shot-location-top-10", position, sort_by, area),
+    goalie_5v5 = c("goalie-5v5-top-10", sort_by),
+    goalie_shot_location = c("goalie-shot-location-top-10", sort_by, area),
+    goalie_save_pct = c("goalie-edge-save-pctg-top-10", sort_by)
   )
   out <- edge_get(path, season, game_type)
   if (tibble::is_tibble(out)) out$rank <- seq_len(nrow(out))
