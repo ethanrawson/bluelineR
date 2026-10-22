@@ -114,6 +114,16 @@ plot_goal_sequence(frames, n = 6, seconds = 5)
 
 <img src="man/figures/README-sequence-1.png" alt="Six frames leading up to the goal." width="100%" />
 
+`animate_goal()` plays it back as an MP4: every player and the puck, the scorer and his assists named,
+his skating speed, and the last three seconds again at half speed (it needs the
+[av](https://docs.ropensci.org/av/) package).
+
+``` r
+animate_goal(frames, "mcdavid.mp4", goal = nhl_goal_replay(2025020534, 777))
+```
+
+<img src="man/figures/README-animate.gif" alt="McDavid's goal played back from the tracking: Boston's players in gold and Edmonton's in navy move up the ice, McDavid's speed shows above him, GOAL flashes as the puck goes in, and the last three seconds replay at half speed." width="100%" />
+
 ## Game tracking summaries
 
 For 2021-22 to 2023-24 (and some of 2020-21 and 2024-25) the NHL’s
@@ -187,7 +197,7 @@ nhl_stats("skater/summary", "2025-26", sort = "points", limit = 5)[, c("skater_f
 |-----------------------------|---------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------|
 | Scores, schedule, standings | `nhl_scores()`, `nhl_schedule()`, `nhl_team_schedule()`, `nhl_standings()`                                                                  | `api-web.nhle.com/v1/score`, `/schedule`, `/club-schedule-season`, `/standings`                    |
 | Games                       | `nhl_pbp()`, `nhl_boxscore()`, `nhl_game()`, `nhl_shifts()`                                                                                 | `/gamecenter/{id}/play-by-play`, `/boxscore`, `/landing`; `api.nhle.com/stats/rest/en/shiftcharts` |
-| Goal tracking               | `nhl_goal_tracking()`, `nhl_goal_replay()`, `goal_frame()`, `classify_goal()`, `goal_context()`, `skater_speed()`, `plot_goal()`            | `wsr.nhle.com/sprites/{season}/{game}/ev{event}.json`, `/ppt-replay/goal`                          |
+| Goal tracking               | `nhl_goal_tracking()`, `nhl_goal_replay()`, `goal_frame()`, `classify_goal()`, `goal_context()`, `skater_speed()`, `plot_goal()`, `animate_goal()`            | `wsr.nhle.com/sprites/{season}/{game}/ev{event}.json`, `/ppt-replay/goal`                          |
 | Game tracking summaries     | `nhl_tracking_summary()`, `nhl_tracking_player_stats()`, `nhl_tracking_entities()`                                                          | `live.nhle.com/ppt/{season}/{game}/` (2021-22 to 2023-24, some of 2020-21 and 2024-25)             |
 | NHL EDGE                    | `nhl_edge_skater()`, `nhl_edge_goalie()`, `nhl_edge_team()`, `nhl_edge_leaders()`, `nhl_edge_landing()`, `nhl_edge_by_the_numbers()`        | `/edge/...` (20 reports)                                                                           |
 | Players and clubs           | `nhl_player()`, `nhl_player_game_log()`, `nhl_player_search()`, `nhl_roster()`, `nhl_prospects()`, `nhl_team_stats()`, `nhl_stat_leaders()` | `/player`, `/roster`, `/prospects`, `/club-stats`, `/skater-stats-leaders`; `search.d3.nhle.com`   |
@@ -216,5 +226,7 @@ season of them at once. What bluelineR adds:
 * **Reading a goal from its tracking** (`classify_goal()`): rush, breakaway, odd-man rush, one-timer,
   cross-slot pass, traffic, behind the net and the forecheck, with who carried it in and who made the
   pass, and the frame the puck went in (`goal_frame()`).
+* **Goal replays as video** (`animate_goal()`): the tracking played back on a rink as an MP4, with
+  the scorer and his assists named, his skating speed and the finish again in slow motion.
 * **NHL EDGE** leaderboards, comparison reports and last night's standouts, the goal replay summary
   (`nhl_goal_replay()`) and player search.

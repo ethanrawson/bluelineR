@@ -25,7 +25,7 @@ reference:
 - title: Stats and records APIs
   contents: [nhl_stats, nhl_teams, nhl_records]
 - title: Plots
-  contents: [nhl_rink, plot_goal, plot_shots]
+  contents: [nhl_rink, plot_goal, plot_shots, animate_goal]
 - title: Helpers
   contents: [nhl_api, tidy_json, nhl_season, nhl_cache_clear, bluelineR-options]
 articles:

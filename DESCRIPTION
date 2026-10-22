@@ -24,6 +24,7 @@ Imports:
     tibble,
     vctrs
 Suggests: 
+    av,
     ggplot2 (>= 3.4.0),
     knitr,
     rmarkdown,
