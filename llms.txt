@@ -193,7 +193,10 @@ Cup of Hockey, the Olympics and the 4 Nations Face-Off, from 1976 to
 2026. Each player’s and club’s numbers at each one, careers with Olympic
 medals, every game and every final. The game ids open the NHL’s
 play-by-play, in full for the 4 Nations and the 2016 World Cup and goals
-and penalties for the Olympics.
+and penalties for the Olympics, and the 4 Nations goals have player
+tracking:
+`animate_goal(nhl_goal_tracking(2024200007, 1443), goal = nhl_goal_replay(2024200007, 1443))`
+is McDavid’s overtime winner in the final.
 
 ``` r
 

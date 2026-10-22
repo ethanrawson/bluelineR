@@ -61,7 +61,11 @@ A tibble.
   and
   [`nhl_boxscore()`](https://ethanrawson.github.io/bluelineR/reference/nhl_boxscore.md):
   full play-by-play for the 4 Nations and the 2016 World Cup, goals and
-  penalties for the Olympics.
+  penalties for the Olympics. Goals at the 4 Nations have puck and
+  player tracking as well, for
+  [`nhl_goal_tracking()`](https://ethanrawson.github.io/bluelineR/reference/nhl_goal_tracking.md)
+  and
+  [`animate_goal()`](https://ethanrawson.github.io/bluelineR/reference/animate_goal.md).
 
 - `nhl_international_winners()`: the game that decided each tournament,
   with the captains, the winning goalie and who scored the winner.
@@ -83,6 +87,10 @@ head(oly[, c("first_name", "last_name", "tri_code", "games_played", "goals", "as
 # Every 4 Nations game, then the final's play-by-play:
 games <- nhl_international_games("4 nations")
 nhl_pbp(games$game_id[games$series_title == "Final"])
+
+# McDavid's overtime winner in the final, from the tracking:
+animate_goal(nhl_goal_tracking(2024200007, 1443), "mcdavid-4-nations.mp4",
+             goal = nhl_goal_replay(2024200007, 1443))
 
 nhl_international_careers("skater")
 nhl_international_careers("goalie", olympics = TRUE)

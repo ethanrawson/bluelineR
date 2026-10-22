@@ -11,7 +11,9 @@
   every Canada Cup, World Cup of Hockey, Olympics and 4 Nations Face-Off
   with NHL players, from records.nhl.com.
 - [`animate_goal()`](https://ethanrawson.github.io/bluelineR/reference/animate_goal.md)
-  puts GOAL in the middle of the rink.
+  puts GOAL in the middle of the rink and labels overtime goals OT.
+- Goal plots and videos use national colors for the 4 Nations Face-Off,
+  whose goals are tracked.
 - [`animate_goal()`](https://ethanrawson.github.io/bluelineR/reference/animate_goal.md)
   writes a goal’s tracking replay as an MP4: every player and the puck
   on the rink, sweater numbers in club colors, the puck’s trail, the

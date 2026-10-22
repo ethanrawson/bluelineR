@@ -17,7 +17,7 @@
 <link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
-<meta property="og:title" content="Tidy Access to the NHL's Web, Stats, EDGE and Goal-Tracking APIs">
+<script src="extra.js"></script><meta property="og:title" content="Tidy Access to the NHL's Web, Stats, EDGE and Goal-Tracking APIs">
 <meta name="description" content="Wraps the public endpoints behind NHL.com: schedules, scores, standings, play-by-play, box scores and shift charts; players, rosters, stat leaders and the draft; the stats and records APIs; NHL EDGE skating, shot and zone-time tracking; and the puck and player tracking frames behind every goal since 2023-24. Results come back as tibbles with snake_case names and rink coordinates in feet, with helpers that read how a goal was scored from its tracking and draw it on a rink.">
 <meta property="og:description" content="Wraps the public endpoints behind NHL.com: schedules, scores, standings, play-by-play, box scores and shift charts; players, rosters, stat leaders and the draft; the stats and records APIs; NHL EDGE skating, shot and zone-time tracking; and the puck and player tracking frames behind every goal since 2023-24. Results come back as tibbles with snake_case names and rink coordinates in feet, with helpers that read how a goal was scored from its tracking and draw it on a rink.">
 <meta property="og:image" content="https://ethanrawson.github.io/bluelineR/logo.png">
@@ -56,7 +56,7 @@
   </div>
 </nav><div class="container template-home">
 <div class="row">
-  <main id="main" class="col-md-9"><p><img src="reference/figures/logo.png" alt="bluelineR" width="100%"></p>
+  <main id="main" class="col-md-9"><p><picture><source media="(prefers-color-scheme: dark)" srcset="reference/figures/logo-dark.png"><img src="reference/figures/logo.png" alt="bluelineR" width="100%"></picture></p>
 <!-- badges: start -->
 
 <p>bluelineR wraps the public APIs behind NHL.com and returns tidy tibbles: scores, schedules, standings, play-by-play, box scores and shift charts; players, rosters, stat leaders and the draft; the stats and records APIs; <strong>NHL EDGE</strong> skating, shot and zone-time tracking; and the <strong>puck and player tracking frames behind every goal since 2023-24</strong>, ten frames a second, with tools that read how each goal was scored and draw it on a rink.</p>
@@ -185,7 +185,7 @@
 <div class="section level2">
 <h2 id="best-on-best-tournaments">Best-on-best tournaments<a class="anchor" aria-label="anchor" href="#best-on-best-tournaments"></a>
 </h2>
-<p>Every tournament NHL players have played in: the Canada Cup, the World Cup of Hockey, the Olympics and the 4 Nations Face-Off, from 1976 to 2026. Each player’s and club’s numbers at each one, careers with Olympic medals, every game and every final. The game ids open the NHL’s play-by-play, in full for the 4 Nations and the 2016 World Cup and goals and penalties for the Olympics.</p>
+<p>Every tournament NHL players have played in: the Canada Cup, the World Cup of Hockey, the Olympics and the 4 Nations Face-Off, from 1976 to 2026. Each player’s and club’s numbers at each one, careers with Olympic medals, every game and every final. The game ids open the NHL’s play-by-play, in full for the 4 Nations and the 2016 World Cup and goals and penalties for the Olympics, and the 4 Nations goals have player tracking: <code>animate_goal(nhl_goal_tracking(2024200007, 1443), goal = nhl_goal_replay(2024200007, 1443))</code> is McDavid’s overtime winner in the final.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">oly</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/nhl_international.html">nhl_international</a></span><span class="op">(</span><span class="st">"skater"</span>, <span class="st">"olympics"</span>, <span class="fl">2026</span><span class="op">)</span></span>
 <span><span class="va">oly</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"first_name"</span>, <span class="st">"last_name"</span>, <span class="st">"tri_code"</span>, <span class="st">"games_played"</span>, <span class="st">"goals"</span>, <span class="st">"assists"</span>, <span class="st">"points"</span>, <span class="st">"toi_seconds"</span><span class="op">)</span><span class="op">]</span></span>
