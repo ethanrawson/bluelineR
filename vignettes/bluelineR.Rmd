@@ -39,7 +39,7 @@ Each event has the clock (`period_seconds`, `game_seconds`), the strength from t
 (`strength_state`, e.g. `"5v4"`), the players by id and name, the running score, and the location twice:
 as the feed gives it (`x`, `y`) and turned so the event team attacks right (`x_fixed`, `y_fixed`).
 
-```{r, fig.alt = "Shot map, both clubs attacking right."}
+```{r, fig.alt = "Shot map, the away club at the left net and the home club at the right."}
 plot_shots(pbp)
 ```
 

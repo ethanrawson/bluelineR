@@ -18,6 +18,8 @@
   and every playoff game of any season, from records.nhl.com.
 * `nhl_edge_leaders()` has all thirteen EDGE top-10 boards: skater shot location, team shot speed,
   distance, zone time and shot location, and the goalie boards (5 on 5, by area, games above .900).
+* `plot_shots()` draws each club at its own end, the away club at the left net and the home club at
+  the right; `sides = "right"` keeps the old view with every shot at one net.
 
 * `nhl_international()`, `nhl_international_careers()`, `nhl_international_games()`,
   `nhl_international_winners()` and `nhl_olympic_podiums()`: every Canada Cup, World Cup of Hockey,

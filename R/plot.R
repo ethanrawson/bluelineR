@@ -150,30 +150,51 @@ plot_goal_sequence <- function(frames, n = 6, seconds = 5, title = NULL) {
 
 #' Shot map
 #'
-#' A game's shots on the rink, every club attacking to the right
-#' (`x_fixed`, `y_fixed` from [nhl_pbp()]): goals, saves and misses.
+#' A game's shots on the rink, each club's at the net it attacks: the away
+#' club's at the left end and the home club's at the right, the way a game
+#' is usually drawn, for the whole game (the play-by-play's `x_fixed`,
+#' `y_fixed`, turned back for the away club). Goals, saves and misses.
+#' `sides = "right"` puts every shot at the right-hand net instead, which
+#' compares the clubs' shot locations on top of each other; a single club
+#' (`team`) always attacks right.
 #'
 #' @param pbp Play-by-play from [nhl_pbp()], or an IIHF game's shots from
 #'   [iihf_shots()].
 #' @param team Only this club's shots; `NULL` for both, coloured by club.
+#' @param sides `"both"`: each club at its own end (away left, home right).
+#'   `"right"`: every shot at the right-hand net.
 #' @return A ggplot.
 #' @export
 #' @examplesIf interactive()
-#' plot_shots(nhl_pbp(2025020534))
-plot_shots <- function(pbp, team = NULL) {
+#' pbp <- nhl_pbp(2025020534)
+#' plot_shots(pbp)
+#' plot_shots(pbp, sides = "right")
+#' plot_shots(pbp, team = "EDM")
+plot_shots <- function(pbp, team = NULL, sides = c("both", "right")) {
   rlang::check_installed("ggplot2", "to plot shots")
+  sides <- match.arg(sides)
   shots <- pbp[pbp$type %in% c("goal", "shot-on-goal", "missed-shot") & !is.na(pbp$x_fixed), ]
   if (!is.null(team)) shots <- shots[shots$event_team == team, ]
   shots$result <- factor(c(goal = "Goal", `shot-on-goal` = "Saved", `missed-shot` = "Missed")[shots$type],
                          levels = c("Goal", "Saved", "Missed"))
+  # Home or away: nhl_pbp() calls it event_team_type, iihf_shots() team_side.
+  venue <- if ("event_team_type" %in% names(shots)) shots$event_team_type else if ("team_side" %in% names(shots)) shots$team_side
+  both <- sides == "both" && is.null(team) && !is.null(venue) && all(venue %in% c("home", "away"))
+  away <- if (both) venue == "away" else rep(FALSE, nrow(shots))
+  shots$x_plot <- ifelse(away, -shots$x_fixed, shots$x_fixed)
+  shots$y_plot <- ifelse(away, -shots$y_fixed, shots$y_fixed)
+  title <- if (both) {
+    sprintf("Shots: %s at the left net, %s at the right", shots$event_team[away][1] %||% "away",
+            shots$event_team[!away][1] %||% "home")
+  } else if (!is.null(team)) sprintf("%s shots, attacking right", team) else "Shots, attacking right"
   pal <- team_palette(sort(unique(shots$event_team)))
   nhl_rink() +
-    ggplot2::geom_point(data = shots, ggplot2::aes(.data$x_fixed, .data$y_fixed, shape = .data$result, size = .data$result,
+    ggplot2::geom_point(data = shots, ggplot2::aes(.data$x_plot, .data$y_plot, shape = .data$result, size = .data$result,
                                                    colour = .data$event_team), stroke = 1.1) +
     ggplot2::scale_shape_manual(values = c(Goal = 16, Saved = 1, Missed = 4), name = NULL, drop = FALSE) +
     ggplot2::scale_size_manual(values = c(Goal = 4, Saved = 2.4, Missed = 2), name = NULL, drop = FALSE) +
     ggplot2::scale_colour_manual(values = stats::setNames(ifelse(pal$fill == "#ffffff", pal$stroke, pal$fill), pal$team), name = NULL) +
-    ggplot2::labs(title = "Shots, attacking right",
+    ggplot2::labs(title = title,
                   caption = if (identical(attr(pbp, "source"), "IIHF")) "IIHF live data" else "NHL play-by-play") +
     ggplot2::theme(legend.position = "bottom")
 }
