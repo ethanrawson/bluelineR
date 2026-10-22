@@ -13,7 +13,9 @@ animate_goal(
   slow_motion = TRUE,
   width = 1280,
   height = 720,
-  title = NULL
+  title = NULL,
+  logos = FALSE,
+  centre_logo = NULL
 )
 }
 \arguments{
@@ -35,6 +37,12 @@ worked out from the frames (empty-net goals).}
 
 \item{title}{Title; \code{NULL} for the scorer, period and clock when \code{goal} is
 given.}
+
+\item{logos}{Draw the clubs' logos (from \code{goal}, which has their
+addresses). Needs the rsvg package.}
+
+\item{centre_logo}{The URL or path of a logo for centre ice, in place of the
+home club's: an SVG (needs rsvg) or a PNG (needs png).}
 }
 \value{
 \code{file}, invisibly.
@@ -52,6 +60,10 @@ Pass the goal from \code{\link[=nhl_goal_replay]{nhl_goal_replay()}} as \code{go
 assists on the ice and title the video; without it the scorer is the
 shooter \code{\link[=classify_goal]{classify_goal()}} finds and nobody is named.
 
+With \code{logos = TRUE} the clubs' logos stand in for their abbreviations in
+the title and the home club's logo goes on centre ice; \code{centre_logo} puts
+another there, like a special event's.
+
 Frames are drawn with base graphics and encoded by the av package (H.264
 where FFmpeg has it); a full-size clip takes under a minute.
 }
@@ -59,6 +71,12 @@ where FFmpeg has it); a full-size clip takes under a minute.
 \dontshow{if (interactive() && requireNamespace("av", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 frames <- nhl_goal_tracking(2025020534, 777)
 animate_goal(frames, "mcdavid.mp4", goal = nhl_goal_replay(2025020534, 777))
+
+# McDavid's overtime winner in the 4 Nations final, with the logos:
+four_nations <- paste0("https://assets.nhle.com/special_event_season/20242025/svg/",
+                       "4n-2025-championship-extwm-en_light.svg")
+animate_goal(nhl_goal_tracking(2024200007, 1443), "4-nations.mp4",
+             goal = nhl_goal_replay(2024200007, 1443), logos = TRUE, centre_logo = four_nations)
 
 # Offline, from the copy that ships with the package:
 path <- system.file("extdata", "goal-2025020534-777.json.gz", package = "bluelineR")

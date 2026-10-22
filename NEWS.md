@@ -5,6 +5,9 @@
   Olympics and 4 Nations Face-Off with NHL players, from records.nhl.com.
 * `animate_goal()` puts GOAL in the middle of the rink and labels overtime goals OT.
 * Goal plots and videos use national colors for the 4 Nations Face-Off, whose goals are tracked.
+* `animate_goal(logos = TRUE)` puts the clubs' logos in the title and the home club's at centre ice, or
+  any SVG or PNG with `centre_logo`; `nhl_goal_replay()` has the logos' addresses. "GOAL" now flashes on
+  a scoreboard panel.
 * `animate_goal()` writes a goal's tracking replay as an MP4: every player and the puck on the rink,
   sweater numbers in club colors, the puck's trail, the scorer and his assists named, his skating speed,
   and the last three seconds again at half speed.

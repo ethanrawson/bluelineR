@@ -27,7 +27,9 @@ Suggests:
     av,
     ggplot2 (>= 3.4.0),
     knitr,
+    png,
     rmarkdown,
+    rsvg,
     testthat (>= 3.0.0),
     withr
 VignetteBuilder: 

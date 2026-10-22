@@ -9,7 +9,8 @@
 #' The files live on `wsr.nhle.com` and answer only requests that come from
 #' nhl.com, so the request says it does (a `Referer` header).
 #' `nhl_goal_replay()` is the goal itself as the NHL's replay page has it:
-#' scorer, assists, strength, the score and the highlight video.
+#' scorer, assists, strength, the score, both clubs' logos and the highlight
+#' video.
 #'
 #' @param game_id Ten-digit NHL game id.
 #' @param event_id The goal's event id in the play-by-play (`event_id` in
@@ -51,6 +52,10 @@ nhl_goal_replay <- function(game_id, event_id) {
   goal$game_date <- as.Date(raw$gameDate)
   goal$away_team <- raw$awayTeam$abbrev
   goal$home_team <- raw$homeTeam$abbrev
+  goal$away_logo <- raw$awayTeam$logo %||% NA_character_
+  goal$home_logo <- raw$homeTeam$logo %||% NA_character_
+  goal$away_logo_dark <- raw$awayTeam$darkLogo %||% NA_character_
+  goal$home_logo_dark <- raw$homeTeam$darkLogo %||% NA_character_
   names(goal)[names(goal) == "period_descriptor_number"] <- "period"
   names(goal)[names(goal) == "period_descriptor_period_type"] <- "period_type"
   front(goal, c("game_id", "event_id", "game_date", "away_team", "home_team", "period", "period_type",

@@ -80,6 +80,16 @@ fetch_json <- function(url, query = list(), headers = list()) {
   body
 }
 
+# GET a file (a logo) as bytes, through the same throttle and retries.
+fetch_raw <- function(url) {
+  resp <- httr2::req_perform(build_request(url))
+  if (httr2::resp_status(resp) >= 400) {
+    cli::cli_abort(c("Couldn't fetch {.url {url}} (HTTP {httr2::resp_status(resp)}).", i = "{.url {httr2::resp_url(resp)}}"),
+                   class = "bluelineR_http_error")
+  }
+  httr2::resp_body_raw(resp)
+}
+
 #' Call any NHL endpoint
 #'
 #' The escape hatch: a GET against one of the NHL's APIs, returned as parsed

@@ -32,7 +32,8 @@ ice in the play-by-play's orientation (x along the rink, y across it).
 The files live on \code{wsr.nhle.com} and answer only requests that come from
 nhl.com, so the request says it does (a \code{Referer} header).
 \code{nhl_goal_replay()} is the goal itself as the NHL's replay page has it:
-scorer, assists, strength, the score and the highlight video.
+scorer, assists, strength, the score, both clubs' logos and the highlight
+video.
 }
 \examples{
 \dontshow{if (interactive()) withAutoprint(\{ # examplesIf}

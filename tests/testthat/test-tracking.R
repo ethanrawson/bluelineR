@@ -52,6 +52,8 @@ test_that("nhl_goal_tracking asks as nhl.com and nhl_goal_replay reads the goal"
   expect_equal(r$last_name, "McDavid")
   expect_equal(r$strength, "sh")
   expect_s3_class(r$assists[[1]], "tbl_df")
+  expect_match(r$away_logo, "EDM_light.svg", fixed = TRUE)
+  expect_match(r$home_logo_dark, "BOS_dark.svg", fixed = TRUE)
 })
 
 test_that("goal_context finds rebounds and faceoff goals", {
