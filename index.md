@@ -363,6 +363,24 @@ log[fifty, c("game_date", "opponent_abbrev", "goals", "assists")]
 #> 1 1981-12-30 PHI                 5       1
 ```
 
+[`nhl_era_adjust()`](https://ethanrawson.github.io/bluelineR/reference/nhl_era_adjust.md)
+puts any seasons on one scale: each rescaled to the last ten seasons’
+scoring, an 82-game schedule and today’s rosters (skaters dressed a
+game), as Hockey-Reference adjusts. Howe’s 1952-53 and Gretzky’s
+1981-82, side by side:
+
+``` r
+
+seasons <- rbind(nhl_stats("skater/summary", "1952-53", sort = "points", limit = 1),
+                 nhl_stats("skater/summary", "1981-82", sort = "points", limit = 1))
+nhl_era_adjust(seasons)[, c("skater_full_name", "season_id", "goals", "points", "adj_goals", "adj_points")]
+#> # A tibble: 2 × 6
+#>   skater_full_name season_id goals points adj_goals adj_points
+#>   <chr>                <int> <int>  <int>     <dbl>      <dbl>
+#> 1 Gordie Howe       19521953    49     95      59.7       122.
+#> 2 Wayne Gretzky     19811982    92    212      66.2       155.
+```
+
 ## The stats API
 
 ``` r

@@ -134,6 +134,10 @@
   : The NHL stats API
 - [`nhl_stat_eras()`](https://ethanrawson.github.io/bluelineR/reference/nhl_stat_eras.md)
   : What the NHL kept, and since when
+- [`nhl_era_adjust()`](https://ethanrawson.github.io/bluelineR/reference/nhl_era_adjust.md)
+  : Era-adjusted stats
+- [`nhl_league_env()`](https://ethanrawson.github.io/bluelineR/reference/nhl_league_env.md)
+  : Each season's scoring environment
 - [`nhl_teams()`](https://ethanrawson.github.io/bluelineR/reference/nhl_teams.md)
   [`nhl_seasons()`](https://ethanrawson.github.io/bluelineR/reference/nhl_teams.md)
   [`nhl_franchises()`](https://ethanrawson.github.io/bluelineR/reference/nhl_teams.md)

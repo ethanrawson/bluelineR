@@ -90,6 +90,15 @@
   [`nhl_shifts()`](https://ethanrawson.github.io/bluelineR/reference/nhl_shifts.md)
   say what an old game has.
 
+- [`nhl_era_adjust()`](https://ethanrawson.github.io/bluelineR/reference/nhl_era_adjust.md):
+  era-adjusted stats. Each season rescaled to one scoring environment
+  (by default the last ten completed seasons, over an 82-game schedule
+  and today’s roster sizes): adjusted goals, assists and points for
+  skaters, adjusted GAA and save % against the league’s for goalies.
+  [`nhl_league_env()`](https://ethanrawson.github.io/bluelineR/reference/nhl_league_env.md)
+  is the table it reads, every completed season since 1917-18, shipped
+  with the package.
+
 - [`nhl_player_game_log()`](https://ethanrawson.github.io/bluelineR/reference/nhl_player.md)
   and
   [`nhl_boxscore()`](https://ethanrawson.github.io/bluelineR/reference/nhl_boxscore.md)
