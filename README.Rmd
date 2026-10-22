@@ -193,6 +193,18 @@ the league did not keep comes back missing (or zero) before then. `nhl_stat_eras
 | 2021-22 | NHL EDGE tracking |
 | 2023-24 | Goal tracking |
 
+Gretzky's 1981-82, from the league's numbers and his game log: 92 goals, and the fiftieth in his
+thirty-ninth game.
+
+```{r gretzky}
+nhl_stats("skater/summary", "1981-82", sort = "points", limit = 5)[, c("skater_full_name", "team_abbrevs", "goals", "assists", "points")]
+log <- nhl_player_game_log(8447400, "1981-82")
+log <- log[order(log$game_date), ]
+fifty <- which(cumsum(log$goals) >= 50)[1]
+fifty
+log[fifty, c("game_date", "opponent_abbrev", "goals", "assists")]
+```
+
 ## The stats API
 
 ```{r stats}
