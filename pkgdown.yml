@@ -1,0 +1,10 @@
+pandoc: 3.8.3
+pkgdown: 2.2.1
+pkgdown_sha: ~
+articles:
+  bluelineR: bluelineR.html
+  goal-tracking: goal-tracking.html
+last_built: 2026-10-22T04:46Z
+urls:
+  reference: https://ethanrawson.github.io/bluelineR/reference
+  article: https://ethanrawson.github.io/bluelineR/articles
