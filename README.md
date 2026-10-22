@@ -204,8 +204,17 @@ limits; turn on `options(bluelineR.cache = TRUE)` to keep responses for
 the session.
 
 bluelineR stands on the work of other R hockey packages, notably
-[nhlscraper](https://cran.r-project.org/package=nhlscraper),
+[nhlscraper](https://rentosaijo.github.io/nhlscraper/),
 [hockeyR](https://cran.r-project.org/package=hockeyR) and
-[fastRhockey](https://cran.r-project.org/package=fastRhockey). What it
-adds is the goal tracking: the frames, the classifier and the rink
-plots.
+[fastRhockey](https://cran.r-project.org/package=fastRhockey). nhlscraper was first to the goal tracking
+frames: its `replay()` has read them from `wsr.nhle.com` since November 2025, and `replays()` serves a
+season of them at once. What bluelineR adds:
+
+* **Game tracking summaries** (`nhl_tracking_summary()`): each player's puck possession time, by zone
+  and strength, with speed, distance, zone time and zone starts, and each club's possession share, from
+  the per-game files at `live.nhle.com/ppt`.
+* **Reading a goal from its tracking** (`classify_goal()`): rush, breakaway, odd-man rush, one-timer,
+  cross-slot pass, traffic, behind the net and the forecheck, with who carried it in and who made the
+  pass, and the frame the puck went in (`goal_frame()`).
+* **NHL EDGE** leaderboards, comparison reports and last night's standouts, the goal replay summary
+  (`nhl_goal_replay()`) and player search.
