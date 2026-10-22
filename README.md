@@ -236,6 +236,59 @@ final[final$type == "goal", c("period", "time_in_period", "event_team", "player_
 #> 5      4 08:18          CAN        Connor McDavid        68       6
 ```
 
+## IIHF tournaments: every shot, located
+
+The IIHF's live-data feed has every game of its championships (the World Championship, the World
+Juniors, the women's and under-18 Worlds and the divisions) and the 2026 Olympics, with every shot
+placed on the ice from the 2019 tournaments on, goals and penalties, and each period's team stats. The
+2026 Olympic final, Jack Hughes in overtime:
+
+``` r
+shots <- iihf_shots(1010000058)
+shots[shots$result == "goal", c("period", "time", "team", "player_name", "x", "y", "distance")]
+table(shots$team, shots$result)
+
+wm <- iihf_schedule(2026, "wm")
+wm[wm$phase %in% c("Semifinals", "BronzeMedalGame", "GoldMedalGame"), c("game_id", "date", "phase", "home_team", "away_team", "home_score", "away_score")]
+#> # A tibble: 3 x 7
+#>   period time  team  player_name     x     y distance
+#>   <chr>  <chr> <chr> <chr>       <dbl> <dbl>    <dbl>
+#> 1 1      06:00 USA   Matt Boldy   80.8 -2.38     8.54
+#> 2 2      38:16 CAN   Cale Makar   65.8 19.8     30.5 
+#> 3 OT     61:41 USA   Jack Hughes  78   -3.57    11.6 
+#>      
+#>       blocked goal missed saved
+#>   CAN      24    1     12    41
+#>   USA      17    2     12    26
+#> # A tibble: 4 x 7
+#>   game_id date       phase           home_team away_team home_score away_score
+#>   <chr>   <date>     <chr>           <chr>     <chr>          <int>      <int>
+#> 1 12917   2026-05-30 Semifinals      SUI       NOR                6          0
+#> 2 12918   2026-05-30 Semifinals      CAN       FIN                2          4
+#> 3 12919   2026-05-31 BronzeMedalGame CAN       NOR                2          3
+#> 4 12920   2026-05-31 GoldMedalGame   SUI       FIN                0          1
+```
+
+``` r
+plot_shots(shots)
+```
+
+<img src="man/figures/README-iihf-1.png" alt="Every shot of the 2026 Olympic final, both teams attacking right; Hughes's overtime winner from the slot." width="100%" />
+
+## DraftKings odds and player props
+
+ESPN's NHL odds come from DraftKings: every game's moneyline, puck line and total, opening and current,
+and DraftKings' player props (shots, points, assists, saves, goalscorer, milestones, club totals), each
+over/under as one row with the no-vig chance and the player's NHL id.
+
+``` r
+odds <- espn_odds()
+odds[, c("home_team", "away_team", "home_ml", "away_ml", "home_win_prob", "total_line", "over_price", "under_price")]
+
+props <- espn_props()
+props[props$stat %in% "shots", c("team", "player_name", "player_id", "line", "over", "under", "over_prob")]
+```
+
 ## The stats API
 
 ``` r
@@ -263,6 +316,10 @@ nhl_stats("skater/summary", "2025-26", sort = "points", limit = 5)[, c("skater_f
 | Draft                       | `nhl_draft_rankings()`, `nhl_draft_picks()`                                                                                                 | `/draft/rankings`, `/draft/picks`                                                                  |
 | International | `nhl_international()`, `nhl_international_careers()`, `nhl_international_games()`, `nhl_international_winners()`, `nhl_olympic_podiums()` | `records.nhl.com/site/api/international-*`, `/olympic-*` |
 | Stats and records APIs      | `nhl_stats()`, `nhl_stats_reports()`, `nhl_teams()`, `nhl_seasons()`, `nhl_franchises()`, `nhl_records()`                                   | `api.nhle.com/stats/rest/en`, `records.nhl.com/site/api`                                           |
+| IIHF tournaments | `iihf_schedule()`, `iihf_olympic_games()`, `iihf_game()`, `iihf_shots()`, `iihf_events()`, `iihf_period_stats()` | `realtime.iihf.com/gamestate/GetLatestState/{game}`; schedules from `canada-central.iihf.com` |
+| DraftKings odds and props | `espn_odds()`, `espn_props()`, `devig()` | `site.api.espn.com/.../scoreboard`; `sports.core.api.espn.com/.../odds/100/propBets` |
+| Players, clubs and games, more | `nhl_player_bio()`, `nhl_team_comparison()`, `nhl_broadcasts()`, `nhl_quick_stats()`, `nhl_news()`, `nhl_videos()`, `espn_player_splits()` | `api-web.nhle.com/v2/player/{id}/bio`, `/v1/team-stats-comparison`, `/v1/how-to-watch`; `live.nhle.com/psr`; `forge-dapi.d3.nhle.com/v2/content`; ESPN athlete splits |
+| Playoff history | `nhl_playoff_series()`, `nhl_playoff_games()` | `records.nhl.com/site/api/playoff-franchise-vs-team`, `/yearly-playoff-series-details` |
 | Anything else               | `nhl_api()`, `tidy_json()`                                                                                                                  | any of the above                                                                                   |
 
 ## Being a good guest
@@ -290,5 +347,13 @@ season of them at once. What bluelineR adds:
   the scorer and his assists named, his skating speed and the finish again in slow motion.
 * **Best-on-best tournaments** (`nhl_international()` and the rest): every Canada Cup, World Cup,
   Olympics and 4 Nations from records.nhl.com, with careers, Olympic medals, every game and every final.
+* **IIHF tournaments with every shot located** (`iihf_shots()` and the rest): the World Championship,
+  World Juniors, women's and under-18 Worlds, the divisions and the 2026 Olympics, from the IIHF's
+  live-data feed, which no other package reads.
+* **DraftKings player props** (`espn_props()`): ESPN's prop list for every game, over and under paired
+  and each player matched to his NHL id, with game lines (`espn_odds()`) and `devig()`.
+* **The newer NHL endpoints**: the v2 player bio with every award and its season (`nhl_player_bio()`),
+  the team comparison, the viewing guide, the quick standings and leader files, NHL.com news and
+  videos, playoff series records and every playoff game, and all thirteen EDGE top-10 boards.
 * **NHL EDGE** leaderboards, comparison reports and last night's standouts, the goal replay summary
   (`nhl_goal_replay()`) and player search.

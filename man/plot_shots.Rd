@@ -7,7 +7,8 @@
 plot_shots(pbp, team = NULL)
 }
 \arguments{
-\item{pbp}{Play-by-play from \code{\link[=nhl_pbp]{nhl_pbp()}}.}
+\item{pbp}{Play-by-play from \code{\link[=nhl_pbp]{nhl_pbp()}}, or an IIHF game's shots from
+\code{\link[=iihf_shots]{iihf_shots()}}.}
 
 \item{team}{Only this club's shots; \code{NULL} for both, coloured by club.}
 }

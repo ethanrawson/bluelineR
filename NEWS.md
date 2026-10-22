@@ -1,5 +1,24 @@
 # bluelineR (development version)
 
+* IIHF tournaments, from the IIHF's live-data feed (`realtime.iihf.com`): `iihf_schedule()` lists a
+  tournament's games (the World Championship, World Juniors, women's and under-18 Worlds and the
+  divisions), `iihf_olympic_games()` every game of the 2026 Olympics, `iihf_game()` one game,
+  `iihf_period_stats()` each team's shots, saves, penalty minutes, power play and faceoffs by period,
+  `iihf_events()` goals with assists and strength, penalties and goalie changes, and `iihf_shots()`
+  every shot with its result (goal, saved, blocked, missed) and place on the ice, from the 2019
+  tournaments on. `plot_shots()` draws them, and knows the IIHF nations' colors.
+* DraftKings odds and props from ESPN: `espn_odds()` (moneyline, puck line and total, opening and
+  current, with no-vig chances), `espn_props()` (every player prop, over and under paired, with each
+  player's NHL id), `espn_player_splits()` and `devig()`.
+* `nhl_player_bio()`: the v2 player bio, with the draft and every NHL award and its season.
+* `nhl_team_comparison()`, `nhl_broadcasts()` (the viewing guide), `nhl_quick_stats()` (the static
+  standings, power-play and leader files at `live.nhle.com/psr`), `nhl_news()` and `nhl_videos()`
+  (NHL.com's content API).
+* `nhl_playoff_series()` and `nhl_playoff_games()`: a franchise's playoff record against each opponent,
+  and every playoff game of any season, from records.nhl.com.
+* `nhl_edge_leaders()` has all thirteen EDGE top-10 boards: skater shot location, team shot speed,
+  distance, zone time and shot location, and the goalie boards (5 on 5, by area, games above .900).
+
 * `nhl_international()`, `nhl_international_careers()`, `nhl_international_games()`,
   `nhl_international_winners()` and `nhl_olympic_podiums()`: every Canada Cup, World Cup of Hockey,
   Olympics and 4 Nations Face-Off with NHL players, from records.nhl.com.

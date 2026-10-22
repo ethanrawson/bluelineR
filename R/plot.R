@@ -55,8 +55,13 @@ nhl_rink <- function(ice = "#f7f9fc") {
 team_palette <- function(teams) {
   info <- nhl_team_info()
   fill <- info$primary_color[match(teams, info$abbrev)]
-  # The 4 Nations Face-Off, whose goals are tracked too.
-  nations <- c(CAN = "#D80621", USA = "#041E42", SWE = "#005293", FIN = "#002F6C")
+  # National teams: the 4 Nations Face-Off, whose goals are tracked too, and
+  # the IIHF's tournaments (iihf_shots()).
+  nations <- c(CAN = "#D80621", USA = "#041E42", SWE = "#005293", FIN = "#002F6C", CZE = "#11457E", SUI = "#DA291C",
+               GER = "#1a1a1a", SVK = "#0B4EA2", LAT = "#9E3039", DEN = "#C8102E", NOR = "#BA0C2F", AUT = "#ED2939",
+               FRA = "#0055A4", KAZ = "#00AFCA", ITA = "#008C45", GBR = "#012169", HUN = "#477050", SLO = "#005DA4",
+               POL = "#DC143C", JPN = "#BC002D", KOR = "#003478", CHN = "#DE2910", UKR = "#0057B7", NED = "#AE1C28",
+               BLR = "#C8313E", RUS = "#0039A6", EST = "#0072CE", LTU = "#006A44", ROU = "#002B7F", CRO = "#171796")
   fill[is.na(fill)] <- unname(nations[teams[is.na(fill)]])
   fill[is.na(fill)] <- c("#1f6feb", "#64748b")[seq_len(sum(is.na(fill)))]
   # Two clubs in alike colors: the second goes white with its color outlined.
@@ -148,7 +153,8 @@ plot_goal_sequence <- function(frames, n = 6, seconds = 5, title = NULL) {
 #' A game's shots on the rink, every club attacking to the right
 #' (`x_fixed`, `y_fixed` from [nhl_pbp()]): goals, saves and misses.
 #'
-#' @param pbp Play-by-play from [nhl_pbp()].
+#' @param pbp Play-by-play from [nhl_pbp()], or an IIHF game's shots from
+#'   [iihf_shots()].
 #' @param team Only this club's shots; `NULL` for both, coloured by club.
 #' @return A ggplot.
 #' @export
@@ -167,6 +173,7 @@ plot_shots <- function(pbp, team = NULL) {
     ggplot2::scale_shape_manual(values = c(Goal = 16, Saved = 1, Missed = 4), name = NULL, drop = FALSE) +
     ggplot2::scale_size_manual(values = c(Goal = 4, Saved = 2.4, Missed = 2), name = NULL, drop = FALSE) +
     ggplot2::scale_colour_manual(values = stats::setNames(ifelse(pal$fill == "#ffffff", pal$stroke, pal$fill), pal$team), name = NULL) +
-    ggplot2::labs(title = "Shots, attacking right", caption = "NHL play-by-play") +
+    ggplot2::labs(title = "Shots, attacking right",
+                  caption = if (identical(attr(pbp, "source"), "IIHF")) "IIHF live data" else "NHL play-by-play") +
     ggplot2::theme(legend.position = "bottom")
 }
