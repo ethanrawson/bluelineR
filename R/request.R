@@ -69,7 +69,8 @@ build_request <- function(url, query = list(), headers = list()) {
 # GET a URL and parse its JSON (lists, not data frames: the parsers below
 # decide the shape). Tests replace this one function with fixtures.
 fetch_json <- function(url, query = list(), headers = list()) {
-  key <- paste(url, paste(names(query), unlist(query), sep = "=", collapse = "&"))
+  q <- unlist(compact(query))
+  key <- paste(url, paste(names(q), q, sep = "=", collapse = "&"))
   if (isTRUE(getOption("bluelineR.cache", FALSE)) && exists(key, envir = .cache, inherits = FALSE)) {
     return(get(key, envir = .cache, inherits = FALSE))
   }

@@ -26,6 +26,8 @@ test_that("nhl_broadcasts() lists national, regional and streaming options", {
   expect_true(nrow(b) > 3)
   expect_true(any(b$market == "Regional Sports Network" & !is.na(b$team)))
   expect_true(any(grepl("ESPN", b$network)))
+  expect_true(all(c("logo_light", "logo_dark") %in% names(b)))
+  expect_true(any(grepl("^https://assets.nhle.com/.*light", b$logo_light)))
 })
 
 test_that("nhl_quick_stats() reads the static standings and leader files", {

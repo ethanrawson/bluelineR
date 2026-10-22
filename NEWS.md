@@ -18,6 +18,13 @@
   and every playoff game of any season, from records.nhl.com.
 * `nhl_edge_leaders()` has all thirteen EDGE top-10 boards: skater shot location, team shot speed,
   distance, zone time and shot location, and the goalie boards (5 on 5, by area, games above .900).
+* Records helpers: `nhl_franchise_records()` (each franchise's record in Game 7s, overtime, season openers,
+  outdoor games, games outside North America and at other neutral sites), `nhl_draft_lottery()` (every draw
+  since 1995: the pick, the clubs, the player) and `nhl_draft_lottery_odds()` (each club's chance, 1995 to
+  2021), `nhl_milestones()` (players closing in on a milestone, and how far they have to go), and
+  `nhl_records_catalog()`, a guide to the 78 records tables with the helper for each. `nhl_records()` takes
+  `include` to join related fields such as names and team codes.
+* `nhl_jersey_url()` (club jersey textures), and broadcaster logos in `nhl_broadcasts()`.
 * `plot_shots()` draws each club at its own end, the away club at the left net and the home club at
   the right; `sides = "right"` keeps the old view with every shot at one net.
 

@@ -15,7 +15,8 @@ A tibble, one row per broadcaster and market.
 \description{
 The NHL's viewing guide for a game: the national and regional networks
 carrying it in the US and Canada (each club's local broadcast) and the
-streaming options out of market and abroad.
+streaming options out of market and abroad, with each broadcaster's logo
+for light and dark backgrounds where the NHL has one.
 }
 \examples{
 \dontshow{if (interactive()) withAutoprint(\{ # examplesIf}

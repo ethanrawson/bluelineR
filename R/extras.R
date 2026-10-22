@@ -85,7 +85,8 @@ nhl_team_comparison <- function(team_a, team_b, season = NULL, game_type = "regu
 #'
 #' The NHL's viewing guide for a game: the national and regional networks
 #' carrying it in the US and Canada (each club's local broadcast) and the
-#' streaming options out of market and abroad.
+#' streaming options out of market and abroad, with each broadcaster's logo
+#' for light and dark backgrounds where the NHL has one.
 #'
 #' @inheritParams nhl_pbp
 #' @return A tibble, one row per broadcaster and market.
@@ -98,7 +99,8 @@ nhl_broadcasts <- function(game_id) {
   row <- function(p, b, team = NA_character_) tibble::tibble(
     market = p$market %||% NA_character_, countries = paste(unlist(p$countries), collapse = ","),
     team = team, broadcaster_id = b$id %||% NA_integer_, country_code = b$countryCode %||% NA_character_,
-    network = b$network %||% loc(b$title), language = b$languageCode %||% NA_character_, link = loc(b$weblink)
+    network = b$network %||% loc(b$title), language = b$languageCode %||% NA_character_, link = loc(b$weblink),
+    logo_light = b$logoUrls$light %||% NA_character_, logo_dark = b$logoUrls$dark %||% NA_character_
   )
   rows <- list()
   for (p in raw$panels %||% list()) {

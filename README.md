@@ -305,6 +305,30 @@ nhl_stats("skater/summary", "2025-26", sort = "points", limit = 5)[, c("skater_f
 #> 5 Mark Scheifele    WPG             36      67    103
 ```
 
+## The records site
+
+records.nhl.com keeps a century of tables. `nhl_records_catalog()` lists the 78 that answer, each with a line on
+what it holds, and helpers cover the ones people ask for: Game 7, overtime, season-opener, outdoor and overseas
+records, the draft lottery and its odds, and the milestones in sight.
+
+``` r
+nhl_franchise_records("game7")[1:5, c("franchise_name", "games_played", "wins", "losses")]
+#> # A tibble: 5 × 4
+#>   franchise_name      games_played  wins losses
+#>   <chr>                      <int> <int>  <int>
+#> 1 Boston Bruins                 31    16     15
+#> 2 Toronto Maple Leafs           28    12     16
+#> 3 Montréal Canadiens            26    17      9
+#> 4 Detroit Red Wings             25    14     11
+#> 5 St. Louis Blues               19    10      9
+nhl_draft_lottery(2026)[, c("draft_year", "pick", "lottery_team", "player_name", "effect")]
+#> # A tibble: 2 × 5
+#>   draft_year  pick lottery_team player_name   effect               
+#>        <int> <int> <chr>        <chr>         <chr>                
+#> 1       2026     1 TOR          Gavin McKenna Moved from 5th to 1st
+#> 2       2026     2 SJS          Ivar Stenberg Moved from 9th to 2nd
+```
+
 ## What it covers
 
 | Area                        | Functions                                                                                                                                   | Endpoint                                                                                           |
@@ -322,6 +346,8 @@ nhl_stats("skater/summary", "2025-26", sort = "points", limit = 5)[, c("skater_f
 | DraftKings odds and props | `espn_odds()`, `espn_props()`, `devig()` | `site.api.espn.com/.../scoreboard`; `sports.core.api.espn.com/.../odds/100/propBets` |
 | Players, clubs and games, more | `nhl_player_bio()`, `nhl_team_comparison()`, `nhl_broadcasts()`, `nhl_quick_stats()`, `nhl_news()`, `nhl_videos()`, `espn_player_splits()` | `api-web.nhle.com/v2/player/{id}/bio`, `/v1/team-stats-comparison`, `/v1/how-to-watch`; `live.nhle.com/psr`; `forge-dapi.d3.nhle.com/v2/content`; ESPN athlete splits |
 | Playoff history | `nhl_playoff_series()`, `nhl_playoff_games()` | `records.nhl.com/site/api/playoff-franchise-vs-team`, `/yearly-playoff-series-details` |
+| Records | `nhl_franchise_records()`, `nhl_draft_lottery()`, `nhl_draft_lottery_odds()`, `nhl_milestones()`, `nhl_records_catalog()` | `records.nhl.com/site/api/franchise-all-time-*`, `/neutral-site-standings`, `/draft-lottery-*`; `api.nhle.com/stats/rest/en/milestones` |
+| Images | `nhl_headshot_url()`, `nhl_logo_url()`, `nhl_jersey_url()`; broadcaster logos in `nhl_broadcasts()` | `assets.nhle.com/mugs`, `/logos/nhl`, `/textures/nhl/jersey`, `/logos/broadcast` |
 | Anything else               | `nhl_api()`, `tidy_json()`                                                                                                                  | any of the above                                                                                   |
 
 ## Being a good guest

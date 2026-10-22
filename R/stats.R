@@ -84,13 +84,19 @@ nhl_franchises <- function() records_to_tibble(fetch_json(api_url("stats", "fran
 #' @param resource The table.
 #' @param filter A Cayenne expression, e.g. `"draftYear=2015"`.
 #' @param limit Rows to return; `NULL` for the API's default.
+#' @param include Related fields to join in, e.g. `"player.lastName"` or
+#'   `"draftTeam.triCode"`; they come back as columns (`player_last_name`).
 #' @return A tibble.
+#' @seealso [nhl_records_catalog()] for every table and what it holds.
 #' @export
 #' @examplesIf interactive()
 #' nhl_records("officials")
 #' nhl_records("draft", filter = "draftYear=2015 and roundNumber=1")
-nhl_records <- function(resource, filter = NULL, limit = NULL) {
-  raw <- fetch_json(api_url("records", resource), query = list(cayenneExp = filter, limit = limit))
+#' nhl_records("draft-lottery-picks", include = c("player.lastName", "draftTeam.triCode"))
+nhl_records <- function(resource, filter = NULL, limit = NULL, include = NULL) {
+  query <- list(cayenneExp = filter, limit = limit)
+  if (length(include)) query <- c(query, stats::setNames(as.list(include), rep("include", length(include))))
+  raw <- fetch_json(api_url("records", resource), query = query)
   records_to_tibble(raw$data %||% list())
 }
 

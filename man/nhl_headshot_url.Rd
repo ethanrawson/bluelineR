@@ -3,11 +3,14 @@
 \name{nhl_headshot_url}
 \alias{nhl_headshot_url}
 \alias{nhl_logo_url}
-\title{Headshot and logo URLs}
+\alias{nhl_jersey_url}
+\title{Headshot, logo and jersey URLs}
 \usage{
 nhl_headshot_url(player_id, team = NULL, season = NULL)
 
 nhl_logo_url(team, variant = c("light", "dark"))
+
+nhl_jersey_url(team)
 }
 \arguments{
 \item{player_id}{NHL player id.}
@@ -23,10 +26,17 @@ A URL.
 }
 \description{
 Image URLs on the NHL's asset server: a player's headshot in a given
-season's sweater (or his latest), and a club's logo.
+season's sweater (or his latest), a club's logo, and its jersey texture,
+a 96-pixel square of sweater mesh in the club's colour that tiles
+seamlessly (NHL.com fills player cards with it); \code{"NHL"} gives the
+league's own.
 }
 \examples{
 nhl_headshot_url(8478402)
 nhl_headshot_url(8478402, "EDM", "2016-17")
 nhl_logo_url("EDM", "dark")
+nhl_jersey_url("EDM")
+}
+\seealso{
+\code{\link[=nhl_broadcasts]{nhl_broadcasts()}} for broadcasters' logos.
 }

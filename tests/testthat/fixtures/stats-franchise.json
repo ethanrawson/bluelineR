@@ -1,0 +1,17 @@
+{
+ "data": [
+  {
+   "id": 1,
+   "fullName": "Montréal Canadiens",
+   "teamCommonName": "Canadiens",
+   "teamPlaceName": "Montréal"
+  },
+  {
+   "id": 6,
+   "fullName": "Boston Bruins",
+   "teamCommonName": "Bruins",
+   "teamPlaceName": "Boston"
+  }
+ ],
+ "total": 40
+}

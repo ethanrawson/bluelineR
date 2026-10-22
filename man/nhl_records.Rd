@@ -4,7 +4,7 @@
 \alias{nhl_records}
 \title{The NHL records API}
 \usage{
-nhl_records(resource, filter = NULL, limit = NULL)
+nhl_records(resource, filter = NULL, limit = NULL, include = NULL)
 }
 \arguments{
 \item{resource}{The table.}
@@ -12,6 +12,9 @@ nhl_records(resource, filter = NULL, limit = NULL)
 \item{filter}{A Cayenne expression, e.g. \code{"draftYear=2015"}.}
 
 \item{limit}{Rows to return; \code{NULL} for the API's default.}
+
+\item{include}{Related fields to join in, e.g. \code{"player.lastName"} or
+\code{"draftTeam.triCode"}; they come back as columns (\code{player_last_name}).}
 }
 \value{
 A tibble.
@@ -26,5 +29,9 @@ table (\code{"officials"}, \code{"coach-career-records"}, \code{"draft"},
 \dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 nhl_records("officials")
 nhl_records("draft", filter = "draftYear=2015 and roundNumber=1")
+nhl_records("draft-lottery-picks", include = c("player.lastName", "draftTeam.triCode"))
 \dontshow{\}) # examplesIf}
+}
+\seealso{
+\code{\link[=nhl_records_catalog]{nhl_records_catalog()}} for every table and what it holds.
 }

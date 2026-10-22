@@ -1,0 +1,47 @@
+{
+ "data": [
+  {
+   "id": 48,
+   "draftTeam": {
+    "triCode": "TOR"
+   },
+   "draftTeamId": 10,
+   "draftYear": 2026,
+   "effectOnDraftOrder": "Moved from 5th to 1st",
+   "lotteryTeam": {
+    "triCode": "TOR"
+   },
+   "lotteryTeamId": 10,
+   "phase": null,
+   "player": {
+    "firstName": "Gavin",
+    "lastName": "McKenna"
+   },
+   "playerId": 8486067,
+   "playerNotes": null,
+   "sequence": 1
+  },
+  {
+   "id": 49,
+   "draftTeam": {
+    "triCode": "SJS"
+   },
+   "draftTeamId": 28,
+   "draftYear": 2026,
+   "effectOnDraftOrder": "Moved from 9th to 2nd",
+   "lotteryTeam": {
+    "triCode": "SJS"
+   },
+   "lotteryTeamId": 28,
+   "phase": null,
+   "player": {
+    "firstName": "Ivar",
+    "lastName": "Stenberg"
+   },
+   "playerId": 8486103,
+   "playerNotes": null,
+   "sequence": 2
+  }
+ ],
+ "total": 2
+}

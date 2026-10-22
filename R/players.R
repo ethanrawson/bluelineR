@@ -143,21 +143,26 @@ nhl_stat_leaders <- function(type = c("skater", "goalie"), season = NULL, game_t
   }))
 }
 
-#' Headshot and logo URLs
+#' Headshot, logo and jersey URLs
 #'
 #' Image URLs on the NHL's asset server: a player's headshot in a given
-#' season's sweater (or his latest), and a club's logo.
+#' season's sweater (or his latest), a club's logo, and its jersey texture,
+#' a 96-pixel square of sweater mesh in the club's colour that tiles
+#' seamlessly (NHL.com fills player cards with it); `"NHL"` gives the
+#' league's own.
 #'
 #' @param player_id NHL player id.
 #' @param team Club abbreviation; needed with `season`.
 #' @param season Season for the headshot; `NULL` for the latest one.
 #' @param variant `"light"` (for light backgrounds) or `"dark"`.
 #' @return A URL.
+#' @seealso [nhl_broadcasts()] for broadcasters' logos.
 #' @export
 #' @examples
 #' nhl_headshot_url(8478402)
 #' nhl_headshot_url(8478402, "EDM", "2016-17")
 #' nhl_logo_url("EDM", "dark")
+#' nhl_jersey_url("EDM")
 nhl_headshot_url <- function(player_id, team = NULL, season = NULL) {
   if (is.null(season)) return(sprintf("https://assets.nhle.com/mugs/nhl/latest/%s.png", player_id))
   if (is.null(team)) cli::cli_abort("A season's headshot needs the {.arg team} he played for.")
@@ -169,4 +174,11 @@ nhl_headshot_url <- function(player_id, team = NULL, season = NULL) {
 nhl_logo_url <- function(team, variant = c("light", "dark")) {
   variant <- match.arg(variant)
   sprintf("https://assets.nhle.com/logos/nhl/svg/%s_%s.svg", team_lookup(team), variant)
+}
+
+#' @rdname nhl_headshot_url
+#' @export
+nhl_jersey_url <- function(team) {
+  key <- if (identical(toupper(as.character(team)), "NHL")) "NHL" else team_lookup(team)
+  sprintf("https://assets.nhle.com/textures/nhl/jersey/png/%s.png", key)
 }
