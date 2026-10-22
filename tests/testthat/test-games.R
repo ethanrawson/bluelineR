@@ -62,3 +62,17 @@ test_that("nhl_shifts keeps shifts and adds seconds", {
 test_that("game ids are checked", {
   expect_error(nhl_pbp(123), "ten-digit")
 })
+
+test_that("boxscores from before ice time was recorded still read", {
+  local_nhl(c("boxscore" = "boxscore-1981020100"))
+  b <- nhl_boxscore(1981020100)
+  expect_equal(nrow(b$skaters), 8)
+  expect_true(all(is.na(b$skaters$toi_seconds)))
+  expect_true(all(c("goals", "assists", "sog") %in% names(b$skaters)))
+})
+
+test_that("plot_shots() says why when a game has no shot locations", {
+  skip_if_not_installed("ggplot2")
+  old <- tibble::tibble(type = c("goal", "penalty"), x_fixed = NA_real_, y_fixed = NA_real_, event_team = "EDM")
+  expect_error(plot_shots(old), "2009-10")
+})

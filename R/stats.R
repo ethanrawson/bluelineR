@@ -8,6 +8,11 @@
 #' Filters are the API's own Cayenne expressions, joined with `and`:
 #' `filter = "teamAbbrevs='EDM'"`, `filter = "gamesPlayed>=20"`.
 #'
+#' Every season back to 1917-18 is there, but not every column: shots and
+#' plus/minus start in 1959-60, ice time in 1997-98, hits in 2005-06.
+#' [nhl_stat_eras()] has each column's first season, and sorting by one for
+#' seasons before it says so.
+#'
 #' @param report The report, e.g. `"skater/summary"`.
 #' @param season Season (see [nhl_season()]); `NULL` for the current one, or
 #'   a vector of two for a range.
@@ -23,11 +28,13 @@
 #' nhl_stats("skater/summary", "2025-26", sort = "points", limit = 10)
 #' nhl_stats("goalie/summary", filter = "gamesPlayed>=20", sort = "+goalsAgainstAverage")
 #' nhl_stats("skater/realtime", c(2015, 2025), aggregate = TRUE, sort = "hits", limit = 20)
+#' nhl_stats("skater/summary", "1981-82", sort = "points", limit = 5)
 nhl_stats <- function(report = "skater/summary", season = NULL, game_type = "regular", filter = NULL,
                       sort = NULL, limit = -1, aggregate = FALSE, by_game = FALSE) {
   seasons <- if (is.null(season)) nhl_season() else vapply(season, nhl_season, numeric(1))
   season_expr <- if (length(seasons) == 2) sprintf("seasonId>=%s and seasonId<=%s", min(seasons), max(seasons))
                  else sprintf("seasonId=%s", seasons)
+  if (!is.null(sort)) stat_era_check(report, to_snake(sub("^[+-]", "", sort)), seasons)
   cayenne <- paste(c(season_expr, sprintf("gameTypeId=%d", nhl_game_type(game_type)), filter), collapse = " and ")
   q <- list(isAggregate = tolower(aggregate), isGame = tolower(by_game), limit = limit, start = 0, cayenneExp = cayenne)
   if (!is.null(sort)) {

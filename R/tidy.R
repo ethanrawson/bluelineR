@@ -110,6 +110,9 @@ tidy_json <- function(x) {
   out
 }
 
+# Ice time as seconds, NA where the NHL has none (anything before 1997-98).
+toi_seconds <- function(d) if ("toi" %in% names(d)) clock_seconds(d$toi) else rep(NA_real_, nrow(d))
+
 clock_seconds <- function(x) {
   x <- as.character(x)
   out <- rep(NA_real_, length(x))

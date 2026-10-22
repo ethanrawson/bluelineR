@@ -175,6 +175,10 @@ plot_shots <- function(pbp, team = NULL, sides = c("both", "right")) {
   sides <- match.arg(sides)
   shots <- pbp[pbp$type %in% c("goal", "shot-on-goal", "missed-shot") & !is.na(pbp$x_fixed), ]
   if (!is.null(team)) shots <- shots[shots$event_team == team, ]
+  if (!nrow(shots)) {
+    cli::cli_abort(c("There are no located shots to plot.",
+                     i = "NHL play-by-play has shot locations from 2009-10 on; see {.fn nhl_stat_eras}."))
+  }
   shots$result <- factor(c(goal = "Goal", `shot-on-goal` = "Saved", `missed-shot` = "Missed")[shots$type],
                          levels = c("Goal", "Saved", "Missed"))
   # Home or away: nhl_pbp() calls it event_team_type, iihf_shots() team_side.

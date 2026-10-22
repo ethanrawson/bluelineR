@@ -76,6 +76,10 @@ nhl_standings <- function(date = NULL) {
 #' it (`x`, `y`, feet from centre ice) and turned so the event's team always
 #' attacks to the right (`x_fixed`, `y_fixed`), the usual frame for shot maps.
 #'
+#' Every game since 1917-18 has a play-by-play, but the early ones are short:
+#' goals and penalties only until 1997-98, shots on goal added from then, and
+#' every event with its location from 2009-10 (see [nhl_stat_eras()]).
+#'
 #' @param game_id Ten-digit NHL game id, e.g. `2025020534`.
 #' @return A tibble, one row per event.
 #' @export
@@ -83,7 +87,9 @@ nhl_standings <- function(date = NULL) {
 #' pbp <- nhl_pbp(2025020534)
 #' pbp[pbp$type == "goal", c("period", "time_in_period", "event_team", "player_1_name")]
 nhl_pbp <- function(game_id) {
-  parse_pbp(fetch_json(api_url("web", "gamecenter", check_game_id(game_id), "play-by-play")))
+  out <- parse_pbp(fetch_json(api_url("web", "gamecenter", check_game_id(game_id), "play-by-play")))
+  era_note(game_id, "pbp")
+  out
 }
 
 parse_pbp <- function(raw) {
@@ -190,8 +196,8 @@ parse_boxscore <- function(raw) {
   skaters <- bind_rows_fill(list(side("awayTeam", "forwards"), side("awayTeam", "defense"),
                                  side("homeTeam", "forwards"), side("homeTeam", "defense")))
   goalies <- bind_rows_fill(list(side("awayTeam", "goalies"), side("homeTeam", "goalies")))
-  skaters$toi_seconds <- clock_seconds(skaters$toi)
-  goalies$toi_seconds <- clock_seconds(goalies$toi)
+  skaters$toi_seconds <- toi_seconds(skaters)
+  goalies$toi_seconds <- toi_seconds(goalies)
   teams <- records_to_tibble(list(raw$awayTeam, raw$homeTeam))
   teams$team_type <- c("away", "home")
   list(
@@ -219,7 +225,8 @@ nhl_game <- function(game_id) {
 #' Shift charts
 #'
 #' Every shift each player took: when it started and ended (as the period
-#' clock and as seconds into the game) and how long it lasted.
+#' clock and as seconds into the game) and how long it lasted. The NHL's
+#' shift charts start in 2010-11.
 #'
 #' @inheritParams nhl_pbp
 #' @param shifts_only Drop the goal rows the NHL mixes into the chart.
@@ -230,7 +237,9 @@ nhl_game <- function(game_id) {
 #' aggregate(duration_seconds ~ player_name, shifts, sum)
 nhl_shifts <- function(game_id, shifts_only = TRUE) {
   raw <- fetch_json(api_url("stats", "shiftcharts"), query = list(cayenneExp = paste0("gameId=", check_game_id(game_id))))
-  parse_shifts(raw, shifts_only)
+  out <- parse_shifts(raw, shifts_only)
+  if (!nrow(out)) era_note(game_id, "shifts")
+  out
 }
 
 parse_shifts <- function(raw, shifts_only = TRUE) {

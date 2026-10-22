@@ -31,7 +31,7 @@ reference:
 - title: More from the NHL
   contents: [nhl_player_bio, nhl_team_comparison, nhl_broadcasts, nhl_quick_stats, nhl_news, nhl_playoff_series]
 - title: Stats and records APIs
-  contents: [nhl_stats, nhl_teams, nhl_records, nhl_records_catalog, nhl_franchise_records, nhl_milestones]
+  contents: [nhl_stats, nhl_stat_eras, nhl_teams, nhl_records, nhl_records_catalog, nhl_franchise_records, nhl_milestones]
 - title: Plots
   contents: [nhl_rink, plot_goal, plot_shots, animate_goal]
 - title: Helpers

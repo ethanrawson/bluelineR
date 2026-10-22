@@ -39,8 +39,7 @@ nhl_player_game_log <- function(player_id, season = NULL, game_type = "regular")
   log <- records_to_tibble(raw$gameLog %||% list())
   if (nrow(log)) {
     log$game_date <- as.Date(log$game_date)
-    # Ice time is only in the logs from 1997-98; older seasons have no toi.
-    log$toi_seconds <- if ("toi" %in% names(log)) clock_seconds(log$toi) else NA_real_
+    log$toi_seconds <- toi_seconds(log)
     log$player_id <- player_id
   }
   front(log, c("player_id", "game_id", "game_date", "team_abbrev", "home_road_flag", "opponent_abbrev"))

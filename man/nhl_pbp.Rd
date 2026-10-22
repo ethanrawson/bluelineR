@@ -19,6 +19,11 @@ by id and name, the running score, and the location twice: as the feed has
 it (\code{x}, \code{y}, feet from centre ice) and turned so the event's team always
 attacks to the right (\code{x_fixed}, \code{y_fixed}), the usual frame for shot maps.
 }
+\details{
+Every game since 1917-18 has a play-by-play, but the early ones are short:
+goals and penalties only until 1997-98, shots on goal added from then, and
+every event with its location from 2009-10 (see \code{\link[=nhl_stat_eras]{nhl_stat_eras()}}).
+}
 \examples{
 \dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 pbp <- nhl_pbp(2025020534)

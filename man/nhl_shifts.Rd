@@ -16,7 +16,8 @@ A tibble, one row per shift.
 }
 \description{
 Every shift each player took: when it started and ended (as the period
-clock and as seconds into the game) and how long it lasted.
+clock and as seconds into the game) and how long it lasted. The NHL's
+shift charts start in 2010-11.
 }
 \examples{
 \dontshow{if (interactive()) withAutoprint(\{ # examplesIf}

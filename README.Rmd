@@ -172,6 +172,27 @@ props <- espn_props()
 props[props$stat %in% "shots", c("team", "player_name", "player_id", "line", "over", "under", "over_prob")]
 ```
 
+## How far back it goes
+
+Every season since 1917-18 is in the NHL's data, but each kind of number starts in its own year, and a column
+the league did not keep comes back missing (or zero) before then. `nhl_stat_eras()` has the eras and, with
+`by = "stat"`, the first season of each stats column, measured against the live API; `nhl_stats()`,
+`nhl_pbp()` and `nhl_shifts()` say so when you ask for something older than the data.
+
+| From | What starts |
+|---|---|
+| 1917-18 | Goals, assists, points, penalty minutes; goalie wins, goals against and shutouts; every game's boxscore, player game logs, and play-by-play of goals and penalties |
+| 1933-34 | Even-strength, power-play and short-handed goals and points |
+| 1955-56 | Goalies' shots against, saves and save percentage |
+| 1959-60 | Shots and plus/minus |
+| 1977-78 | Team power-play and penalty-kill percentages |
+| 1997-98 | Ice time, shifts and faceoffs; shots on goal in the play-by-play |
+| 2005-06 | Hits, blocked shots, giveaways, takeaways and missed shots |
+| 2009-10 | Every event in the play-by-play, with its location (shot maps) |
+| 2010-11 | Shift charts |
+| 2021-22 | NHL EDGE tracking |
+| 2023-24 | Goal tracking |
+
 ## The stats API
 
 ```{r stats}
