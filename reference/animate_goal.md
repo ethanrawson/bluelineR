@@ -19,7 +19,9 @@ animate_goal(
   slow_motion = TRUE,
   width = 1280,
   height = 720,
-  title = NULL
+  title = NULL,
+  logos = FALSE,
+  centre_logo = NULL
 )
 ```
 
@@ -62,6 +64,16 @@ animate_goal(
 
   Title; `NULL` for the scorer, period and clock when `goal` is given.
 
+- logos:
+
+  Draw the clubs' logos (from `goal`, which has their addresses). Needs
+  the rsvg package.
+
+- centre_logo:
+
+  The URL or path of a logo for centre ice, in place of the home club's:
+  an SVG (needs rsvg) or a PNG (needs png).
+
 ## Value
 
 `file`, invisibly.
@@ -75,6 +87,10 @@ video; without it the scorer is the shooter
 [`classify_goal()`](https://ethanrawson.github.io/bluelineR/reference/classify_goal.md)
 finds and nobody is named.
 
+With `logos = TRUE` the clubs' logos stand in for their abbreviations in
+the title and the home club's logo goes on centre ice; `centre_logo`
+puts another there, like a special event's.
+
 Frames are drawn with base graphics and encoded by the av package (H.264
 where FFmpeg has it); a full-size clip takes under a minute.
 
@@ -84,6 +100,12 @@ where FFmpeg has it); a full-size clip takes under a minute.
 if (FALSE) { # interactive() && requireNamespace("av", quietly = TRUE)
 frames <- nhl_goal_tracking(2025020534, 777)
 animate_goal(frames, "mcdavid.mp4", goal = nhl_goal_replay(2025020534, 777))
+
+# McDavid's overtime winner in the 4 Nations final, with the logos:
+four_nations <- paste0("https://assets.nhle.com/special_event_season/20242025/svg/",
+                       "4n-2025-championship-extwm-en_light.svg")
+animate_goal(nhl_goal_tracking(2024200007, 1443), "4-nations.mp4",
+             goal = nhl_goal_replay(2024200007, 1443), logos = TRUE, centre_logo = four_nations)
 
 # Offline, from the copy that ships with the package:
 path <- system.file("extdata", "goal-2025020534-777.json.gz", package = "bluelineR")

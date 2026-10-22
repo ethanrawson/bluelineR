@@ -37,7 +37,8 @@ along as attributes. `nhl_goal_replay()`: a one-row tibble.
 The files live on `wsr.nhle.com` and answer only requests that come from
 nhl.com, so the request says it does (a `Referer` header).
 `nhl_goal_replay()` is the goal itself as the NHL's replay page has it:
-scorer, assists, strength, the score and the highlight video.
+scorer, assists, strength, the score, both clubs' logos and the
+highlight video.
 
 ## Examples
 
