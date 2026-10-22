@@ -66,11 +66,13 @@ pbp[pbp$type == "goal", c("period", "time_in_period", "event_team", "strength_st
 #> 4      3 01:41          EDM        4v5            Connor McDavid           87      -3
 ```
 
+`plot_shots()` puts each club at its own end, the away club at the left net:
+
 ``` r
 plot_shots(pbp)
 ```
 
-<img src="man/figures/README-shots-1.png" alt="Shot map of Edmonton at Boston, both clubs attacking right." width="100%" />
+<img src="man/figures/README-shots-1.png" alt="Shot map of Edmonton at Boston: Edmonton at the left net, Boston at the right." width="100%" />
 
 ## A goal, from the tracking
 
@@ -273,7 +275,7 @@ wm[wm$phase %in% c("Semifinals", "BronzeMedalGame", "GoldMedalGame"), c("game_id
 plot_shots(shots)
 ```
 
-<img src="man/figures/README-iihf-1.png" alt="Every shot of the 2026 Olympic final, both teams attacking right; Hughes's overtime winner from the slot." width="100%" />
+<img src="man/figures/README-iihf-1.png" alt="Every shot of the 2026 Olympic final: USA at the left net, Canada at the right; Hughes's overtime winner from the slot." width="100%" />
 
 ## DraftKings odds and player props
 

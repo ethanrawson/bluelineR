@@ -4,23 +4,34 @@
 \alias{plot_shots}
 \title{Shot map}
 \usage{
-plot_shots(pbp, team = NULL)
+plot_shots(pbp, team = NULL, sides = c("both", "right"))
 }
 \arguments{
 \item{pbp}{Play-by-play from \code{\link[=nhl_pbp]{nhl_pbp()}}, or an IIHF game's shots from
 \code{\link[=iihf_shots]{iihf_shots()}}.}
 
 \item{team}{Only this club's shots; \code{NULL} for both, coloured by club.}
+
+\item{sides}{\code{"both"}: each club at its own end (away left, home right).
+\code{"right"}: every shot at the right-hand net.}
 }
 \value{
 A ggplot.
 }
 \description{
-A game's shots on the rink, every club attacking to the right
-(\code{x_fixed}, \code{y_fixed} from \code{\link[=nhl_pbp]{nhl_pbp()}}): goals, saves and misses.
+A game's shots on the rink, each club's at the net it attacks: the away
+club's at the left end and the home club's at the right, the way a game
+is usually drawn, for the whole game (the play-by-play's \code{x_fixed},
+\code{y_fixed}, turned back for the away club). Goals, saves and misses.
+\code{sides = "right"} puts every shot at the right-hand net instead, which
+compares the clubs' shot locations on top of each other; a single club
+(\code{team}) always attacks right.
 }
 \examples{
 \dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
-plot_shots(nhl_pbp(2025020534))
+pbp <- nhl_pbp(2025020534)
+plot_shots(pbp)
+plot_shots(pbp, sides = "right")
+plot_shots(pbp, team = "EDM")
 \dontshow{\}) # examplesIf}
 }
