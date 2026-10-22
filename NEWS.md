@@ -30,6 +30,10 @@
   charts from 2010-11, tracking from 2021-22) and as each stats column's first season, measured against the
   live API. `nhl_stats()` says when it is sorting by a column the NHL did not keep for the seasons asked for,
   and `nhl_pbp()` and `nhl_shifts()` say what an old game has.
+* `nhl_era_adjust()`: era-adjusted stats. Each season rescaled to one scoring environment (by default the
+  last ten completed seasons, over an 82-game schedule and today's roster sizes): adjusted goals, assists and
+  points for skaters, adjusted GAA and save % against the league's for goalies. `nhl_league_env()` is the
+  table it reads, every completed season since 1917-18, shipped with the package.
 * `nhl_player_game_log()` and `nhl_boxscore()` read seasons before 1997-98, which have no ice time (they used
   to fail on them), and `plot_shots()` says why when a game has no shot locations.
 * `plot_shots()` draws each club at its own end, the away club at the left net and the home club at

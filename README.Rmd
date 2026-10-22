@@ -205,6 +205,16 @@ fifty
 log[fifty, c("game_date", "opponent_abbrev", "goals", "assists")]
 ```
 
+`nhl_era_adjust()` puts any seasons on one scale: each rescaled to the last ten seasons' scoring, an
+82-game schedule and today's rosters (skaters dressed a game), as Hockey-Reference adjusts. Howe's 1952-53
+and Gretzky's 1981-82, side by side:
+
+```{r era}
+seasons <- rbind(nhl_stats("skater/summary", "1952-53", sort = "points", limit = 1),
+                 nhl_stats("skater/summary", "1981-82", sort = "points", limit = 1))
+nhl_era_adjust(seasons)[, c("skater_full_name", "season_id", "goals", "points", "adj_goals", "adj_points")]
+```
+
 ## The stats API
 
 ```{r stats}
