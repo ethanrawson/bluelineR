@@ -1,0 +1,37 @@
+Package: bluelineR
+Title: Tidy Access to the NHL's Web, Stats, EDGE and Goal-Tracking APIs
+Version: 0.1.0
+Authors@R: 
+    person("Ethan", "Rawson", , "ethanb.rawson@icloud.com", role = c("aut", "cre", "cph"))
+Description: Wraps the public endpoints behind NHL.com: schedules, scores,
+    standings, play-by-play, box scores and shift charts; players, rosters,
+    stat leaders and the draft; the stats and records APIs; NHL EDGE skating,
+    shot and zone-time tracking; and the puck and player tracking frames
+    behind every goal since 2023-24. Results come back as tibbles with
+    snake_case names and rink coordinates in feet, with helpers that read how
+    a goal was scored from its tracking and draw it on a rink.
+License: MIT + file LICENSE
+URL: https://github.com/ethanrawson/bluelineR,
+    https://ethanrawson.github.io/bluelineR/
+BugReports: https://github.com/ethanrawson/bluelineR/issues
+Depends: 
+    R (>= 4.1.0)
+Imports: 
+    cli,
+    httr2 (>= 1.0.0),
+    jsonlite,
+    rlang (>= 1.1.0),
+    tibble,
+    vctrs
+Suggests: 
+    ggplot2 (>= 3.4.0),
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0),
+    withr
+VignetteBuilder: 
+    knitr
+Config/testthat/edition: 3
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+Config/roxygen2/version: 8.1.1

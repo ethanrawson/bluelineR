@@ -1,0 +1,103 @@
+---
+title: "Getting started with bluelineR"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting started with bluelineR}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+# This vignette calls the NHL's APIs. It runs when the docs site is built
+# (BLUELINER_LIVE=true) and is shown without output otherwise.
+live <- identical(Sys.getenv("BLUELINER_LIVE"), "true")
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", eval = live, fig.width = 7.5, fig.height = 4, dpi = 110)
+options(tibble.print_min = 5, width = 90)
+```
+
+```{r}
+library(bluelineR)
+```
+
+## A night of hockey
+
+```{r}
+scores <- nhl_scores("2026-10-20")
+scores[, c("id", "away_team_abbrev", "away_team_score", "home_team_abbrev", "home_team_score", "game_outcome_last_period_type")]
+```
+
+`id` is the game id every game function takes.
+
+## One game
+
+```{r}
+pbp <- nhl_pbp(2025020534)
+table(pbp$type)
+```
+
+Each event has the clock (`period_seconds`, `game_seconds`), the strength from the event team's side
+(`strength_state`, e.g. `"5v4"`), the players by id and name, the running score, and the location twice:
+as the feed gives it (`x`, `y`) and turned so the event team attacks right (`x_fixed`, `y_fixed`).
+
+```{r, fig.alt = "Shot map, both clubs attacking right."}
+plot_shots(pbp)
+```
+
+```{r}
+box <- nhl_boxscore(2025020534)
+box$skaters[order(-box$skaters$toi_seconds), c("team", "name", "position", "goals", "assists", "sog", "toi")]
+
+shifts <- nhl_shifts(2025020534)
+head(shifts[, c("team_abbrev", "player_name", "period", "start_time", "end_time", "duration_seconds")])
+```
+
+## Every goal's tracking
+
+```{r}
+goals <- pbp[pbp$type == "goal", ]
+kinds <- do.call(rbind, lapply(seq_len(nrow(goals)), function(i) {
+  fr <- nhl_goal_tracking(goals$game_id[i], goals$event_id[i])
+  cbind(goals[i, c("event_id", "event_team", "player_1_name")],
+        classify_goal(fr, team = goals$event_team[i], shot_type = goals$shot_type[i])[, c("distance", "shot_speed", "kinds")])
+}))
+kinds
+```
+
+See `vignette("goal-tracking")` for one goal in detail.
+
+## NHL EDGE
+
+```{r}
+nhl_edge_leaders("skater_shot_speed", season = "2025-26")[, c("rank", "player_first_name", "player_last_name", "player_team_abbrev", "hardest_shot_imperial")]
+
+nhl_edge_team("EDM", "2025-26", report = "zone_time")$zone_time_details
+```
+
+## Players and clubs
+
+```{r}
+nhl_player_search("hughes", active = TRUE)[, c("player_id", "name", "team_abbrev", "position_code")]
+
+log <- nhl_player_game_log(8478402, "2025-26")
+sum(log$goals)
+
+nhl_roster("EDM")[, c("full_name", "sweater_number", "position_code", "birth_country")]
+```
+
+## The stats and records APIs
+
+`nhl_stats()` reaches every report behind NHL.com/stats, with the API's own filters:
+
+```{r}
+nhl_stats("goalie/summary", "2025-26", filter = "gamesPlayed>=30", sort = "+goalsAgainstAverage", limit = 5)[, c("goalie_full_name", "games_played", "goals_against_average", "save_pct")]
+
+nhl_records("draft", filter = "draftYear=2015 and roundNumber=1")[1:5, c("overall_pick_number", "player_name", "tri_code", "amateur_club_name")]
+```
+
+## Anything else
+
+`nhl_api()` calls any endpoint and `tidy_json()` tidies what comes back:
+
+```{r}
+nhl_api("network/tv-schedule/now", tidy = TRUE)$broadcasts
+```

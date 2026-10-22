@@ -1,0 +1,31 @@
+url: https://ethanrawson.github.io/bluelineR/
+template:
+  bootstrap: 5
+  bslib:
+    primary: "#1565FF"
+    base_font: {google: "Manrope"}
+    heading_font: {google: "Barlow Condensed"}
+navbar:
+  structure:
+    left: [intro, reference, articles, news]
+    right: [search, github]
+reference:
+- title: Games
+  contents: [nhl_scores, nhl_schedule, nhl_team_schedule, nhl_standings, nhl_pbp, nhl_boxscore, nhl_game, nhl_shifts]
+- title: Goal tracking
+  contents: [nhl_goal_tracking, read_goal_tracking, goal_frame, classify_goal, goal_context, skater_speed]
+- title: NHL EDGE
+  contents: [nhl_edge, nhl_edge_leaders, nhl_edge_by_the_numbers]
+- title: Players and clubs
+  contents: [nhl_player, nhl_roster, nhl_team_stats, nhl_stat_leaders, nhl_headshot_url, nhl_team_info]
+- title: Draft
+  contents: [nhl_draft_rankings]
+- title: Stats and records APIs
+  contents: [nhl_stats, nhl_teams, nhl_records]
+- title: Plots
+  contents: [nhl_rink, plot_goal, plot_shots]
+- title: Helpers
+  contents: [nhl_api, tidy_json, nhl_season, nhl_cache_clear, bluelineR-options]
+articles:
+- title: Articles
+  contents: [bluelineR, goal-tracking]

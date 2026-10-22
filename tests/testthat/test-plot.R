@@ -1,0 +1,11 @@
+test_that("plots build", {
+  skip_if_not_installed("ggplot2")
+  expect_s3_class(nhl_rink(), "ggplot")
+  fr <- mcdavid_goal()
+  p <- plot_goal(fr, title = "McDavid")
+  expect_s3_class(p, "ggplot")
+  expect_silent(ggplot2::ggplot_build(p))
+  expect_s3_class(plot_goal_sequence(fr), "ggplot")
+  local_nhl(c("play-by-play" = "pbp-2025020534"))
+  expect_s3_class(plot_shots(nhl_pbp(2025020534)), "ggplot")
+})

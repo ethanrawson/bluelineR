@@ -1,0 +1,120 @@
+---
+output: github_document
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", fig.path = "man/figures/README-", out.width = "100%", dpi = 150)
+options(tibble.print_min = 5, tibble.print_max = 5, width = 100)
+```
+
+# bluelineR <img src="man/figures/logo.png" align="right" height="120" alt="" />
+
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/ethanrawson/bluelineR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ethanrawson/bluelineR/actions/workflows/R-CMD-check.yaml)
+[![pkgdown](https://github.com/ethanrawson/bluelineR/actions/workflows/pkgdown.yaml/badge.svg)](https://ethanrawson.github.io/bluelineR/)
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.md)
+<!-- badges: end -->
+
+bluelineR wraps the public APIs behind NHL.com and returns tidy tibbles: scores, schedules, standings,
+play-by-play, box scores and shift charts; players, rosters, stat leaders and the draft; the stats and
+records APIs; **NHL EDGE** skating, shot and zone-time tracking; and the **puck and player tracking
+frames behind every goal since 2023-24**, ten frames a second, with tools that read how each goal was
+scored and draw it on a rink.
+
+It grew out of [BluelineMetrics](https://bluelinemetrics.com), where these endpoints feed the live game
+tracker, the goal replays and the player pages.
+
+## Installation
+
+```r
+# install.packages("pak")
+pak::pak("ethanrawson/bluelineR")
+```
+
+## A game
+
+```{r scores}
+library(bluelineR)
+
+nhl_scores("2026-10-20")[, c("id", "away_team_abbrev", "away_team_score", "home_team_abbrev", "home_team_score")]
+```
+
+Play-by-play comes back one row per event, with the clock in seconds, the strength, the players by name,
+the running score, and the location turned so the shooting team always attacks to the right:
+
+```{r pbp}
+pbp <- nhl_pbp(2025020534)
+pbp[pbp$type == "goal", c("period", "time_in_period", "event_team", "strength_state", "player_1_name", "x_fixed", "y_fixed")]
+```
+
+```{r shots, fig.height = 4.6, fig.alt = "Shot map of Edmonton at Boston, both clubs attacking right."}
+plot_shots(pbp)
+```
+
+## A goal, from the tracking
+
+The NHL keeps about fourteen seconds of tracking behind every goal. `nhl_goal_tracking()` fetches it
+(the files only answer requests that come from nhl.com, so it says it does) as one row per skater, goalie
+and puck per frame, in feet:
+
+```{r tracking}
+frames <- nhl_goal_tracking(2025020534, 777)
+frames
+```
+
+`classify_goal()` reads how it was scored. The same rules build the goal types on BluelineMetrics, and
+the R port matches them goal for goal:
+
+```{r classify}
+goal <- classify_goal(frames, team = "EDM", shot_type = "backhand")
+goal[, c("shooter", "distance", "shot_speed", "since_neutral", "kinds")]
+```
+
+```{r goal, fig.height = 4.9, fig.alt = "McDavid's shorthanded breakaway goal at Boston drawn from tracking: every player's position as the puck goes in, with the last two seconds of each path."}
+plot_goal(frames, title = "Connor McDavid, shorthanded breakaway at Boston, 18 Dec 2025")
+```
+
+```{r sequence, fig.height = 7, fig.alt = "Six frames leading up to the goal."}
+plot_goal_sequence(frames, n = 6, seconds = 5)
+```
+
+## NHL EDGE
+
+```{r edge}
+nhl_edge_leaders("skater_speed", season = "2025-26")[, c("rank", "player_first_name", "player_last_name", "player_team_abbrev", "max_speed_imperial", "bursts_over22")]
+
+mcdavid <- nhl_edge_skater(8478402, "2025-26")
+mcdavid$info[, c("skating_speed_speed_max_imperial", "skating_speed_speed_max_percentile", "top_shot_speed_imperial", "total_distance_skated_imperial")]
+```
+
+## The stats API
+
+```{r stats}
+nhl_stats("skater/summary", "2025-26", sort = "points", limit = 5)[, c("skater_full_name", "team_abbrevs", "goals", "assists", "points")]
+```
+
+## What it covers
+
+| Area | Functions | Endpoint |
+|---|---|---|
+| Scores, schedule, standings | `nhl_scores()`, `nhl_schedule()`, `nhl_team_schedule()`, `nhl_standings()` | `api-web.nhle.com/v1/score`, `/schedule`, `/club-schedule-season`, `/standings` |
+| Games | `nhl_pbp()`, `nhl_boxscore()`, `nhl_game()`, `nhl_shifts()` | `/gamecenter/{id}/play-by-play`, `/boxscore`, `/landing`; `api.nhle.com/stats/rest/en/shiftcharts` |
+| Goal tracking | `nhl_goal_tracking()`, `nhl_goal_replay()`, `goal_frame()`, `classify_goal()`, `goal_context()`, `skater_speed()`, `plot_goal()` | `wsr.nhle.com/sprites/{season}/{game}/ev{event}.json`, `/ppt-replay/goal` |
+| NHL EDGE | `nhl_edge_skater()`, `nhl_edge_goalie()`, `nhl_edge_team()`, `nhl_edge_leaders()`, `nhl_edge_landing()`, `nhl_edge_by_the_numbers()` | `/edge/...` (20 reports) |
+| Players and clubs | `nhl_player()`, `nhl_player_game_log()`, `nhl_player_search()`, `nhl_roster()`, `nhl_prospects()`, `nhl_team_stats()`, `nhl_stat_leaders()` | `/player`, `/roster`, `/prospects`, `/club-stats`, `/skater-stats-leaders`; `search.d3.nhle.com` |
+| Draft | `nhl_draft_rankings()`, `nhl_draft_picks()` | `/draft/rankings`, `/draft/picks` |
+| Stats and records APIs | `nhl_stats()`, `nhl_stats_reports()`, `nhl_teams()`, `nhl_seasons()`, `nhl_franchises()`, `nhl_records()` | `api.nhle.com/stats/rest/en`, `records.nhl.com/site/api` |
+| Anything else | `nhl_api()`, `tidy_json()` | any of the above |
+
+## Being a good guest
+
+These are the NHL's own, undocumented APIs; bluelineR is not affiliated with the NHL, and endpoints can
+change without notice. Requests are throttled (five a second by default) and retried with backoff on rate
+limits; turn on `options(bluelineR.cache = TRUE)` to keep responses for the session.
+
+bluelineR stands on the work of other R hockey packages, notably
+[nhlscraper](https://cran.r-project.org/package=nhlscraper),
+[hockeyR](https://cran.r-project.org/package=hockeyR) and
+[fastRhockey](https://cran.r-project.org/package=fastRhockey). What it adds is the goal tracking: the
+frames, the classifier and the rink plots.

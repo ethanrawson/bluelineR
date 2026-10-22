@@ -1,0 +1,79 @@
+---
+title: "Reading a goal from its tracking"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Reading a goal from its tracking}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", fig.width = 7.5, fig.height = 4, dpi = 110)
+options(tibble.print_min = 6, width = 90)
+```
+
+Since 2023-24 the NHL has kept the puck and player tracking behind every goal: about fourteen seconds
+of every skater, both goalies and the puck, ten frames a second. NHL.com uses it for its goal replays.
+This vignette reads one goal end to end, Connor McDavid's shorthanded breakaway at Boston on
+18 December 2025, from the copy that ships with the package, so nothing here needs the network.
+`nhl_goal_tracking(2025020534, 777)` fetches the same frames.
+
+```{r}
+library(bluelineR)
+path <- system.file("extdata", "goal-2025020534-777.json.gz", package = "bluelineR")
+frames <- read_goal_tracking(path, game_id = 2025020534, event_id = 777)
+frames
+```
+
+Each row is one object in one frame. `x` runs along the rink and `y` across it, in feet from centre
+ice, the frame the play-by-play uses: the nets are at x = -89 and +89. The puck is `entity_id` 1.
+
+## When it went in
+
+The clip runs on past the goal, and the puck can sit at the other net when it starts or blip over the
+line before the real goal. `goal_frame()` wants it in the net, between the posts, two frames running,
+at the net the clip finishes at:
+
+```{r}
+g <- goal_frame(frames)
+g
+frames[frames$frame == g & frames$is_puck, c("time", "x", "y")]
+```
+
+## How it was scored
+
+```{r}
+goal <- classify_goal(frames, team = "EDM", shot_type = "backhand")
+t(goal[, c("shooter", "distance", "shot_speed", "since_neutral", "passes", "rush", "breakaway",
+           "oddman", "onetimer", "cross", "traffic", "behind", "forecheck")])
+```
+
+It was a rush (the puck was in Edmonton's end 2.8 seconds before the shot) and a breakaway: McDavid
+carried it over the blue line with no Bruin but the goalie between him and the net. He shot from
+7.5 feet; the puck left his stick at 24 mph, a backhand.
+
+The rules in `?classify_goal` are the ones BluelineMetrics builds its goal types with. On 120 goals from
+2025-26 the R version agrees with the site's on every type, the shooter, the distance, the shot speed
+and the number of passes.
+
+## How fast he was going
+
+`skater_speed()` gives every skater's speed at every frame, over the 0.6 seconds around it:
+
+```{r}
+speed <- skater_speed(frames)
+mcd <- speed[speed$player_id == 8478402, ]
+round(max(mcd$speed_mph, na.rm = TRUE), 1)
+```
+
+## Drawing it
+
+```{r, fig.alt = "Every player's position as the puck goes in, with the last two seconds of each path."}
+plot_goal(frames, title = "McDavid, shorthanded breakaway at Boston")
+```
+
+```{r, fig.height = 7, fig.alt = "Six frames over the five seconds before the goal."}
+plot_goal_sequence(frames, n = 6, seconds = 5)
+```
+
+`nhl_rink()` is the empty rink, in the same feet, for drawing anything else on.
