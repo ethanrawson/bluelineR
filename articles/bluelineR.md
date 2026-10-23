@@ -208,14 +208,28 @@ tidies what comes back:
 ``` r
 
 nhl_api("network/tv-schedule/now", tidy = TRUE)$broadcasts
-#> # A tibble: 31 × 9
-#>   start_time       end_time duration_seconds title description house_number broadcast_type
-#>   <chr>            <chr>               <int> <chr> <chr>       <chr>        <chr>         
-#> 1 2026-10-22T00:0… 2026-10…             1800 On T… On The Fly  HOTF27R1021… HD            
-#> 2 2026-10-22T00:3… 2026-10…             1800 On T… On The Fly  HOTF27R1021… HD            
-#> 3 2026-10-22T01:0… 2026-10…             1800 On T… On The Fly  HOTF27R1021… HD            
-#> 4 2026-10-22T01:3… 2026-10…             1800 On T… On The Fly  HOTF27R1021… HD            
-#> 5 2026-10-22T02:0… 2026-10…             1800 On T… On The Fly  HOTF27R1021… HD            
-#> # ℹ 26 more rows
+#> # A tibble: 20 × 9
+#>    start_time      end_time duration_seconds title description house_number broadcast_type
+#>    <chr>           <chr>               <int> <chr> <chr>       <chr>        <chr>         
+#>  1 2026-10-23T00:… 2026-10…             3600 On T… Missed the… H60DETVAN10… HD            
+#>  2 2026-10-23T01:… 2026-10…             3600 On T… On The Fly  HOTF27R1022… HD            
+#>  3 2026-10-23T02:… 2026-10…             3600 On T… On The Fly  HOTF27R1022… HD            
+#>  4 2026-10-23T03:… 2026-10…             3600 On T… On The Fly  HOTF27R1022… HD            
+#>  5 2026-10-23T04:… 2026-10…             3600 On T… On The Fly  HOTF27R1022… HD            
+#>  6 2026-10-23T05:… 2026-10…             3600 On T… On The Fly  HOTF27R1022… HD            
+#>  7 2026-10-23T06:… 2026-10…             3600 On T… On The Fly  HOTF27R1022… HD            
+#>  8 2026-10-23T07:… 2026-10…             3600 On T… On The Fly  HOTF27R1022… HD            
+#>  9 2026-10-23T08:… 2026-10…             3600 On T… On The Fly  HOTF27R1022… HD            
+#> 10 2026-10-23T09:… 2026-10…             3600 On T… On The Fly  HOTF27R1022… HD            
+#> 11 2026-10-23T10:… 2026-10…             3600 On T… On The Fly  HOTF27R1022… HD            
+#> 12 2026-10-23T11:… 2026-10…             7200 NHL … Nashville … H120NSHBOS1… HD            
+#> 13 2026-10-23T12:… 2026-10…             7200 NHL … Nashville … H120NSHBOS1… HD            
+#> 14 2026-10-23T13:… 2026-10…             7200 NHL … New York R… H120NYRTOR1… HD            
+#> 15 2026-10-23T14:… 2026-10…             7200 NHL … New York R… H120NYRTOR1… HD            
+#> 16 2026-10-23T15:… 2026-10…             3600 Neve… Julie and … HNHLNEVOFFS… HD            
+#> 17 2026-10-23T16:… 2026-10…             3600 NHL … NHL Tonigh… HNHLTFS2710… HD            
+#> 18 2026-10-23T17:… 2026-10…            10800 NHL … NHL Now     HNOW27R1023… HD            
+#> 19 2026-10-23T20:… 2026-10…            10800 Regu… Montreal C… H180MTLCHI1… HD            
+#> 20 2026-10-23T23:… 2026-10…             3600 On T… Missed the… H60TBLCOL10… HD            
 #> # ℹ 2 more variables: broadcast_status <chr>, broadcast_image_url <chr>
 ```

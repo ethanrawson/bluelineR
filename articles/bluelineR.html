@@ -23,7 +23,7 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
-    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="dark" aria-label="Site navigation"><div class="container">
 
     <a class="navbar-brand me-2" href="../index.html">bluelineR</a>
 
@@ -251,15 +251,29 @@ with the API’s own filters:</p>
 <code><a href="../reference/tidy_json.html">tidy_json()</a></code> tidies what comes back:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/nhl_api.html">nhl_api</a></span><span class="op">(</span><span class="st">"network/tv-schedule/now"</span>, tidy <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="va">broadcasts</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 31 × 9</span></span></span>
-<span><span class="co">#&gt;   start_time       end_time duration_seconds title description house_number broadcast_type</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 2026-10-22T00:0… 2026-10…             <span style="text-decoration: underline;">1</span>800 On T… On The Fly  HOTF27R1021… HD            </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 2026-10-22T00:3… 2026-10…             <span style="text-decoration: underline;">1</span>800 On T… On The Fly  HOTF27R1021… HD            </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 2026-10-22T01:0… 2026-10…             <span style="text-decoration: underline;">1</span>800 On T… On The Fly  HOTF27R1021… HD            </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 2026-10-22T01:3… 2026-10…             <span style="text-decoration: underline;">1</span>800 On T… On The Fly  HOTF27R1021… HD            </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 2026-10-22T02:0… 2026-10…             <span style="text-decoration: underline;">1</span>800 On T… On The Fly  HOTF27R1021… HD            </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 26 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 20 × 9</span></span></span>
+<span><span class="co">#&gt;    start_time      end_time duration_seconds title description house_number broadcast_type</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 2026-10-23T00:… 2026-10…             <span style="text-decoration: underline;">3</span>600 On T… Missed the… H60DETVAN10… HD            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 2026-10-23T01:… 2026-10…             <span style="text-decoration: underline;">3</span>600 On T… On The Fly  HOTF27R1022… HD            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 2026-10-23T02:… 2026-10…             <span style="text-decoration: underline;">3</span>600 On T… On The Fly  HOTF27R1022… HD            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 2026-10-23T03:… 2026-10…             <span style="text-decoration: underline;">3</span>600 On T… On The Fly  HOTF27R1022… HD            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 2026-10-23T04:… 2026-10…             <span style="text-decoration: underline;">3</span>600 On T… On The Fly  HOTF27R1022… HD            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 2026-10-23T05:… 2026-10…             <span style="text-decoration: underline;">3</span>600 On T… On The Fly  HOTF27R1022… HD            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 2026-10-23T06:… 2026-10…             <span style="text-decoration: underline;">3</span>600 On T… On The Fly  HOTF27R1022… HD            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 2026-10-23T07:… 2026-10…             <span style="text-decoration: underline;">3</span>600 On T… On The Fly  HOTF27R1022… HD            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 2026-10-23T08:… 2026-10…             <span style="text-decoration: underline;">3</span>600 On T… On The Fly  HOTF27R1022… HD            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 2026-10-23T09:… 2026-10…             <span style="text-decoration: underline;">3</span>600 On T… On The Fly  HOTF27R1022… HD            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> 2026-10-23T10:… 2026-10…             <span style="text-decoration: underline;">3</span>600 On T… On The Fly  HOTF27R1022… HD            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> 2026-10-23T11:… 2026-10…             <span style="text-decoration: underline;">7</span>200 NHL … Nashville … H120NSHBOS1… HD            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> 2026-10-23T12:… 2026-10…             <span style="text-decoration: underline;">7</span>200 NHL … Nashville … H120NSHBOS1… HD            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> 2026-10-23T13:… 2026-10…             <span style="text-decoration: underline;">7</span>200 NHL … New York R… H120NYRTOR1… HD            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> 2026-10-23T14:… 2026-10…             <span style="text-decoration: underline;">7</span>200 NHL … New York R… H120NYRTOR1… HD            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> 2026-10-23T15:… 2026-10…             <span style="text-decoration: underline;">3</span>600 Neve… Julie and … HNHLNEVOFFS… HD            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">17</span> 2026-10-23T16:… 2026-10…             <span style="text-decoration: underline;">3</span>600 NHL … NHL Tonigh… HNHLTFS2710… HD            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">18</span> 2026-10-23T17:… 2026-10…            <span style="text-decoration: underline;">10</span>800 NHL … NHL Now     HNOW27R1023… HD            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">19</span> 2026-10-23T20:… 2026-10…            <span style="text-decoration: underline;">10</span>800 Regu… Montreal C… H180MTLCHI1… HD            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">20</span> 2026-10-23T23:… 2026-10…             <span style="text-decoration: underline;">3</span>600 On T… Missed the… H60TBLCOL10… HD            </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 2 more variables: broadcast_status &lt;chr&gt;, broadcast_image_url &lt;chr&gt;</span></span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
