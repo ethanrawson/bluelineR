@@ -1,11 +1,21 @@
 url: https://ethanrawson.github.io/bluelineR/
 template:
   bootstrap: 5
+  # Dark, like BluelineMetrics.
+  theme: a11y-dark
   bslib:
-    primary: "#1565FF"
+    bg: "#0b1220"
+    fg: "#f1f5f9"
+    primary: "#4c8dff"
+    body-secondary-color: "#f1f5f9"
+    code-bg: "#111a2e"
+    code-color: "#facc15"
+    navbar-bg: "#070d18"
+    border-color: "#26324a"
     base_font: {google: "Manrope"}
     heading_font: {google: "Barlow Condensed"}
 navbar:
+  type: dark
   structure:
     left: [intro, reference, articles, news]
     right: [search, github]

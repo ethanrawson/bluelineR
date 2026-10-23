@@ -2,3 +2,13 @@
 img.logo {
   width: 180px;
 }
+
+/* The dark theme: navbar, search box and code blocks in the site's navy. */
+.navbar { background-color: #070d18 !important; border-bottom: 1px solid #26324a; }
+.navbar .nav-text, .navbar .text-muted, .navbar .version { color: #f1f5f9 !important; }
+.navbar input[type="search"] { background-color: #111a2e; color: #f1f5f9; border-color: #26324a; }
+.navbar input[type="search"]::placeholder { color: #cbd5e1; }
+pre, pre code, div.sourceCode { background-color: #0f1729 !important; }
+pre { border-color: #26324a; }
+.navbar .nav-link { color: #f1f5f9; }
+.navbar .nav-link:hover, .navbar .nav-link.active { color: #4c8dff; }
