@@ -12,6 +12,15 @@ It grew out of [BluelineMetrics](https://bluelinemetrics.com), where
 these endpoints feed the live game tracker, the goal replays and the
 player pages.
 
+![Connor McDavid's overtime winner in the 2025 4 Nations Face-Off final,
+drawn from the NHL's player and puck tracking: Canada in red, the United
+States in navy, Marner and Makar on the assists, and GOAL as the puck
+goes in.](reference/figures/README-hero.gif)
+
+Connor McDavid’s overtime winner in the 4 Nations final, from the NHL’s
+player and puck tracking, drawn by
+[`animate_goal()`](https://ethanrawson.github.io/bluelineR/reference/animate_goal.md).
+
 ## Installation
 
 ``` r
@@ -309,6 +318,54 @@ props <- espn_props()
 props[props$stat %in% "shots", c("team", "player_name", "player_id", "line", "over", "under", "over_prob")]
 ```
 
+## Contracts, trades and coaches
+
+The NHL’s APIs have no contract data, but Sportsnet publishes
+PuckPedia’s tracker: every contract signed, with each season’s cap hit,
+salary and bonuses, and every trade since 2020-21 with the cap hit and
+the salary retained on each player moved. ESPN logs every roster move
+and keeps the injury list, and the records site has every head coach and
+general manager.
+
+``` r
+
+signings <- nhl_signings(2026)
+signings[order(-signings$aav), c("player_name", "team", "contract_length", "aav", "signing_status", "clause")]
+#> # A tibble: 618 × 6
+#>   player_name       team  contract_length      aav signing_status clause
+#>   <chr>             <chr>           <dbl>    <dbl> <chr>          <chr> 
+#> 1 Cale Makar        COL                 8 20400000 UFA            NMC   
+#> 2 Macklin Celebrini SJS                 5 18800000 RFA            <NA>  
+#> 3 Leo Carlsson      ANA                 5 18000000 RFA            <NA>  
+#> 4 Connor Bedard     CHI                 5 15000000 RFA            <NA>  
+#> 5 Adam Fantilli     CBJ                 6 13750000 RFA            <NA>  
+#> # ℹ 613 more rows
+
+trades <- nhl_trades("2025-26", assets = TRUE)
+retained <- trades[which(trades$retained_hit > 0), ]
+retained[, c("trade_date", "team", "player_name", "cap_hit", "retained_hit")]
+#> # A tibble: 14 × 5
+#>   trade_date team  player_name        cap_hit retained_hit
+#>   <date>     <chr> <chr>                <dbl>        <dbl>
+#> 1 2026-06-30 VGK   Parker Wotherspoon 1000000       500000
+#> 2 2026-06-29 VAN   Brendan Gallagher  6500000      3250000
+#> 3 2026-06-27 STL   Brandon Carlo      4100000       615000
+#> 4 2026-06-25 FLA   Garnet Hathaway    2400000      1200000
+#> 5 2026-03-06 LAK   Scott Laughton     3000000      1500000
+#> # ℹ 9 more rows
+
+nhl_coaches("team", active = TRUE)[, c("name", "team", "first_season", "games", "wins", "point_pctg")]
+#> # A tibble: 32 × 6
+#>   name            team  first_season games  wins point_pctg
+#>   <chr>           <chr>        <int> <int> <int>      <dbl>
+#> 1 Lindy Ruff      BUF       19971998  1339   661      0.561
+#> 2 Jon Cooper      TBL       20122013  1052   629      0.640
+#> 3 Jared Bednar    COL       20162017   792   450      0.616
+#> 4 Rod Brind'Amour CAR       20182019   627   386      0.661
+#> 5 Paul Maurice    FLA       20222023   338   186      0.586
+#> # ℹ 27 more rows
+```
+
 ## How far back it goes
 
 Every season since 1917-18 is in the NHL’s data, but each kind of number
@@ -443,6 +500,8 @@ nhl_draft_lottery(2026)[, c("draft_year", "pick", "lottery_team", "player_name",
 | Playoff history | [`nhl_playoff_series()`](https://ethanrawson.github.io/bluelineR/reference/nhl_playoff_series.md), [`nhl_playoff_games()`](https://ethanrawson.github.io/bluelineR/reference/nhl_playoff_series.md) | `records.nhl.com/site/api/playoff-franchise-vs-team`, `/yearly-playoff-series-details` |
 | Records | [`nhl_franchise_records()`](https://ethanrawson.github.io/bluelineR/reference/nhl_franchise_records.md), [`nhl_draft_lottery()`](https://ethanrawson.github.io/bluelineR/reference/nhl_draft_lottery.md), [`nhl_draft_lottery_odds()`](https://ethanrawson.github.io/bluelineR/reference/nhl_draft_lottery.md), [`nhl_milestones()`](https://ethanrawson.github.io/bluelineR/reference/nhl_milestones.md), [`nhl_records_catalog()`](https://ethanrawson.github.io/bluelineR/reference/nhl_records_catalog.md) | `records.nhl.com/site/api/franchise-all-time-*`, `/neutral-site-standings`, `/draft-lottery-*`; `api.nhle.com/stats/rest/en/milestones` |
 | Images | [`nhl_headshot_url()`](https://ethanrawson.github.io/bluelineR/reference/nhl_headshot_url.md), [`nhl_logo_url()`](https://ethanrawson.github.io/bluelineR/reference/nhl_headshot_url.md), [`nhl_jersey_url()`](https://ethanrawson.github.io/bluelineR/reference/nhl_headshot_url.md); broadcaster logos in [`nhl_broadcasts()`](https://ethanrawson.github.io/bluelineR/reference/nhl_broadcasts.md) | `assets.nhle.com/mugs`, `/logos/nhl`, `/textures/nhl/jersey`, `/logos/broadcast` |
+| Contracts, trades and transactions | [`nhl_signings()`](https://ethanrawson.github.io/bluelineR/reference/nhl_signings.md), [`nhl_trades()`](https://ethanrawson.github.io/bluelineR/reference/nhl_signings.md), [`espn_transactions()`](https://ethanrawson.github.io/bluelineR/reference/espn_transactions.md), [`espn_injuries()`](https://ethanrawson.github.io/bluelineR/reference/espn_transactions.md) | `stats-api.sportsnet.ca/signings`, `/trades` (data by PuckPedia); `site.api.espn.com/.../transactions`, `/injuries` |
+| Coaches and GMs | [`nhl_coaches()`](https://ethanrawson.github.io/bluelineR/reference/nhl_coaches.md), [`nhl_general_managers()`](https://ethanrawson.github.io/bluelineR/reference/nhl_coaches.md) | `records.nhl.com/site/api/coach-*`, `/general-manager-*` |
 | Anything else | [`nhl_api()`](https://ethanrawson.github.io/bluelineR/reference/nhl_api.md), [`tidy_json()`](https://ethanrawson.github.io/bluelineR/reference/tidy_json.md) | any of the above |
 
 ## Being a good guest
@@ -453,6 +512,9 @@ throttled (five a second by default) and retried with backoff on rate
 limits; turn on `options(bluelineR.cache = TRUE)` to keep responses for
 the session.
 
+Contracts and trades come from Sportsnet’s stats API, which publishes
+[PuckPedia](https://puckpedia.com)’s data; credit them when you use it.
+
 bluelineR stands on the work of other R hockey packages, notably
 [nhlscraper](https://rentosaijo.github.io/nhlscraper/),
 [hockeyR](https://cran.r-project.org/package=hockeyR) and
@@ -461,6 +523,11 @@ nhlscraper was first to the goal tracking frames: its `replay()` has
 read them from `wsr.nhle.com` since November 2025, and `replays()`
 serves a season of them at once. What bluelineR adds:
 
+- **Contracts and trades**
+  ([`nhl_signings()`](https://ethanrawson.github.io/bluelineR/reference/nhl_signings.md),
+  [`nhl_trades()`](https://ethanrawson.github.io/bluelineR/reference/nhl_signings.md)):
+  each contract’s cap hit, salary and bonuses season by season, and the
+  salary retained in trades, from Sportsnet’s feed of PuckPedia’s data.
 - **Game tracking summaries**
   ([`nhl_tracking_summary()`](https://ethanrawson.github.io/bluelineR/reference/nhl_tracking_summary.md)):
   each player’s puck possession time, by zone and strength, with speed,

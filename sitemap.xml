@@ -2,6 +2,7 @@
 <url><loc>https://ethanrawson.github.io/bluelineR/404.html</loc></url>
 <url><loc>https://ethanrawson.github.io/bluelineR/LICENSE-text.html</loc></url>
 <url><loc>https://ethanrawson.github.io/bluelineR/LICENSE.html</loc></url>
+<url><loc>https://ethanrawson.github.io/bluelineR/articles/beyond-the-nhl.html</loc></url>
 <url><loc>https://ethanrawson.github.io/bluelineR/articles/bluelineR.html</loc></url>
 <url><loc>https://ethanrawson.github.io/bluelineR/articles/goal-tracking.html</loc></url>
 <url><loc>https://ethanrawson.github.io/bluelineR/articles/index.html</loc></url>
@@ -15,6 +16,7 @@
 <url><loc>https://ethanrawson.github.io/bluelineR/reference/devig.html</loc></url>
 <url><loc>https://ethanrawson.github.io/bluelineR/reference/espn_odds.html</loc></url>
 <url><loc>https://ethanrawson.github.io/bluelineR/reference/espn_player_splits.html</loc></url>
+<url><loc>https://ethanrawson.github.io/bluelineR/reference/espn_transactions.html</loc></url>
 <url><loc>https://ethanrawson.github.io/bluelineR/reference/goal_context.html</loc></url>
 <url><loc>https://ethanrawson.github.io/bluelineR/reference/goal_frame.html</loc></url>
 <url><loc>https://ethanrawson.github.io/bluelineR/reference/iihf.html</loc></url>
@@ -23,6 +25,7 @@
 <url><loc>https://ethanrawson.github.io/bluelineR/reference/nhl_boxscore.html</loc></url>
 <url><loc>https://ethanrawson.github.io/bluelineR/reference/nhl_broadcasts.html</loc></url>
 <url><loc>https://ethanrawson.github.io/bluelineR/reference/nhl_cache_clear.html</loc></url>
+<url><loc>https://ethanrawson.github.io/bluelineR/reference/nhl_coaches.html</loc></url>
 <url><loc>https://ethanrawson.github.io/bluelineR/reference/nhl_draft_lottery.html</loc></url>
 <url><loc>https://ethanrawson.github.io/bluelineR/reference/nhl_draft_rankings.html</loc></url>
 <url><loc>https://ethanrawson.github.io/bluelineR/reference/nhl_edge.html</loc></url>
@@ -49,6 +52,7 @@
 <url><loc>https://ethanrawson.github.io/bluelineR/reference/nhl_scores.html</loc></url>
 <url><loc>https://ethanrawson.github.io/bluelineR/reference/nhl_season.html</loc></url>
 <url><loc>https://ethanrawson.github.io/bluelineR/reference/nhl_shifts.html</loc></url>
+<url><loc>https://ethanrawson.github.io/bluelineR/reference/nhl_signings.html</loc></url>
 <url><loc>https://ethanrawson.github.io/bluelineR/reference/nhl_standings.html</loc></url>
 <url><loc>https://ethanrawson.github.io/bluelineR/reference/nhl_stat_eras.html</loc></url>
 <url><loc>https://ethanrawson.github.io/bluelineR/reference/nhl_stat_leaders.html</loc></url>

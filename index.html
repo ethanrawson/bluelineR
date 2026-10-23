@@ -18,8 +18,8 @@
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
 <script src="extra.js"></script><meta property="og:title" content="Tidy Access to the NHL's Web, Stats, EDGE and Goal-Tracking APIs, IIHF Data and NHL Odds">
-<meta name="description" content="Wraps the public endpoints behind NHL.com: schedules, scores, standings, play-by-play, box scores and shift charts; players, rosters, stat leaders and the draft; the stats and records APIs; NHL EDGE skating, shot and zone-time tracking; and the puck and player tracking frames behind every goal since 2023-24. Also the IIHFs live data (every shot of its tournaments placed on the ice) and DraftKings NHL odds and player props as ESPN publishes them. Results come back as tibbles with snake_case names and rink coordinates in feet, with helpers that read how a goal was scored from its tracking and draw it on a rink.">
-<meta property="og:description" content="Wraps the public endpoints behind NHL.com: schedules, scores, standings, play-by-play, box scores and shift charts; players, rosters, stat leaders and the draft; the stats and records APIs; NHL EDGE skating, shot and zone-time tracking; and the puck and player tracking frames behind every goal since 2023-24. Also the IIHFs live data (every shot of its tournaments placed on the ice) and DraftKings NHL odds and player props as ESPN publishes them. Results come back as tibbles with snake_case names and rink coordinates in feet, with helpers that read how a goal was scored from its tracking and draw it on a rink.">
+<meta name="description" content="Wraps the public endpoints behind NHL.com: schedules, scores, standings, play-by-play, box scores and shift charts; players, rosters, stat leaders and the draft; the stats and records APIs, with coaches, general managers and every best-on-best tournament since 1976; NHL EDGE skating, shot and zone-time tracking; and the puck and player tracking frames behind every goal since 2023-24. Also contracts and trades from Sportsnets feed of PuckPedias data, the IIHFs live data (every shot of its tournaments placed on the ice) and DraftKings NHL odds and player props as ESPN publishes them. Results come back as tibbles with snake_case names and rink coordinates in feet, with helpers that read how a goal was scored from its tracking, adjust stats for era, and draw and animate goals on a rink.">
+<meta property="og:description" content="Wraps the public endpoints behind NHL.com: schedules, scores, standings, play-by-play, box scores and shift charts; players, rosters, stat leaders and the draft; the stats and records APIs, with coaches, general managers and every best-on-best tournament since 1976; NHL EDGE skating, shot and zone-time tracking; and the puck and player tracking frames behind every goal since 2023-24. Also contracts and trades from Sportsnets feed of PuckPedias data, the IIHFs live data (every shot of its tournaments placed on the ice) and DraftKings NHL odds and player props as ESPN publishes them. Results come back as tibbles with snake_case names and rink coordinates in feet, with helpers that read how a goal was scored from its tracking, adjust stats for era, and draw and animate goals on a rink.">
 <meta property="og:image" content="https://ethanrawson.github.io/bluelineR/logo.png">
 </head>
 <body>
@@ -30,7 +30,7 @@
 
     <a class="navbar-brand me-2" href="index.html">bluelineR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,6 +61,8 @@
 
 <p>bluelineR wraps the public APIs behind NHL.com and returns tidy tibbles: scores, schedules, standings, play-by-play, box scores and shift charts; players, rosters, stat leaders and the draft; the stats and records APIs; <strong>NHL EDGE</strong> skating, shot and zone-time tracking; and the <strong>puck and player tracking frames behind every goal since 2023-24</strong>, ten frames a second, with tools that read how each goal was scored and draw it on a rink.</p>
 <p>It grew out of <a href="https://bluelinemetrics.com" class="external-link">BluelineMetrics</a>, where these endpoints feed the live game tracker, the goal replays and the player pages.</p>
+<p><img src="reference/figures/README-hero.gif" alt="Connor McDavid's overtime winner in the 2025 4 Nations Face-Off final, drawn from the NHL's player and puck tracking: Canada in red, the United States in navy, Marner and Makar on the assists, and GOAL as the puck goes in." width="100%"></p>
+<p>Connor McDavid’s overtime winner in the 4 Nations final, from the NHL’s player and puck tracking, drawn by <code><a href="reference/animate_goal.html">animate_goal()</a></code>.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -277,6 +279,47 @@
 <span><span class="va">props</span><span class="op">[</span><span class="va">props</span><span class="op">$</span><span class="va">stat</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="st">"shots"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"team"</span>, <span class="st">"player_name"</span>, <span class="st">"player_id"</span>, <span class="st">"line"</span>, <span class="st">"over"</span>, <span class="st">"under"</span>, <span class="st">"over_prob"</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
 </div>
 <div class="section level2">
+<h2 id="contracts-trades-and-coaches">Contracts, trades and coaches<a class="anchor" aria-label="anchor" href="#contracts-trades-and-coaches"></a>
+</h2>
+<p>The NHL’s APIs have no contract data, but Sportsnet publishes PuckPedia’s tracker: every contract signed, with each season’s cap hit, salary and bonuses, and every trade since 2020-21 with the cap hit and the salary retained on each player moved. ESPN logs every roster move and keeps the injury list, and the records site has every head coach and general manager.</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">signings</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/nhl_signings.html">nhl_signings</a></span><span class="op">(</span><span class="fl">2026</span><span class="op">)</span></span>
+<span><span class="va">signings</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="op">-</span><span class="va">signings</span><span class="op">$</span><span class="va">aav</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"player_name"</span>, <span class="st">"team"</span>, <span class="st">"contract_length"</span>, <span class="st">"aav"</span>, <span class="st">"signing_status"</span>, <span class="st">"clause"</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="co">#&gt; # A tibble: 618 × 6</span></span>
+<span><span class="co">#&gt;   player_name       team  contract_length      aav signing_status clause</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;             &lt;chr&gt;           &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;          &lt;chr&gt; </span></span>
+<span><span class="co">#&gt; 1 Cale Makar        COL                 8 20400000 UFA            NMC   </span></span>
+<span><span class="co">#&gt; 2 Macklin Celebrini SJS                 5 18800000 RFA            &lt;NA&gt;  </span></span>
+<span><span class="co">#&gt; 3 Leo Carlsson      ANA                 5 18000000 RFA            &lt;NA&gt;  </span></span>
+<span><span class="co">#&gt; 4 Connor Bedard     CHI                 5 15000000 RFA            &lt;NA&gt;  </span></span>
+<span><span class="co">#&gt; 5 Adam Fantilli     CBJ                 6 13750000 RFA            &lt;NA&gt;  </span></span>
+<span><span class="co">#&gt; # ℹ 613 more rows</span></span>
+<span></span>
+<span><span class="va">trades</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/nhl_signings.html">nhl_trades</a></span><span class="op">(</span><span class="st">"2025-26"</span>, assets <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">retained</span> <span class="op">&lt;-</span> <span class="va">trades</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">trades</span><span class="op">$</span><span class="va">retained_hit</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span>, <span class="op">]</span></span>
+<span><span class="va">retained</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"trade_date"</span>, <span class="st">"team"</span>, <span class="st">"player_name"</span>, <span class="st">"cap_hit"</span>, <span class="st">"retained_hit"</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="co">#&gt; # A tibble: 14 × 5</span></span>
+<span><span class="co">#&gt;   trade_date team  player_name        cap_hit retained_hit</span></span>
+<span><span class="co">#&gt;   &lt;date&gt;     &lt;chr&gt; &lt;chr&gt;                &lt;dbl&gt;        &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 2026-06-30 VGK   Parker Wotherspoon 1000000       500000</span></span>
+<span><span class="co">#&gt; 2 2026-06-29 VAN   Brendan Gallagher  6500000      3250000</span></span>
+<span><span class="co">#&gt; 3 2026-06-27 STL   Brandon Carlo      4100000       615000</span></span>
+<span><span class="co">#&gt; 4 2026-06-25 FLA   Garnet Hathaway    2400000      1200000</span></span>
+<span><span class="co">#&gt; 5 2026-03-06 LAK   Scott Laughton     3000000      1500000</span></span>
+<span><span class="co">#&gt; # ℹ 9 more rows</span></span>
+<span></span>
+<span><span class="fu"><a href="reference/nhl_coaches.html">nhl_coaches</a></span><span class="op">(</span><span class="st">"team"</span>, active <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"name"</span>, <span class="st">"team"</span>, <span class="st">"first_season"</span>, <span class="st">"games"</span>, <span class="st">"wins"</span>, <span class="st">"point_pctg"</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="co">#&gt; # A tibble: 32 × 6</span></span>
+<span><span class="co">#&gt;   name            team  first_season games  wins point_pctg</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;           &lt;chr&gt;        &lt;int&gt; &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 Lindy Ruff      BUF       19971998  1339   661      0.561</span></span>
+<span><span class="co">#&gt; 2 Jon Cooper      TBL       20122013  1052   629      0.640</span></span>
+<span><span class="co">#&gt; 3 Jared Bednar    COL       20162017   792   450      0.616</span></span>
+<span><span class="co">#&gt; 4 Rod Brind'Amour CAR       20182019   627   386      0.661</span></span>
+<span><span class="co">#&gt; 5 Paul Maurice    FLA       20222023   338   186      0.586</span></span>
+<span><span class="co">#&gt; # ℹ 27 more rows</span></span></code></pre></div>
+</div>
+<div class="section level2">
 <h2 id="how-far-back-it-goes">How far back it goes<a class="anchor" aria-label="anchor" href="#how-far-back-it-goes"></a>
 </h2>
 <p>Every season since 1917-18 is in the NHL’s data, but each kind of number starts in its own year, and a column the league did not keep comes back missing (or zero) before then. <code><a href="reference/nhl_stat_eras.html">nhl_stat_eras()</a></code> has the eras and, with <code>by = "stat"</code>, the first season of each stats column, measured against the live API; <code><a href="reference/nhl_stats.html">nhl_stats()</a></code>, <code><a href="reference/nhl_pbp.html">nhl_pbp()</a></code> and <code><a href="reference/nhl_shifts.html">nhl_shifts()</a></code> say so when you ask for something older than the data.</p>
@@ -337,7 +380,7 @@
 </tbody>
 </table>
 <p>Gretzky’s 1981-82, from the league’s numbers and his game log: 92 goals, and the fiftieth in his thirty-ninth game.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/nhl_stats.html">nhl_stats</a></span><span class="op">(</span><span class="st">"skater/summary"</span>, <span class="st">"1981-82"</span>, sort <span class="op">=</span> <span class="st">"points"</span>, limit <span class="op">=</span> <span class="fl">5</span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"skater_full_name"</span>, <span class="st">"team_abbrevs"</span>, <span class="st">"goals"</span>, <span class="st">"assists"</span>, <span class="st">"points"</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">#&gt; # A tibble: 5 × 5</span></span>
 <span><span class="co">#&gt;   skater_full_name team_abbrevs goals assists points</span></span>
@@ -358,7 +401,7 @@
 <span><span class="co">#&gt;   &lt;date&gt;     &lt;chr&gt;           &lt;int&gt;   &lt;int&gt;</span></span>
 <span><span class="co">#&gt; 1 1981-12-30 PHI                 5       1</span></span></code></pre></div>
 <p><code><a href="reference/nhl_era_adjust.html">nhl_era_adjust()</a></code> puts any seasons on one scale: each rescaled to the last ten seasons’ scoring, an 82-game schedule and today’s rosters (skaters dressed a game), as Hockey-Reference adjusts. Howe’s 1952-53 and Gretzky’s 1981-82, side by side:</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">seasons</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="fu"><a href="reference/nhl_stats.html">nhl_stats</a></span><span class="op">(</span><span class="st">"skater/summary"</span>, <span class="st">"1952-53"</span>, sort <span class="op">=</span> <span class="st">"points"</span>, limit <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
 <span>                 <span class="fu"><a href="reference/nhl_stats.html">nhl_stats</a></span><span class="op">(</span><span class="st">"skater/summary"</span>, <span class="st">"1981-82"</span>, sort <span class="op">=</span> <span class="st">"points"</span>, limit <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/nhl_era_adjust.html">nhl_era_adjust</a></span><span class="op">(</span><span class="va">seasons</span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"skater_full_name"</span>, <span class="st">"season_id"</span>, <span class="st">"goals"</span>, <span class="st">"points"</span>, <span class="st">"adj_goals"</span>, <span class="st">"adj_points"</span><span class="op">)</span><span class="op">]</span></span>
@@ -371,7 +414,7 @@
 <div class="section level2">
 <h2 id="the-stats-api">The stats API<a class="anchor" aria-label="anchor" href="#the-stats-api"></a>
 </h2>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/nhl_stats.html">nhl_stats</a></span><span class="op">(</span><span class="st">"skater/summary"</span>, <span class="st">"2025-26"</span>, sort <span class="op">=</span> <span class="st">"points"</span>, limit <span class="op">=</span> <span class="fl">5</span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"skater_full_name"</span>, <span class="st">"team_abbrevs"</span>, <span class="st">"goals"</span>, <span class="st">"assists"</span>, <span class="st">"points"</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">#&gt; # A tibble: 5 × 5</span></span>
 <span><span class="co">#&gt;   skater_full_name  team_abbrevs goals assists points</span></span>
@@ -386,7 +429,7 @@
 <h2 id="the-records-site">The records site<a class="anchor" aria-label="anchor" href="#the-records-site"></a>
 </h2>
 <p>records.nhl.com keeps a century of tables. <code><a href="reference/nhl_records_catalog.html">nhl_records_catalog()</a></code> lists the 78 that answer, each with a line on what it holds, and helpers cover the ones people ask for: Game 7, overtime, season-opener, outdoor and overseas records, the draft lottery and its odds, and the milestones in sight.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/nhl_franchise_records.html">nhl_franchise_records</a></span><span class="op">(</span><span class="st">"game7"</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"franchise_name"</span>, <span class="st">"games_played"</span>, <span class="st">"wins"</span>, <span class="st">"losses"</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">#&gt; # A tibble: 5 × 4</span></span>
 <span><span class="co">#&gt;   franchise_name      games_played  wins losses</span></span>
@@ -551,6 +594,24 @@
 </td>
 </tr>
 <tr>
+<td>Contracts, trades and transactions</td>
+<td>
+<code><a href="reference/nhl_signings.html">nhl_signings()</a></code>, <code><a href="reference/nhl_signings.html">nhl_trades()</a></code>, <code><a href="reference/espn_transactions.html">espn_transactions()</a></code>, <code><a href="reference/espn_transactions.html">espn_injuries()</a></code>
+</td>
+<td>
+<code>stats-api.sportsnet.ca/signings</code>, <code>/trades</code> (data by PuckPedia); <code>site.api.espn.com/.../transactions</code>, <code>/injuries</code>
+</td>
+</tr>
+<tr>
+<td>Coaches and GMs</td>
+<td>
+<code><a href="reference/nhl_coaches.html">nhl_coaches()</a></code>, <code><a href="reference/nhl_coaches.html">nhl_general_managers()</a></code>
+</td>
+<td>
+<code>records.nhl.com/site/api/coach-*</code>, <code>/general-manager-*</code>
+</td>
+</tr>
+<tr>
 <td>Anything else</td>
 <td>
 <code><a href="reference/nhl_api.html">nhl_api()</a></code>, <code><a href="reference/tidy_json.html">tidy_json()</a></code>
@@ -564,8 +625,11 @@
 <h2 id="being-a-good-guest">Being a good guest<a class="anchor" aria-label="anchor" href="#being-a-good-guest"></a>
 </h2>
 <p>These are the NHL’s own, undocumented APIs; bluelineR is not affiliated with the NHL, and endpoints can change without notice. Requests are throttled (five a second by default) and retried with backoff on rate limits; turn on <code>options(bluelineR.cache = TRUE)</code> to keep responses for the session.</p>
+<p>Contracts and trades come from Sportsnet’s stats API, which publishes <a href="https://puckpedia.com" class="external-link">PuckPedia</a>’s data; credit them when you use it.</p>
 <p>bluelineR stands on the work of other R hockey packages, notably <a href="https://rentosaijo.github.io/nhlscraper/" class="external-link">nhlscraper</a>, <a href="https://cran.r-project.org/package=hockeyR" class="external-link">hockeyR</a> and <a href="https://cran.r-project.org/package=fastRhockey" class="external-link">fastRhockey</a>. nhlscraper was first to the goal tracking frames: its <code>replay()</code> has read them from <code>wsr.nhle.com</code> since November 2025, and <code>replays()</code> serves a season of them at once. What bluelineR adds:</p>
 <ul>
+<li>
+<strong>Contracts and trades</strong> (<code><a href="reference/nhl_signings.html">nhl_signings()</a></code>, <code><a href="reference/nhl_signings.html">nhl_trades()</a></code>): each contract’s cap hit, salary and bonuses season by season, and the salary retained in trades, from Sportsnet’s feed of PuckPedia’s data.</li>
 <li>
 <strong>Game tracking summaries</strong> (<code><a href="reference/nhl_tracking_summary.html">nhl_tracking_summary()</a></code>): each player’s puck possession time, by zone and strength, with speed, distance, zone time and zone starts, and each club’s possession share, from the per-game files at <code>live.nhle.com/ppt</code>.</li>
 <li>

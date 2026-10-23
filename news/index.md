@@ -1,6 +1,23 @@
 # Changelog
 
-## bluelineR (development version)
+## bluelineR 0.2.0
+
+- Contracts and trades from Sportsnet’s stats API (PuckPedia’s data):
+  [`nhl_signings()`](https://ethanrawson.github.io/bluelineR/reference/nhl_signings.md)
+  (every contract signed in a year, and with `by_season = TRUE` each
+  season’s cap hit, salary, bonuses and clause) and
+  [`nhl_trades()`](https://ethanrawson.github.io/bluelineR/reference/nhl_signings.md)
+  (every trade since 2020-21, or every player and pick moved, with cap
+  hits and retained salary). From ESPN,
+  [`espn_transactions()`](https://ethanrawson.github.io/bluelineR/reference/espn_transactions.md)
+  (every roster move) and
+  [`espn_injuries()`](https://ethanrawson.github.io/bluelineR/reference/espn_transactions.md).
+
+- [`nhl_coaches()`](https://ethanrawson.github.io/bluelineR/reference/nhl_coaches.md)
+  and
+  [`nhl_general_managers()`](https://ethanrawson.github.io/bluelineR/reference/nhl_coaches.md):
+  every head coach and GM, by career, by club or as a bio, from
+  records.nhl.com.
 
 - IIHF tournaments, from the IIHF’s live-data feed
   (`realtime.iihf.com`):

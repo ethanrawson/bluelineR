@@ -81,6 +81,21 @@
   [`nhl_draft_lottery_odds()`](https://ethanrawson.github.io/bluelineR/reference/nhl_draft_lottery.md)
   : Draft lottery winners and odds
 
+## Contracts, trades and transactions
+
+- [`nhl_signings()`](https://ethanrawson.github.io/bluelineR/reference/nhl_signings.md)
+  [`nhl_trades()`](https://ethanrawson.github.io/bluelineR/reference/nhl_signings.md)
+  : Contracts and trades
+- [`espn_transactions()`](https://ethanrawson.github.io/bluelineR/reference/espn_transactions.md)
+  [`espn_injuries()`](https://ethanrawson.github.io/bluelineR/reference/espn_transactions.md)
+  : Transactions and injuries, from ESPN
+
+## Coaches and GMs
+
+- [`nhl_coaches()`](https://ethanrawson.github.io/bluelineR/reference/nhl_coaches.md)
+  [`nhl_general_managers()`](https://ethanrawson.github.io/bluelineR/reference/nhl_coaches.md)
+  : Coaches and general managers
+
 ## International
 
 - [`nhl_international()`](https://ethanrawson.github.io/bluelineR/reference/nhl_international.md)
