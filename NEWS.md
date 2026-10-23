@@ -1,4 +1,4 @@
-# bluelineR (development version)
+# bluelineR 0.2.0
 
 * Contracts and trades from Sportsnet's stats API (PuckPedia's data): `nhl_signings()` (every contract
   signed in a year, and with `by_season = TRUE` each season's cap hit, salary, bonuses and clause) and

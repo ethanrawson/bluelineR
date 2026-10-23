@@ -1,17 +1,20 @@
 Package: bluelineR
 Title: Tidy Access to the NHL's Web, Stats, EDGE and Goal-Tracking APIs, IIHF Data and NHL Odds
-Version: 0.1.0.9000
+Version: 0.2.0
 Authors@R: 
     person("Ethan", "Rawson", , "ethanb.rawson@icloud.com", role = c("aut", "cre", "cph"))
 Description: Wraps the public endpoints behind NHL.com: schedules, scores,
     standings, play-by-play, box scores and shift charts; players, rosters,
-    stat leaders and the draft; the stats and records APIs; NHL EDGE skating,
-    shot and zone-time tracking; and the puck and player tracking frames
-    behind every goal since 2023-24. Also the IIHF's live data (every shot of
+    stat leaders and the draft; the stats and records APIs, with coaches,
+    general managers and every best-on-best tournament since 1976; NHL EDGE
+    skating, shot and zone-time tracking; and the puck and player tracking
+    frames behind every goal since 2023-24. Also contracts and trades from
+    Sportsnet's feed of PuckPedia's data, the IIHF's live data (every shot of
     its tournaments placed on the ice) and DraftKings' NHL odds and player
     props as ESPN publishes them. Results come back as tibbles with
     snake_case names and rink coordinates in feet, with helpers that read how
-    a goal was scored from its tracking and draw it on a rink.
+    a goal was scored from its tracking, adjust stats for era, and draw and
+    animate goals on a rink.
 License: MIT + file LICENSE
 URL: https://github.com/ethanrawson/bluelineR,
     https://ethanrawson.github.io/bluelineR/
