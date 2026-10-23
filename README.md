@@ -471,6 +471,10 @@ throttled (five a second by default) and retried with backoff on rate
 limits; turn on `options(bluelineR.cache = TRUE)` to keep responses for
 the session.
 
+Team and tournament logos and marks belong to their owners. bluelineR
+doesn’t include any: it links to the NHL’s copies, which
+`animate_goal(logos = TRUE)` downloads as it draws.
+
 Contracts and trades come from Sportsnet's stats API, which publishes [PuckPedia](https://puckpedia.com)'s
 data; credit them when you use it.
 

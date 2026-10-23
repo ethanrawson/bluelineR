@@ -40,8 +40,8 @@
 #' animate_goal(frames, "mcdavid.mp4", goal = nhl_goal_replay(2025020534, 777))
 #'
 #' # McDavid's overtime winner in the 4 Nations final, with the logos:
-#' four_nations <- paste0("https://raw.githubusercontent.com/ethanrawson/bluelineR/Model/",
-#'                        "man/figures/4-nations-logo.png")
+#' four_nations <- paste0("https://assets.nhle.com/special_event_season/20242025/svg/",
+#'                        "4n-2025-championship-extwm-en_light.svg")
 #' animate_goal(nhl_goal_tracking(2024200007, 1443), "4-nations.mp4",
 #'              goal = nhl_goal_replay(2024200007, 1443), logos = TRUE, centre_logo = four_nations)
 #'
