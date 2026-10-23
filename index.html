@@ -625,6 +625,7 @@
 <h2 id="being-a-good-guest">Being a good guest<a class="anchor" aria-label="anchor" href="#being-a-good-guest"></a>
 </h2>
 <p>These are the NHL’s own, undocumented APIs; bluelineR is not affiliated with the NHL, and endpoints can change without notice. Requests are throttled (five a second by default) and retried with backoff on rate limits; turn on <code>options(bluelineR.cache = TRUE)</code> to keep responses for the session.</p>
+<p>Team and tournament logos and marks belong to their owners. bluelineR doesn’t include any: it links to the NHL’s copies, which <code>animate_goal(logos = TRUE)</code> downloads as it draws.</p>
 <p>Contracts and trades come from Sportsnet’s stats API, which publishes <a href="https://puckpedia.com" class="external-link">PuckPedia</a>’s data; credit them when you use it.</p>
 <p>bluelineR stands on the work of other R hockey packages, notably <a href="https://rentosaijo.github.io/nhlscraper/" class="external-link">nhlscraper</a>, <a href="https://cran.r-project.org/package=hockeyR" class="external-link">hockeyR</a> and <a href="https://cran.r-project.org/package=fastRhockey" class="external-link">fastRhockey</a>. nhlscraper was first to the goal tracking frames: its <code>replay()</code> has read them from <code>wsr.nhle.com</code> since November 2025, and <code>replays()</code> serves a season of them at once. What bluelineR adds:</p>
 <ul>
