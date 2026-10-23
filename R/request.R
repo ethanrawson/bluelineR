@@ -13,6 +13,7 @@ api_base <- function(api) {
     # iihf.com refuses scripted requests; this mirror of it does not.
     iihf_site = "https://canada-central.iihf.com",
     espn_site = "https://site.api.espn.com/apis/site/v2/sports/hockey/nhl",
+    sportsnet = "https://stats-api.sportsnet.ca",
     espn_web = "https://site.web.api.espn.com/apis",
     espn_core = "https://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl",
     psr = "https://live.nhle.com/psr",

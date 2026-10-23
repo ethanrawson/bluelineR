@@ -1,0 +1,115 @@
+---
+title: "Beyond the NHL: international hockey and other eras"
+---
+
+```{r, include = FALSE}
+# This article calls the NHL's and the IIHF's APIs. It runs when the docs
+# site is built (BLUELINER_LIVE=true) and is shown without output otherwise.
+live <- identical(Sys.getenv("BLUELINER_LIVE"), "true")
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", eval = live, fig.width = 7.5, fig.height = 4, dpi = 110)
+options(tibble.print_min = 6, width = 95)
+```
+
+The NHL's APIs reach past its own regular season and playoffs: the
+best-on-best tournaments its players have played in since 1976, the tracking
+of the 4 Nations Face-Off, and every season back to 1917-18. The IIHF's live
+feed adds a shot map of every game it runs. This article goes through each.
+
+```{r}
+library(bluelineR)
+```
+
+## Every best-on-best tournament
+
+The NHL keeps the record of every tournament its players have played in:
+five Canada Cups, three World Cups of Hockey, the Olympics from 1998 to 2014
+and in 2026, and the 4 Nations Face-Off. `nhl_international_winners()` is
+the game that decided each:
+
+```{r}
+winners <- nhl_international_winners()
+winners[, c("tournament", "year", "winning_tricode", "winning_score", "losing_tricode", "losing_score", "overtime")]
+```
+
+Each player's and club's numbers at each tournament are in
+`nhl_international()`; here are the 2026 Olympics' scoring leaders:
+
+```{r}
+oly <- nhl_international("skater", "olympics", 2026)
+oly[, c("first_name", "last_name", "tri_code", "games_played", "goals", "assists", "points")]
+```
+
+and the Olympic careers, with medals:
+
+```{r}
+careers <- nhl_international_careers("skater", olympics = TRUE)
+careers[, c("first_name", "last_name", "team_name", "tournaments_played", "games_played", "points", "gold_medals", "total_medals")]
+```
+
+## The 4 Nations final, from the tracking
+
+The 4 Nations Face-Off was played on NHL ice with the NHL's tracking, so
+its goals have the same frames as any NHL goal: every skater and the puck,
+ten times a second. Connor McDavid's overtime winner in the final:
+
+```{r goal, fig.height = 4.6, fig.alt = "Connor McDavid's overtime winner in the 4 Nations final: every player's position as the puck goes in, with the last two seconds of each path."}
+frames <- nhl_goal_tracking(2024200007, 1443)
+plot_goal(frames, title = "Connor McDavid, overtime winner, 4 Nations final, 20 Feb 2025")
+```
+
+`animate_goal()` plays it back, with the clubs' logos and the tournament's
+at centre ice:
+
+```{r, eval = FALSE}
+four_nations <- paste0("https://assets.nhle.com/special_event_season/20242025/svg/",
+                       "4n-2025-championship-extwm-en_light.svg")
+animate_goal(frames, "mcdavid-4-nations.mp4", goal = nhl_goal_replay(2024200007, 1443),
+             logos = TRUE, centre_logo = four_nations)
+```
+
+<img src="https://raw.githubusercontent.com/ethanrawson/bluelineR/Model/man/figures/README-hero.gif" alt="Connor McDavid's overtime winner in the 4 Nations final, played back from the tracking." width="100%" />
+
+## The Olympic final, shot by shot
+
+The Olympics are not on NHL tracking, but the IIHF's live feed places every
+shot on the ice. The 2026 men's final, won by Jack Hughes in overtime:
+
+```{r}
+shots <- iihf_shots(1010000058)
+table(shots$team, shots$result)
+shots[shots$result == "goal", c("period", "time", "team", "player_name", "distance")]
+```
+
+```{r shots, fig.height = 4.6, fig.alt = "Shot map of the 2026 Olympic men's final, Canada against the United States, each club at its own end."}
+plot_shots(shots)
+```
+
+The same functions cover the IIHF's World Championships, World Juniors and
+women's and under-18 tournaments from 2019 on: `iihf_schedule()` lists a
+tournament's games.
+
+## Other eras
+
+A 1950s season and a 2020s one were played in different leagues: fewer
+games, fewer skaters dressed, and more or fewer goals a night.
+`nhl_era_adjust()` rescales each season to one scoring environment (by
+default the last ten completed seasons over 82 games), so the best seasons
+of four eras read on one scale:
+
+```{r}
+best_season <- function(id) {
+  p <- nhl_player(id)
+  s <- p$season_totals
+  s <- s[s$league_abbrev == "NHL" & s$game_type_id == 2, ]
+  out <- s[which.max(s$points), c("season", "goals", "assists", "points")]
+  out$player <- paste(p$bio$first_name, p$bio$last_name)
+  out
+}
+best <- do.call(rbind, lapply(c(8448000, 8447400, 8448782, 8478402), best_season))
+nhl_era_adjust(best)[, c("player", "season", "goals", "assists", "points", "adj_goals", "adj_assists", "adj_points")]
+```
+
+`nhl_league_env()` is the table behind it: every season since 1917-18, with
+its games, goals and assists a game and roster size. `nhl_stat_eras()` says
+what the NHL kept in each era, from goals and assists in 1917-18 to the
+tracking of today.

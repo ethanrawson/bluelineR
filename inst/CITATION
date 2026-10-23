@@ -1,0 +1,10 @@
+bibentry(
+  bibtype = "Manual",
+  title = paste0("{bluelineR}: ", meta$Title),
+  author = person("Ethan", "Rawson"),
+  year = "2026",
+  note = paste("R package version", meta$Version),
+  url = "https://github.com/ethanrawson/bluelineR",
+  textVersion = paste0("Rawson, E. (2026). bluelineR: ", meta$Title, ". R package version ", meta$Version,
+                       ". https://github.com/ethanrawson/bluelineR")
+)

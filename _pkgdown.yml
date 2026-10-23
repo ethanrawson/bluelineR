@@ -32,6 +32,10 @@ reference:
   contents: [nhl_player, nhl_roster, nhl_team_stats, nhl_stat_leaders, nhl_headshot_url, nhl_team_info]
 - title: Draft
   contents: [nhl_draft_rankings, nhl_draft_lottery]
+- title: Contracts, trades and transactions
+  contents: [nhl_signings, espn_transactions]
+- title: Coaches and GMs
+  contents: [nhl_coaches]
 - title: International
   contents: [nhl_international]
 - title: IIHF tournaments
@@ -48,4 +52,4 @@ reference:
   contents: [nhl_api, tidy_json, nhl_season, nhl_cache_clear, bluelineR-options]
 articles:
 - title: Articles
-  contents: [bluelineR, goal-tracking]
+  contents: [bluelineR, goal-tracking, articles/beyond-the-nhl]

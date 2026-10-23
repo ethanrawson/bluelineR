@@ -9,3 +9,5 @@
 ^data-raw$
 ^cran-comments\.md$
 ^man/figures/README-animate\.gif$
+^man/figures/README-hero\.gif$
+^vignettes/articles$

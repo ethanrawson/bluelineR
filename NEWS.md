@@ -1,5 +1,11 @@
 # bluelineR (development version)
 
+* Contracts and trades from Sportsnet's stats API (PuckPedia's data): `nhl_signings()` (every contract
+  signed in a year, and with `by_season = TRUE` each season's cap hit, salary, bonuses and clause) and
+  `nhl_trades()` (every trade since 2020-21, or every player and pick moved, with cap hits and retained
+  salary). From ESPN, `espn_transactions()` (every roster move) and `espn_injuries()`.
+* `nhl_coaches()` and `nhl_general_managers()`: every head coach and GM, by career, by club or as a bio,
+  from records.nhl.com.
 * IIHF tournaments, from the IIHF's live-data feed (`realtime.iihf.com`): `iihf_schedule()` lists a
   tournament's games (the World Championship, World Juniors, women's and under-18 Worlds and the
   divisions), `iihf_olympic_games()` every game of the 2026 Olympics, `iihf_game()` one game,
